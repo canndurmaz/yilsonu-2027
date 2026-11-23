@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kübik süsleme yarışması kuralları</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .envelope { max-width: 620px; margin: 0 0 8px; }
+  .envelope svg { width: 100%; height: auto; display: block; }
+  .rules { counter-reset: r; list-style: none; padding: 0; max-width: 76ch; }
+  .rules > li {
+    counter-increment: r;
+    padding: 10px 0 10px 54px;
+    border-top: 1px solid var(--grid);
+    position: relative;
+    margin: 0;
+  }
+  .rules > li::before {
+    content: counter(r);
+    position: absolute;
+    left: 0;
+    top: 8px;
+    font-family: var(--head);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent);
+    width: 40px;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+<main>
+<header class="top wrap">
+  <h1>Kübik süsleme yarışması</h1>
+  <p>Bütçesi sınırlı, göze batmayan, çalışmayı engellemeyen bir masa süsleme yarışması için kurallar, ölçü sınırları, puanlama ve takvim. Kural metni duyuruya olduğu gibi kopyalanabilir.</p>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2>Bir bakışta sınırlar</h2>
+  <div class="cols">
+    <div class="envelope">
+      <svg viewBox="0 0 620 330" role="img" aria-label="Kübik kesiti: süsler bölme panelinin üst kenarını en çok 15 santimetre aşabilir, koridora taşamaz, tavana ve aydınlatmaya bir şey asılamaz.">
+        <rect x="0" y="0" width="620" height="330" fill="#fff"/>
+        <!-- zemin -->
+        <line x1="20" y1="300" x2="600" y2="300" stroke="#002d7a" stroke-width="3"/>
+        <!-- tavan -->
+        <line x1="20" y1="22" x2="600" y2="22" stroke="#002d7a" stroke-width="3" stroke-dasharray="2 6"/>
+        <text x="24" y="16" font-size="13" fill="#4667a0">Tavan, aydınlatma, dedektör: boş kalır</text>
+        <!-- yasak bölge -->
+        <rect x="150" y="26" width="300" height="94" fill="#fbe3e7"/>
+        <text x="300" y="78" font-size="15" text-anchor="middle" fill="#c8102e" font-weight="700">Süs yok</text>
+        <!-- izinli bant -->
+        <rect x="150" y="120" width="300" height="28" fill="#dde8f7"/>
+        <text x="300" y="139" font-size="13" text-anchor="middle" fill="#002d7a">Panel üstü: en çok 15 cm</text>
+        <!-- paneller -->
+        <rect x="142" y="148" width="10" height="152" fill="#002d7a"/>
+        <rect x="448" y="148" width="10" height="152" fill="#002d7a"/>
+        <!-- masa -->
+        <rect x="152" y="218" width="296" height="8" fill="#4667a0"/>
+        <!-- monitör -->
+        <rect x="262" y="170" width="76" height="42" fill="none" stroke="#002d7a" stroke-width="3"/>
+        <line x1="300" y1="212" x2="300" y2="218" stroke="#002d7a" stroke-width="3"/>
+        <!-- süs alanı -->
+        <rect x="156" y="152" width="288" height="64" fill="none" stroke="#2f63c4" stroke-width="2" stroke-dasharray="6 4"/>
+        <text x="300" y="250" font-size="13" text-anchor="middle" fill="#002d7a">Süsleme alanı: kendi masan ve panelin iç yüzü</text>
+        <!-- koridor -->
+        <text x="80" y="250" font-size="13" text-anchor="middle" fill="#c8102e" font-weight="700">Koridor</text>
+        <text x="80" y="268" font-size="13" text-anchor="middle" fill="#c8102e">taşma 0 cm</text>
+        <text x="530" y="250" font-size="13" text-anchor="middle" fill="#c8102e" font-weight="700">Komşu masa</text>
+        <text x="530" y="268" font-size="13" text-anchor="middle" fill="#c8102e">izinsiz girilmez</text>
+        <!-- ölçü oku -->
+        <line x1="476" y1="120" x2="476" y2="148" stroke="#002d7a" stroke-width="2"/>
+        <line x1="470" y1="120" x2="482" y2="120" stroke="#002d7a" stroke-width="2"/>
+        <line x1="470" y1="148" x2="482" y2="148" stroke="#002d7a" stroke-width="2"/>
+        <text x="490" y="139" font-size="13" fill="#002d7a">15 cm</text>
+      </svg>
+    </div>
+    <div>
+      <table>
+        <tbody>
+          <tr><td><b>Bütçe tavanı</b></td><td class="num"><b id="cap1">250 TL</b> kişi başı</td></tr>
+          <tr><td><b>Yükseklik</b></td><td class="num">Panel üstünden en çok 15 cm</td></tr>
+          <tr><td><b>Panelsiz masada</b></td><td class="num">Masa yüzeyinden en çok 60 cm</td></tr>
+          <tr><td><b>Koridora taşma</b></td><td class="num">0 cm</td></tr>
+          <tr><td><b>Işık</b></td><td class="num">Pilli ya da USB, sabit, sıcak beyaz</td></tr>
+          <tr><td><b>Ses ve koku</b></td><td class="num">Yok</td></tr>
+          <tr><td><b>Kurulum süresi</b></td><td class="num">Mesai dışında, en çok 1 saat</td></tr>
+          <tr><td><b>Söküm</b></td><td class="num">Ocak'ın ilk iş haftası sonu</td></tr>
+        </tbody>
+      </table>
+      <p class="small">Panel yüksekliği ofisten ofise değişir. Kuralı panel üst kenarına bağlamak, ölçmeyi kolaylaştırır ve süslerin ofisin karşı ucundan görünmesini önler.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Kurallar</h2>
+  <h3>Katılım</h3>
+  <ol class="rules">
+    <li><b>Katılım gönüllüdür.</b> Katılmayanın masasına dokunulmaz, katılmamak hiçbir biçimde yorumlanmaz.</li>
+    <li><b>İki kategori vardır:</b> bireysel masa ve ortak ada (yan yana en az üç masa birlikte). Bir kişi yalnızca birine girer.</li>
+    <li><b>Tema "kış ve yeni yıl"dır.</b> Dini, siyasi ve ticari marka içeren öğeler kullanılmaz. Mühendislik göndermesi serbesttir ve ayrıca puan getirir.</li>
+    <li><b>Kayıt:</b> katılmak isteyen, son kayıt gününe kadar adını ve kategorisini organizasyon ekibine bildirir.</li>
+  </ol>
+
+  <h3>Bütçe</h3>
+  <ol class="rules" style="counter-reset: r 4">
+    <li><b>Kişi başı harcama tavanı <span id="cap2">250 TL</span>'dir.</b> Ortak adada tavan, kişi sayısı çarpı tavanın yüzde yetmişidir; birlikte alışveriş ucuzlatır.</li>
+    <li><b>Harcama beyana dayanır.</b> Katılımcı, malzeme listesini ve toplam tutarı tek satırlık bir notla masasına iliştirir. Fiş istenmez; jüri şüphe duyarsa sorabilir. Kargo ücreti bütçeye sayılmaz.</li>
+    <li><b>Sıfır sayılanlar:</b> evden getirilen eski süsler, geri dönüşüm malzemesi (koli, kağıt, ambalaj), ofisin hurda kutusundan çıkan parçalar, kendi ürettiğiniz 3B baskı ve el işi parçalar. Filament ve boya gibi sarf malzemesi bütçeye yazılır.</li>
+    <li><b>Kurum malzemesi kullanılmaz.</b> Proje malzemesi, ölçü aleti, numune, ESD ekipmanı ve demirbaş süs olarak kullanılamaz.</li>
+  </ol>
+
+  <h3>Ölçü ve görünüm</h3>
+  <ol class="rules" style="counter-reset: r 8">
+    <li><b>Süsler panel üst kenarını en çok 15 cm aşar.</b> Panelsiz masalarda sınır, masa yüzeyinden 60 cm'dir.</li>
+    <li><b>Süsleme kendi alanınızda kalır:</b> masa yüzeyi, masa altı ve panelin size bakan yüzü. Koridora, komşu masaya ve ortak duvara taşılmaz.</li>
+    <li><b>Tavana, aydınlatmaya, havalandırma menfezine, yangın dedektörüne, sprinklere ve acil durum levhalarına hiçbir şey asılmaz ve bunların önü kapatılmaz.</b></li>
+    <li><b>Işık sabit ve sıcak beyaz olur.</b> Yanıp sönen, renk değiştiren, hareketli ışık kullanılmaz. Monitöre ya da komşuya doğru ışık tutulmaz.</li>
+    <li><b>Ses çıkaran, müzik çalan, hareket sensörlü süs kullanılmaz.</b></li>
+    <li><b>Kokulu ürün kullanılmaz:</b> mum, tütsü, oda spreyi, kokulu çam dalı.</li>
+    <li><b>Dökülen ve iz bırakan malzeme kullanılmaz:</b> sim, konfeti, kar spreyi, yapay kar tozu, kalıcı bant, raptiye, çivi. Sabitleme için kağıt bant, çıkarılabilir yapıştırıcı hamur ya da mandal kullanılır.</li>
+    <li><b>Ekran, klavye, telefon ve çekmeceler kullanılabilir durumda kalır.</b> Masa, ertesi sabah hiçbir şey kaldırılmadan çalışılabilecek halde olmalıdır.</li>
+  </ol>
+
+  <h3>Güvenlik</h3>
+  <ol class="rules" style="counter-reset: r 16">
+    <li><b>Yalnızca pilli ya da USB beslemeli LED kullanılır.</b> Şebekeye takılan ışık zinciri, uzatma kablosu ve çoklu priz eklemesi yasaktır.</li>
+    <li><b>Açık alev ve ısınan ürün yasaktır:</b> mum, maytap, akkor ampul.</li>
+    <li><b>Işıklar mesai bitiminde kapatılır.</b> Açık bırakılan ışık, puan düşürür.</li>
+    <li><b>Yürüme yolunda kablo, ip, sarkan süs olmaz.</b> Kaçış yolları ve yangın dolapları açık kalır.</li>
+    <li><b>Laboratuvar, test alanı ve ESD korumalı tezgâhlar yarışma dışıdır.</b> Buralara süs konmaz.</li>
+    <li><b>Canlı bitki serbest, canlı çam dalı ve yiyecekle süsleme serbest değildir.</b> Açıkta yiyecek, hafta sonu ofiste kalınca sorun olur.</li>
+  </ol>
+
+  <h3>Gizlilik ve düzen</h3>
+  <ol class="rules" style="counter-reset: r 22">
+    <li><b>Fotoğraf çekilirken ekranlar kapalı, masadaki dokümanlar kaldırılmış olur.</b> Fotoğrafı yalnızca organizasyon ekibi çeker ve kurum içi kullanır.</li>
+    <li><b>Kurulum mesai saatleri dışında yapılır</b> ve en çok bir saat sürer. Mesai içinde süsleme yapılmaz.</li>
+    <li><b>Söküm, Ocak'ın ilk iş haftasının son gününe kadar tamamlanır.</b> Herkes kendi süsünü toplar; panelde ve masada iz kalmaz.</li>
+    <li><b>Organizasyon ekibi, kurallara uymayan ya da rahatsızlık bildirilen süsü kaldırtabilir.</b> Rahatsız olan kişi doğrudan ekibe söyler; kimin söylediği paylaşılmaz.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Puanlama</h2>
+  <p>Jüri puanı 85, ofis oyu 15 üzerinden. Jüri, yarışmaya katılmayan üç kişiden oluşur; biri başka bir müdürlükten olursa tarafsızlık tartışması çıkmaz.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ölçüt</th><th class="num">Puan</th><th>Jüri neye bakar</th></tr></thead>
+    <tbody>
+      <tr><td>Yaratıcılık</td><td class="num">25</td><td>Fikir özgün mü, hazır set mi dizilmiş?</td></tr>
+      <tr><td>Bütçe verimi</td><td class="num">20</td><td>Az parayla ne kadar etki yaratılmış? Geri dönüşüm ve el işi öne çıkar.</td></tr>
+      <tr><td>Mühendislik dokunuşu</td><td class="num">15</td><td>Basamak yanıtı biçiminde ışık dizisi, dişliden kar tanesi, blok diyagramdan çam ağacı gibi bölüme özgü espri.</td></tr>
+      <tr><td>Sadelik ve düzen</td><td class="num">15</td><td>Masa çalışılabilir mi, uzaktan göze batıyor mu? Az ve derli toplu olan daha yüksek alır.</td></tr>
+      <tr><td>İşçilik</td><td class="num">10</td><td>Sabitleme temiz mi, sarkan, düşen parça var mı?</td></tr>
+      <tr><td>Ofis oyu</td><td class="num">15</td><td>Herkes bir yapışkan nokta ile bir masaya oy verir; kendi masasına veremez. En çok oy alan 15, diğerleri oranla puan alır.</td></tr>
+    </tbody>
+    <tfoot><tr><td>Toplam</td><td class="num">100</td><td></td></tr></tfoot>
+  </table>
+  </div>
+
+  <div class="cols">
+    <div>
+      <h3>Puan kesintileri</h3>
+      <ul>
+        <li>Yükseklik ya da alan sınırını aşmak: 10 puan, düzeltilene kadar</li>
+        <li>Bütçe tavanını aşmak: aşılan her 50 TL için 5 puan</li>
+        <li>Işığı mesai sonunda açık bırakmak: her seferinde 5 puan</li>
+        <li>Güvenlik kurallarından birini çiğnemek: yarışma dışı</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Ödüller</h3>
+      <ul>
+        <li><b>En İyi Bireysel Masa</b> ve <b>En İyi Ada</b></li>
+        <li><b>En Az Parayla En Çok İş:</b> bütçe verimi puanı en yüksek olan</li>
+        <li><b>Mühendis İşi:</b> mühendislik dokunuşu puanı en yüksek olan</li>
+        <li><b>Ofisin Seçimi:</b> en çok yapışkan nokta alan</li>
+      </ul>
+      <p class="small">Eşitlikte bütçesi düşük olan kazanır. Ödüller Altın PID töreninde verilir; küçük bir sertifika ve bir kutu çikolata yeterlidir.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Takvim</h2>
+  <p>Etkinlik günü <a href="5-ek-detaylar.html">plan sayfasında</a> seçilen tarihten alınır. Tarihi orada değiştirirseniz bu tablo da güncellenir.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Tarih</th><th>Adım</th></tr></thead>
+    <tbody id="takvim"></tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Bütçe tavanı nasıl seçildi</h2>
+  <div class="calc no-print">
+    <div><label for="cap">Kişi başı tavan (TL)</label><input type="number" id="cap" min="0" step="50" value="250"></div>
+  </div>
+  <p>Tavan, bir ışık dizisi, kağıt ve yapıştırıcı alınabilecek ama hazır süslü ağaç alınamayacak düzeyde seçildi. Böylece fark, harcanan paradan değil fikirden gelir ve masalar birbirine benzer ölçekte kalır.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Tavan</th><th>Örnek sepet</th><th class="num">Tutar</th><th>Sonuç</th></tr></thead>
+    <tbody>
+      <tr><td>150 TL</td><td>Peri LED 3 m ve 25 x 35 fon kartonu</td><td class="num">128,00 TL</td><td>Dar; ya ışık ya kağıt ve yapıştırıcı alınır</td></tr>
+      <tr class="pick"><td>250 TL</td><td>Peri LED 3 m, A4 fon kartonu, hamur yapıştırıcı</td><td class="num">236,02 TL</td><td>Herkes ışıklı, derli toplu bir masa kurabilir</td></tr>
+      <tr><td>400 TL</td><td>Peri LED 5 m, 15 cm ağaç, iki paket fon kartonu, hamur yapıştırıcı</td><td class="num">384,76 TL</td><td>Masalar kalabalıklaşır, göze batma riski artar</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note">
+    <p><b>Kargo tavanı bozar.</b> Sipariş başına kargo 45 ile 115 TL arasında. Herkes ayrı sipariş verirse 250 TL'lik tavan fiilen ikiye katlanır. İki çözüm var: organizasyon ekibi ışık ve yapıştırıcıyı toplu alıp katılımcılara maliyetine dağıtır ya da kargo ücreti bütçeye sayılmaz. Kural metninde ikincisi varsayıldı.</p>
+  </div>
+  <h3>Malzeme fiyatları</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ürün</th><th>Satıcı</th><th class="num">Adet</th><th class="num">Fiyat</th><th>Not</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td><a href="https://www.idefix.com/myk-hediye-ve-sanat-atolyesi-3-metre-gun-isigi-peri-led-isik-pilli-3-modlu-dekoratif-led-p-20278873">Peri LED 3 m, gün ışığı, pilli, piller dahil</a></td><td>idefix</td><td class="num">1</td><td class="num">90,00 TL</td><td>Üç modlu; sabit modda kullanılmalı</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/serit-led/en-ucuz-dekonivia-peri-led-5-metre-gun-isigi-sari-iki-fonksiyonlu-pilli-dekoratif-aydinlatma-susleme-parti-led-isik-yilbasi-led-isik-susleme-dekorasyon-isigi-serit-fiyati,1658647804.html">Peri LED 5 m, pilli</a></td><td>Akakçe, tek satıcı</td><td class="num">1</td><td class="num">92,00 TL</td><td></td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/serit-led/en-ucuz-coverzone-peri-led-isik-3-metre-sari-pilli-aydinlatma-sacak-spot-susleme-1-adet-fiyati,932496911.html">Peri LED 3 m, sarı, pilli</a></td><td>Amazon.com.tr</td><td class="num">1</td><td class="num">129,00 TL</td><td>Kargo 49,90 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr class="pick"><td><a href="https://www.akakce.com/fon-kartonu/en-ucuz-bigpoint-a4-120-gram-karisik-10-renk-fiyati,1307818338.html">Fon kartonu A4, 120 g, 10 renk</a></td><td>idefix</td><td class="num">10</td><td class="num">66,02 TL</td><td>Kargo 44,90 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/fon-kartonu/en-ucuz-bigpoint-25x35cm-karisik-10-renk-fiyati,1738404385.html">Fon kartonu 25 x 35 cm, 10 renk</a></td><td>Akakçe, 10 teklif</td><td class="num">10</td><td class="num">38,00 TL</td><td></td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/krapon-kagidi/en-ucuz-sudor-karisik-grapon-kagidi-10-lu-set-fiyati,1074272117.html">Krapon kağıdı 50 x 200 cm, 10 renk</a></td><td>Akakçe, 10 teklif</td><td class="num">10</td><td class="num">109,13 TL</td><td></td><td><span class="tag">Akakçe</span></td></tr>
+      <tr class="pick"><td><a href="https://www.akakce.com/yapistirici/en-ucuz-faber-castell-hamur-yapistirici-tack-it-creative-50-gr-renkli-18-70-94-fiyati,680788533.html">Hamur yapıştırıcı, 50 g</a></td><td>Akakçe, 19 teklif</td><td class="num">1</td><td class="num">80,00 TL</td><td>İz bırakmayan sabitleme için</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/yilbasi-agaci/en-ucuz-dekoratif-mini-15cm-fiyati,1294408930.html">Mini yılbaşı ağacı, 15 cm</a></td><td>Akakçe, 3 teklif</td><td class="num">1</td><td class="num">108,74 TL</td><td></td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/yilbasi-agaci/masaustu-yilbasi-agaci.html">Mini süslü spiral ağaç, 30 cm</a></td><td>Akakçe, tek satıcı</td><td class="num">1</td><td class="num">207,00 TL</td><td></td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/yilbasi-agaci/en-ucuz-3-lu-set-nevada-mini-cam-agaci-uclarina-kar-yagmis-karli-yilbasi-hediyesi-15-12-8-cm-fiyati,947527397.html">Mini çam 3'lü set, 15, 12 ve 8 cm</a></td><td>Akakçe, 2 teklif</td><td class="num">3</td><td class="num">224,14 TL</td><td></td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.idefix.com/yilbasi-masaustu-suslu-yeni-yil-cam-agaci-40-cm-kutuklu-kirmizi-konsept-25-parca-sus-set-p-3338103">Süslü masaüstü çam 40 cm, 25 parça süsle</a></td><td>idefix</td><td class="num">1 set</td><td class="num">809,91 TL</td><td>Hiçbir tavana sığmaz</td><td><span class="tag q">Özet</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/yilbasi-susu/en-ucuz-3-cm-parlak-karisik-renk-yilbasi-top-sus-12-parca-mini-dekoratif-agac-ve-parti-susleme-seti-fiyati,1606540029.html">Top süs seti, 3 cm</a></td><td>Akakçe, 2 teklif</td><td class="num">12</td><td class="num">299,00 TL</td><td>Paylaşılarak alınmalı</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.partidolu.com/3-cm-ince-parti-susu-sim-2-metre-sari-renk">İnce sim kordon, 2 m</a></td><td>partidolu.com</td><td class="num">1</td><td class="num">108,00 TL</td><td>Sim döküldüğü için kurallarda yasak</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/kar-spreyi/en-ucuz-kika-joy-150ml-fiyati,1344489637.html">Kar spreyi, 150 ml</a></td><td>idefix, PttAVM</td><td class="num">1</td><td class="num">129,63 ile 149,00 TL</td><td>İz bıraktığı için kurallarda yasak</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/sticker/en-ucuz-kar-tanesi-pencere-susu-40-adet-yilbasi-dekorasyon-6x6-cm-cocuk-odasi-ve-cam-yuzeyler-icin-kis-temali-yapiskanli-susleme-seti-beyaz-fiyati,1619554975.html">Kar tanesi pencere süsü, 6 x 6 cm</a></td><td>Akakçe, tek satıcı</td><td class="num">40</td><td class="num">299,99 TL</td><td></td><td><span class="tag">Akakçe</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small">Fiyatlar 23 Kasım 2026 tarihli ve kargo hariç. Akakçe satırları karşılaştırma sayfasında görüldü, satıcı sayfası açılmadı.</p>
+</section>
+
+<section>
+  <h2>Kaynaklar</h2>
+  <ul class="sources">
+    <li><a href="https://alresources.nd.edu/news/all-news/holiday-decorating-competition/">Notre Dame Üniversitesi, süsleme yarışması</a>: bireysel ve takım kategorileri, malzemeyi çalışanın karşılaması, güvenlik için yap ve yapma listesi; ölçütler tema, yaratıcılık ve özgünlük.</li>
+    <li><a href="https://fhsu.edu/staff-senate/events/holiday-door-or-window-decorating-contest-rules.pdf">Fort Hays Eyalet Üniversitesi, yarışma kuralları</a>: kişi başı tek giriş, yalnızca iz bırakmayan bant, erişimi engellememe, jürinin kendi girişini puanlayamaması.</li>
+    <li><a href="https://www.luc.edu/staffcouncil/events/holidayspirit/">Loyola Üniversitesi</a>: halk oylaması ve kendi birimine oy verme yasağı.</li>
+    <li><a href="https://www.ocwr.gov/publications/fast-facts/holiday-office-decorations/">ABD Kongresi İşyeri Hakları Ofisi, ofis süsleme güvenliği</a>: uzatma kablosu ve çoklu prizi zincirlememe, mesai bitiminde ışıkları kapatma, söndürücü, çıkış ve levhaları kapatmama, geçişte en az 91 cm açıklık.</li>
+    <li><a href="https://safetyandhealthmagazine.com/articles/23292-deck-the-halls-safely">Safety and Health dergisi</a>: sprinklere süs asmama ve altında 46 cm boşluk bırakma, sandalyeye çıkmama, hasarlı kablo kontrolü.</li>
+    <li><a href="https://www.csustan.edu/safety-risk-management/holiday-decor-safety">Cal State Stanislaus, süsleme güvenliği</a>: pilli ışık tercihi, tavandan 46 cm boşluk, işten çıkarken elektrikli süsleri kapatma.</li>
+    <li><a href="https://allianz.com.tr/content/dam/onemarketing/aztr/allianz/pdf/bizden-haberler/eviniz-degil-cam-agacinizin-isiklari-yansin/risk_yonetimi.pdf">Allianz Türkiye risk bülteni</a>: mum kullanmama, kablo kontrolü, çıkarken elektriği kesme. Ev odaklı, Türkçe.</li>
+    <li>Türkiye'ye ait resmi bir ofis süsleme rehberi bulunamadı. Puan ağırlıkları, 15 cm yükseklik sınırı ve bütçe tavanı bu çalışmanın önerisidir; kuralları duyurmadan önce binanın iş güvenliği uzmanına onaylatın.</li>
+  </ul>
+</section>
+
+</div>
+</main>
+<footer class="wrap">HKTTM 2026 yıl sonu organizasyonu. Hazırlanma tarihi 23 Kasım 2026.</footer>
+
+<script src="common.js"></script>
+<script>
+var capEl = document.getElementById("cap");
+capEl.value = HK.get("cap", "250");
+function showCap() {
+  var v = (parseInt(capEl.value, 10) || 0) + " TL";
+  document.getElementById("cap1").textContent = v;
+  document.getElementById("cap2").textContent = v;
+  HK.set("cap", capEl.value);
+}
+capEl.oninput = showCap;
+showCap();
+
+// Takvim: etkinlik gününe göre geriye doğru
+var ev = new Date(HK.get("date", "2026-12-30") + "T12:00:00");
+function wd(d) { // hafta sonuna denk gelirse önceki cumaya çek
+  var x = new Date(d);
+  while (x.getDay() === 0 || x.getDay() === 6) x.setDate(x.getDate() - 1);
+  return x;
+}
+function off(n) { var d = new Date(ev); d.setDate(d.getDate() + n); return wd(d); }
+function fmt(d) { return d.toLocaleDateString("tr-TR", { day: "numeric", month: "long", weekday: "long" }); }
+var after = new Date(ev.getFullYear() + (ev.getMonth() === 11 ? 1 : 0), 0, 8, 12);
+var rows = [
+  [off(-28), "Duyuru: kurallar, bütçe tavanı ve takvim e-postayla paylaşılır."],
+  [off(-19), "Son kayıt. Jüri üyeleri belirlenir."],
+  [off(-16), "Kurulum başlar (mesai dışında). Bu tarihten önce süs asılmaz."],
+  [off(-7), "Kurulum biter. Bu tarihten sonra ekleme yapılmaz."],
+  [off(-6), "Ofis oyu başlar: herkese bir yapışkan nokta dağıtılır."],
+  [off(-2), "Jüri turu ve fotoğraf çekimi. Ofis oyu kapanır, noktalar sayılır."],
+  [ev, "Etkinlik günü: sonuçlar Altın PID töreninde açıklanır."],
+  [wd(after), "Söküm için son gün."]
+];
+document.getElementById("takvim").innerHTML = rows
+  .map(function (r) { return "<tr><td>" + fmt(r[0]) + "</td><td>" + r[1] + "</td></tr>"; })
+  .join("");
+</script>
+</body>
+</html>

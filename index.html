@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HKTTM 2026 yıl sonu organizasyonu</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .hero { padding-top: 36px; padding-bottom: 8px; }
+  .hero svg { width: 100%; height: auto; display: block; }
+  .hero .curve { stroke-dasharray: 2400; stroke-dashoffset: 2400; animation: ciz 2.6s ease-out 0.2s forwards; }
+  @keyframes ciz { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) { .hero .curve { stroke-dashoffset: 0; } }
+  .hero h1 {
+    font-family: var(--head);
+    font-size: clamp(38px, 6.4vw, 76px);
+    line-height: 1;
+    margin: 18px 0 12px;
+    max-width: 16ch;
+  }
+  .hero p { font-size: 19px; color: var(--ink-soft); max-width: 62ch; margin: 0 0 28px; }
+  .toc { list-style: none; padding: 0; margin: 0; max-width: none; }
+  .toc li { border-top: 1px solid var(--grid); margin: 0; }
+  .toc li:first-child { border-top: 0; }
+  .toc a {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 6px 28px;
+    padding: 16px 0;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .toc a:hover b { color: var(--berry); text-decoration: underline; }
+  .toc b { font-family: var(--head); font-size: 23px; line-height: 1.15; }
+  .toc span { color: var(--ink-soft); }
+  @media (max-width: 700px) { .toc a { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+<div class="wrap hero">
+  <svg viewBox="0 0 1080 300" role="img" aria-label="2026 seviyesinden 2027 referansına aşım yaparak oturan basamak yanıtı eğrisi">
+    <line x1="0" y1="90" x2="1080" y2="90" stroke="#002d7a" stroke-width="2" stroke-dasharray="10 8"/>
+    <text x="1080" y="76" text-anchor="end" font-family="Bahnschrift, 'Arial Narrow', sans-serif" font-size="26" fill="#002d7a">r = 2027</text>
+    <text x="0" y="246" font-family="Bahnschrift, 'Arial Narrow', sans-serif" font-size="26" fill="#4667a0">2026</text>
+    <path id="curve" class="curve" fill="none" stroke="#2f63c4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <img src="HKTTM_final.png" alt="HKTTM logosu" style="display:block;width:min(360px,70%);height:auto;margin:22px 0 4px">
+  <h1>Yıl sonu buluşması 2026</h1>
+  <p>Hareket Kontrol Teknolojileri Tasarım Müdürlüğü'nün yıl sonu organizasyonu için beş araştırma sayfası. Fiyatlar 23 Kasım 2026 tarihlidir.</p>
+</div>
+
+<div class="wrap">
+<section>
+  <ul class="toc">
+    <li><a href="1-hediye.html"><b>1 Hediye fiyat araştırması</b><span>Tül kesede verilecek on kalem için fiyatlar ve kaynaklar, 50 kişi ve kişi başı 300 TL sınırına göre beş kese kombinasyonu, üç hazır kart tasarımı.</span></a></li>
+    <li><a href="2-altin-pid.html"><b>2 Altın PID ödülleri</b><span>Kontrol, makine ve mekatronik esprili altmış kategori, on ödüllük çekirdek liste, kimsenin gücenmemesi için seçim kuralları, tören akışı.</span></a></li>
+    <li><a href="3-etkinlikler.html"><b>3 Etkinlikler ve kase videosu</b><span>Kase videosu için altmış soru, çekim planı, yazdırılabilir soru şeritleri ve on yedi etkinlik önerisi.</span></a></li>
+    <li><a href="4-kubik-susleme.html"><b>4 Kübik süsleme yarışması</b><span>Bütçe tavanı, yükseklik ve alan sınırları, güvenlik kuralları, puanlama cetveli ve takvim.</span></a></li>
+    <li><a href="altin-pid-sunum.html"><b>Altın PID tören sunumu</b><span>Törende projeksiyonda oynatılacak slaytlar: her ödül için grafik, zarf cümlesi ve kazanan açıklaması.</span></a></li>
+    <li><a href="takvim/takvim-poster.pdf"><b>2027 kontrol teorisi takvimi</b><span>Tombala ödülü için LaTeX ile hazırlanmış takvim: A2 duvar posteri, 13 sayfalık masa takvimi ve karton ayak şablonu; HKTTM logosu ve laciverti ile. Kaynak dosyalar takvim klasöründe.</span></a></li>
+    <li><a href="5-ek-detaylar.html"><b>5 Plan ve ek detaylar</b><span>Etkinlik gününe göre iş takvimi, doksan dakikalık akış, toplam bütçe, duyuru e-postası taslağı ve kontrol listeleri.</span></a></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Karar bekleyen dört konu</h2>
+  <ol>
+    <li><b>Kese içeriği.</b> On kalemin hepsi kişi başı yaklaşık 288 TL ile sınıra sığıyor. Önerilen kombinasyon 238 TL: LÖSEV kurabiyesi kesede değil ikram masasında, kalem isimli. LÖSEV'in mağazasında şu an yılbaşı temalı kurabiye yok. Ayrıntı <a href="1-hediye.html">birinci sayfada</a>.</li>
+    <li><b>Video izni.</b> Kase videosunun çekimi ve Instagram'da paylaşımı kurumun güvenlik ve iletişim kurallarına bağlı. Onay çıkmazsa video yalnızca etkinlikte gösterilir.</li>
+    <li><b>Etkinlik günü.</b> Hesaplar 50 kişiye göre yapıldı. Etkinlik günü 30 Aralık 2026 Çarşamba varsayıldı; plan sayfasındaki kutudan değiştirilebilir ve takvim buna göre yenilenir.</li>
+    <li><b>Kübik bütçe tavanı.</b> Öneri kişi başı 250 TL. Gerekçesi <a href="4-kubik-susleme.html">dördüncü sayfada</a>.</li>
+  </ol>
+</section>
+</div>
+</main>
+<footer class="wrap">HKTTM 2026 yıl sonu organizasyonu. Hazırlanma tarihi 23 Kasım 2026.</footer>
+
+<script src="common.js"></script>
+<script>
+(function () {
+  var z = 0.24, w = 1.5, wd = w * Math.sqrt(1 - z * z), t0 = 1.5, T = 16, d = "";
+  for (var i = 0; i <= 320; i++) {
+    var t = (i / 320) * T, y = 0;
+    if (t > t0) {
+      var s = t - t0;
+      y = 1 - Math.exp(-z * w * s) * (Math.cos(wd * s) + (z / Math.sqrt(1 - z * z)) * Math.sin(wd * s));
+    }
+    d += (i ? "L" : "M") + (70 + (1010 * t) / T).toFixed(1) + " " + (260 - 170 * y).toFixed(1);
+  }
+  document.getElementById("curve").setAttribute("d", d);
+})();
+</script>
+</body>
+</html>

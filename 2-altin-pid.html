@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Altın PID ödülleri: kategoriler ve tören planı</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+  .filters button { padding: 5px 14px; font-size: 15px; }
+  .filters button[aria-pressed="false"] { background: #fff; color: var(--ink); }
+  .cert {
+    border: 3px double var(--accent);
+    padding: 26px 24px;
+    text-align: center;
+    max-width: 560px;
+    background: #f7faff;
+    margin: 0 0 16px;
+  }
+  .cert .t { font-family: var(--head); font-size: 30px; line-height: 1.1; margin: 6px 0; }
+  .cert .n { font-family: var(--head); font-size: 22px; color: var(--berry); margin: 10px 0 4px; }
+  .cert p { margin: 0 auto 6px; font-size: 15px; }
+</style>
+</head>
+<body>
+<main>
+<header class="top wrap">
+  <h1>Altın PID ödülleri</h1>
+  <p>HKTTM'nin "Yılın Enleri" töreni için kontrol, makine ve mekatronik esprili ödül kategorileri, kimsenin gücenmemesi için seçim kuralları ve tören akışı.</p>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2>Önerilen çekirdek liste</h2>
+  <p>Törende sahnede verilecek on ödül. Hepsi bir davranışı ya da katkıyı övüyor; hiçbiri bir eksikliğe, görünüşe ya da özel hayata dokunmuyor. Sıra, törenin temposuna göre dizildi: hafif kategorilerle açılır, büyük ödülle kapanır.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Sıra</th><th>Ödül</th><th>Kime gider</th><th>Zarftan okunacak cümle</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><b>Kafein Kontrol Döngüsü</b></td><td>Çay ve kahve akışını hiç kesintiye uğratmayan kişi</td><td>"Referans değeri: dolu bardak. Kalıcı durum hatası: sıfır."</td></tr>
+      <tr><td>2</td><td><b>Rezonans Ödülü</b></td><td>Enerjisi ve kahkahası bütün ofise yayılan kişi</td><td>"Doğal frekansını bulduğunda bütün kat titreşiyor."</td></tr>
+      <tr><td>3</td><td><b>Sistem Tanılama Ödülü</b></td><td>"Bu kime sorulur?" sorusunun cevabını her zaman bilen kişi</td><td>"Kara kutuyu açmadan içinde ne olduğunu söyleyen isim."</td></tr>
+      <tr><td>4</td><td><b>Kalman Filtresi Ödülü</b></td><td>Uzun ve karışık toplantıdan üç maddelik net özet çıkaran kişi</td><td>"Gürültü ne kadar yüksek olursa olsun kestirimi şaşmıyor."</td></tr>
+      <tr><td>5</td><td><b>Bozucu Bastırma Ödülü</b></td><td>Son dakika değişikliğinde soğukkanlılığını koruyup işi toparlayan kişi</td><td>"Basamak bozucu geldi, çıkışta görünmedi bile."</td></tr>
+      <tr><td>6</td><td><b>Sıfır Boşluk Ödülü</b></td><td>Söylediğiyle yaptığı arasında boşluk olmayan, sözünü tutan kişi</td><td>"Backlash ölçüldü: sıfır mikron."</td></tr>
+      <tr><td>7</td><td><b>En Hızlı Yerleşme Süresi</b></td><td>Yıl içinde ekibe katılıp en çabuk uyum sağlayan kişi</td><td>"Yüzde iki bandına rekor sürede girdi."</td></tr>
+      <tr><td>8</td><td><b>Geri Besleme Ustası</b></td><td>Gözden geçirmelerde en yapıcı, en işe yarar yorumu yapan kişi</td><td>"Onun çevrimine giren her tasarım daha kararlı çıkıyor."</td></tr>
+      <tr><td>9</td><td><b>Kararlılık Marjı Ödülü</b></td><td>En yoğun günde bile sakinliğiyle ekibi rahatlatan kişi</td><td>"Faz marjı altmış derece, kazanç marjı sonsuz."</td></tr>
+      <tr class="pick"><td>10</td><td><b>Altın PID</b> (büyük ödül)</td><td>Oransal emeği, integral birikimi ve türev öngörüsüyle yılın en dengeli katkısını yapan kişi</td><td>"Kp, Ki ve Kd bu yıl en iyi onda ayarlandı."</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small">Elli kişilik ekip için on ödül alt sınırdır; on ikiye çıkarmak isterseniz iki kategori daha ekleyin. Aşağıdaki havuzdan değiştirebilirsiniz.</p>
+</section>
+
+<section>
+  <h2>Kategori havuzu</h2>
+  <p>Altmış kategori. Aday gösterme formuna hangilerini koyacağınızı buradan seçin. Her birinin yanında ödülün neyi övdüğü yazıyor.</p>
+  <div class="filters no-print" id="filters"></div>
+  <ul class="items" id="pool"></ul>
+</section>
+
+<section>
+  <h2>Kimse gücenmesin diye seçim kuralları</h2>
+  <div class="cols">
+    <div>
+      <h3>Bir kategoriyi listeye almadan önce</h3>
+      <ul>
+        <li>Ödülü kazanan kişi bunu ailesine gururla anlatabilir mi? Anlatamazsa kategori çıkar.</li>
+        <li>Kategori bir davranışı ya da katkıyı mı övüyor, yoksa bir özelliği mi işaret ediyor? Yalnızca birincisi kalır.</li>
+        <li>Aynı ödül müdüre de, yeni başlayan mühendise de verilebiliyor mu? Unvana göre anlamı değişiyorsa çıkar.</li>
+        <li>İkinci olmak üzücü mü? "En çalışkan" gibi kıyas içeren kategoriler, kazanmayanları kırar.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Listeye girmemesi gerekenler</h3>
+      <ul>
+        <li>Geç gelme, erken çıkma, izin, rapor, mola süresi</li>
+        <li>Görünüş, kilo, yaş, saç, giyim</li>
+        <li>Medeni durum, çocuk, ilişkiler, memleket, inanç</li>
+        <li>Masa dağınıklığı, yüksek sesle konuşma, unutkanlık</li>
+        <li>Hata, gecikme, başarısız test, kırılan parça (kişi kendisi aday olsa bile)</li>
+        <li>Maaş, terfi, performans notu çağrıştıran her şey</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Aday gösterme ve oylama</h3>
+  <ol>
+    <li><b>Gönüllülük.</b> Duyuruda "aday gösterilmek istemeyenler organizasyon ekibine yazabilir" cümlesi yer alır. Yazan kişi sessizce listeden çıkarılır.</li>
+    <li><b>İsimsiz form.</b> Microsoft Forms ya da kağıt kutu. Her kategori için bir isim ve isteğe bağlı tek cümlelik gerekçe istenir. Gerekçeler törende okunacak malzemedir.</li>
+    <li><b>Kendine oy yok, boş bırakmak serbest.</b></li>
+    <li><b>Kişi başı en çok bir sahne ödülü.</b> Birden fazla kategoride birinci gelen kişi en çok oy aldığı ödülü alır, diğerinde ikinci sıradaki kazanır. Böylece on ödül on farklı kişiye gider.</li>
+    <li><b>Ön onay.</b> Sonuçlar törenden iki gün önce iki kişilik komiteye gelir. Komite gerekçeleri okur, kırıcı olanı ayıklar ve kazananlara "bir ödül aldın, sahneye çağrılman uygun mu?" diye sorar. Kategori söylenmez.</li>
+    <li><b>Oy sayıları açıklanmaz.</b> Yalnızca kazanan duyurulur; ikinci, üçüncü ve oy dağılımı paylaşılmaz.</li>
+  </ol>
+
+  <div class="note">
+    <p><b>Herkese bir sertifika seçeneği.</b> Ekip 25 kişiden küçükse en güvenli yol, sahne ödüllerine ek olarak herkese havuzdan kişiye özel bir kategoriyle sertifika vermektir. Komite, oylamada çıkan gerekçelerden yararlanarak eşleştirir. Kimse eli boş dönmez, maliyeti kişi başı bir renkli çıktıdır.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Tören akışı</h2>
+  <p>Toplam 25 dakika. Daha uzun tutulursa dikkat dağılıyor.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Süre</th><th>Ne olur</th><th>Not</th></tr></thead>
+    <tbody>
+      <tr><td>2 dk</td><td>Açılış</td><td>Sunucu "jüri raporunu" okur: "Bu yıl 10 kategoride … aday gösterme alındı, sistem kararlı bulundu."</td></tr>
+      <tr><td>18 dk</td><td>Dokuz ödül</td><td>Ödül başına iki dakika: kategori tanıtımı, formdan bir gerekçe, zarf, alkış, fotoğraf. Konuşma istenmez; isteyen tek cümle söyler.</td></tr>
+      <tr><td>3 dk</td><td>Altın PID</td><td>Bir önceki yılın kazananı ya da müdür verir. İlk yıl olduğu için müdürün vermesi uygun.</td></tr>
+      <tr><td>2 dk</td><td>Toplu fotoğraf</td><td>Sertifikalar herkese dağıtılır, fotoğraf ondan sonra çekilir.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>Küçük dokunuşlar</h3>
+  <ul>
+    <li>Her ödülden önce projeksiyonda o kategoriye ait bir grafik gösterin: basamak yanıtı, Bode eğrisi, kök yer eğrisi. Hazırlaması on dakika sürer, salonu güldürür.</li>
+    <li>Sunucu ikilisi iyi çalışır: biri ciddi "jüri başkanı", diğeri gerekçeleri okuyan kişi.</li>
+    <li>Altın PID gezici kupa olabilir. Kazananın adı altına yazılır, kupa bir yıl masasında durur, seneye devreder.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Ödülün kendisi</h2>
+  <div class="cols">
+    <div>
+      <h3>Kendi kupanızı basın</h3>
+      <p>Mekatronik bir ekibin en ucuz ve en akılda kalan seçeneği, kupayı kendisinin üretmesi.</p>
+      <ul>
+        <li><b>Basamak yanıtı heykeli.</b> Aşımlı bir basamak yanıtı eğrisinin 3B yazıcıda basılmış, altın sprey boyalı hali. Kaide üzerine "Altın PID 2026".</li>
+        <li><b>Blok diyagram plaketi.</b> Lazer kesim pleksi ya da kontrplak üzerine kapalı çevrim diyagramı; kontrolcü bloğunun içine kazananın adı.</li>
+        <li><b>Hurda parçadan kupa.</b> Ömrünü tamamlamış bir rulman, dişli ya da enkoder diski, altın sprey ve ahşap kaide. Kurum dışına çıkarılmaması gereken parça kullanmayın.</li>
+      </ul>
+      <p class="small">Malzeme: 200 gr PLA filament ve bir kutu altın sprey boya. Fiyatlar aşağıda.</p>
+    </div>
+    <div>
+      <h3>Sertifika metni</h3>
+      <div class="cert">
+        <p>Hareket Kontrol Teknolojileri Tasarım Müdürlüğü</p>
+        <div class="t">Altın PID 2026</div>
+        <p>Kalman Filtresi Ödülü</p>
+        <div class="n">Ad Soyad</div>
+        <p>Gürültü ne kadar yüksek olursa olsun kestirimi şaşmadığı için.</p>
+        <p class="small">Jüri adına: Σ &nbsp; Kp &nbsp; Ki &nbsp; Kd</p>
+      </div>
+      <p class="small">A4 yatay, 200 gr üzeri kağıda renkli çıktı. İmza satırına gerçek imza yerine jüri sembolleri koymak espriyi tamamlar.</p>
+    </div>
+  </div>
+
+  <h3>Hazır ödül malzemesi fiyatları</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ürün</th><th>Satıcı</th><th class="num">Adet</th><th class="num">Fiyat</th><th>Not</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td><a href="https://www.toptanturkiye.com/urun/oscar-basari-odulu-heykeli">Oscar başarı ödülü heykeli, 26 cm</a></td><td>toptanturkiye.com</td><td class="num">1</td><td class="num">280,00 TL</td><td>KDV dahil, baskı hariç. Büyük ödül için</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.ofisomi.com/sublimasyon-oscar-heykel">Süblimasyon Oscar heykel, isim plakalı</a></td><td>Ofisomi</td><td class="num">1</td><td class="num">232,04 TL</td><td>Hangi boya ait olduğu ve stok durumu sayfada çelişkili</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://hizlifotobaski.com/firmaya-ozel-logolu-altin-yildiz-oscar-odulu-p-1026447">Firmaya özel altın yıldız ödülü</a></td><td>hizlifotobaski.com</td><td class="num">1</td><td class="num">599,90 TL</td><td>Logo baskılı</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr class="pick"><td><a href="https://www.idefix.com/lider-1-adet-sampiyon-madalyasi-dijital-baskili-1-kalite-madalya-p-26102029">Şampiyon madalyası, dijital baskılı</a></td><td>idefix</td><td class="num">1</td><td class="num">59,50 TL</td><td>Sahne ödülleri için en ucuz düzgün seçenek</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.1001promosyon.com.tr/urun/altin-madalya-29316">Altın madalya 5 x 5 cm, baskısız</a></td><td>1001promosyon</td><td class="num">En az 5</td><td class="num">60,78 ile 71,50 TL artı KDV</td><td>Kurdelenin dahil olup olmadığı yazmıyor</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.hediyesepeti.com/kisiye-ozel-basari-odulu-altin-madalya-22134">Kişiye özel altın madalya, 6 x 6 cm</a></td><td>hediyesepeti.com</td><td class="num">1</td><td class="num">199,90 TL</td><td>İsim baskılı</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://hizlifotobaski.com/kisiye-ozel-isimli-kirmizi-kadife-plaket-orta-p-1023489">Kırmızı kadife plaket, orta boy</a></td><td>hizlifotobaski.com</td><td class="num">1</td><td class="num">269,90 TL</td><td>Aynı sitenin fiyat listesinde 309,99 TL yazıyor</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.amazon.com.tr/Toddmomy-Kupalar%C4%B1-%C3%87ocuklar-Erkekler-Kad%C4%B1nlar/dp/B0CC384RHT">Mini altın plastik kupa</a></td><td>Amazon.com.tr</td><td class="num">12</td><td class="num">yaklaşık 668,89 TL</td><td>İthal; fiyat ve adet doğrulanmadı</td><td><span class="tag q">Özet</span></td></tr>
+      <tr class="pick"><td><a href="https://www.akakce.com/fotokopi-kagidi/en-ucuz-a4-sertifika-kagidi-kalin-25-adet-gramajli-250-gr-tum-yazicilara-uyumlu-21x29-7-cm-kalin-baski-kagidi-fiyati,1146163235.html">A4 sertifika kağıdı, 250 g</a></td><td>Akakçe, 5 teklif</td><td class="num">25</td><td class="num">167,80 TL</td><td>Herkese sertifika için</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/fotokopi-kagidi/en-ucuz-a4-sertifika-kagidi-kalin-50-adet-gramajli-220-gr-tum-yazicilara-uyumlu-21x29-7-cm-kalin-baski-kagidi-fiyati,1148085832.html">A4 sertifika kağıdı, 220 g</a></td><td>Akakçe, 4 teklif</td><td class="num">50</td><td class="num">242,98 TL</td><td></td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/sunum-urunu/en-ucuz-cengo-a4-rondo-cerceve-10-lu-paket-21x30-fiyati,1349811960.html">A4 açılır kapanır çerçeve, 10'lu</a></td><td>Akakçe, 2 teklif</td><td class="num">10</td><td class="num">890,00 TL</td><td>Adedi 89 TL. Yalnızca sahne ödülleri için</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr class="pick"><td><a href="https://www.akakce.com/zarf/en-ucuz-oyal-13x18-160gr-50li-altin-saten-fiyati,1086123932.html">Altın saten zarf, 13 x 18 cm</a></td><td>Akakçe, 3 teklif</td><td class="num">50</td><td class="num">250,00 TL</td><td>Kazananı açıklamak için</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.partisepeti.com/amscan-hollywood-temali-fotograf-duvari">Hollywood temalı fotoğraf duvarı, 82 x 165 cm</a></td><td>partisepeti.com</td><td class="num">1</td><td class="num">550,00 TL</td><td>Stok bilgisi yok. İsteğe bağlı</td><td><span class="tag ok">Sayfada</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="cols">
+    <div>
+      <h3>En ekonomik set</h3>
+      <p>Büyük ödüle bir heykelcik (280 TL), dokuz sahne ödülüne birer madalya (yaklaşık 540 TL), 50 kişiye sertifika için 50'li kağıt (243 TL) ve altın zarflar (250 TL). Toplam yaklaşık 1.315 TL, kargo hariç. Kupayı kendiniz basarsanız 280 TL düşer.</p>
+    </div>
+    <div>
+      <h3>Bulunamayanlar</h3>
+      <p>Çoklu paket mini plastik kupa ve plastik madalya yalnızca Amazon'da ithal ürün olarak çıktı; fiyatları doğrulanamadı. Etkinlik tipi kırmızı halı için güncel fiyat bulunamadı. Akakçe'deki kargo ücretleri sipariş başına 45 ile 115 TL arasında; siparişleri tek satıcıda toplayın.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Kaynaklar</h2>
+  <ul class="sources" id="kaynaklar">
+    <li><a href="https://ahaslides.com/blog/funny-awards-for-employees">AhaSlides, çalışanlar için 50 eğlenceli ödül</a>: mizahın sevecen kalması, önceden rıza alınması ve aynı kişinin hep kazanmaması üzerine kurallar.</li>
+    <li><a href="https://www.vantagecircle.com/en/blog/superlative-awards-for-work/">Vantage Circle, iş yeri için süperlatif ödüller</a>: olumlu kategoriler, akran adaylığı ve çekilme hakkı.</li>
+    <li><a href="https://www.rushordertees.com/blog/101-funny-employee-awards-ideas/">RushOrderTees, 101 ödül fikri</a>: yalnızca utandırarak işleyen ödülün çıkarılması, kazanana önceden haber verilmesi.</li>
+    <li><a href="https://www.awards.com/articles/funny-award-ideas">Awards.com, 250'den fazla ödül adı</a>: görünüş ve aile temalı olanlar ayıklanarak kullanılmalı.</li>
+    <li>Kontrol, makine ve mekatronik esprili kategoriler bu çalışma için yazıldı; bir kaynaktan alınmadı.</li>
+    <li>Fiyatlar 23 Kasım 2026'da tarandı. Trendyol, Hepsiburada, N11 ve Amazon sayfaları açılamadı.</li>
+  </ul>
+</section>
+
+</div>
+</main>
+<footer class="wrap">HKTTM 2026 yıl sonu organizasyonu. Hazırlanma tarihi 23 Kasım 2026.</footer>
+
+<script src="common.js"></script>
+<script>
+var G = { k: "Kontrol", m: "Makine ve mekatronik", y: "Yazılım ve araçlar", o: "Ofis hayatı" };
+var pool = [
+  ["k","Altın PID","Yılın en dengeli katkısı: emek, birikim ve öngörü bir arada."],
+  ["k","Sıfır Aşım Ödülü","İşi taşırmadan, tam istenen yere oturtan kişi."],
+  ["k","En Hızlı Yerleşme Süresi","Ekibe ya da yeni bir konuya en çabuk uyum sağlayan."],
+  ["k","Kararlılık Marjı Ödülü","Yoğun günde sakin kalıp çevresini de sakinleştiren."],
+  ["k","Kalman Filtresi Ödülü","Karışık tartışmadan net özeti çıkaran."],
+  ["k","Geri Besleme Ustası","En yapıcı gözden geçirme yorumlarının sahibi."],
+  ["k","İleri Besleme Ödülü","Sorunu ortaya çıkmadan görüp önlem alan."],
+  ["k","Bozucu Bastırma Ödülü","Son dakika değişikliğini sorunsuz karşılayan."],
+  ["k","Kalıcı Durum Hatası Sıfır","Dokümanı, listesi, kaydı her zaman eksiksiz olan."],
+  ["k","İntegral Etkisi Ödülü","Her gün küçük küçük ekleyerek büyük iş çıkaran."],
+  ["k","Türev Etkisi Ödülü","Değişimi ilk fark eden, eğilimi önceden okuyan."],
+  ["k","Kazanç Ayarlama Ustası","Her ekipte, her projede ayarını bulan uyumlu isim."],
+  ["k","Rezonans Ödülü","Enerjisi bütün ofise yayılan."],
+  ["k","Kritik Sönüm Ödülü","Gergin ortamı tek cümleyle yumuşatan."],
+  ["k","Kök Yer Eğrisi Kâşifi","Sorunun kök nedenine inmeden bırakmayan."],
+  ["k","Sistem Tanılama Ödülü","Kimin neyi bildiğini en iyi bilen."],
+  ["k","Anti-Windup Ödülü","Mola vermeyi ve ekibe verdirmeyi bilen; iş ve yaşam dengesinin örneği."],
+  ["k","Ziegler–Nichols Ödülü","Pratik zekâsıyla hızlı ve çalışan çözüm bulan."],
+  ["k","Nyquist Ödülü","Mesajlara ve sorulara en hızlı dönen."],
+  ["k","Gözleyici Ödülü","Kimsenin görmediği ayrıntıyı yakalayan."],
+  ["k","Gürbüz Kontrol Ödülü","Belirsizlik ne kadar büyük olursa olsun işini aynı kalitede yapan."],
+  ["k","Referans Sinyali Ödülü","Ekibe yön veren, örnek alınan."],
+  ["m","Sıfır Boşluk Ödülü","Söylediğiyle yaptığı arasında boşluk olmayan."],
+  ["m","Rulman Ödülü","Ekipler arasındaki sürtünmeyi azaltan."],
+  ["m","Tork Ödülü","Ağır işi sessizce omuzlayan."],
+  ["m","Emniyet Katsayısı Ödülü","Her şeyin yedeğini, B planını hazır tutan."],
+  ["m","Yay Sabiti Ödülü","Zor bir haftadan en çabuk toparlanan."],
+  ["m","Sıkı Geçme Ödülü","Ekibe en iyi oturan, herkesle uyumlu çalışan."],
+  ["m","Sensör Füzyonu Ödülü","Farklı disiplinleri aynı masada buluşturan."],
+  ["m","Enkoder Ödülü","Toplantı notunu, kararı, tarihi kayıt altına alan."],
+  ["m","Prototip Kahramanı","Laboratuvarda ve atölyede işi ayağa kaldıran."],
+  ["m","Kablaj Sanatçısı","Kablo demeti tablo gibi olan."],
+  ["m","Volan Ödülü","İşler yavaşladığında ekibin ivmesini koruyan."],
+  ["m","Kaplin Ödülü","İki ekibi, iki işi birbirine sorunsuz bağlayan."],
+  ["m","Redüktör Ödülü","Aceleyi sakin ve güçlü bir ilerleyişe çeviren."],
+  ["m","Kalibrasyon Ödülü","Ölçmeden konuşmayan, veriye dayanan."],
+  ["m","Teknik Resim Ödülü","Çizimi ve dokümanı başkasının sormadan anlayacağı kadar açık olan."],
+  ["y","Simülasyon Büyücüsü","Modeli gerçeğiyle en iyi örtüşen."],
+  ["y","Hata Ayıklama Dedektifi","En inatçı hatayı sabırla bulan."],
+  ["y","Grafik Ustası","Sunumdaki grafikleri bir bakışta anlaşılan."],
+  ["y","Tablo Büyücüsü","Hesap tablosunda herkesin yardımına koşan."],
+  ["y","Otomasyon Ödülü","Tekrarlayan işi betiğe döküp herkese zaman kazandıran."],
+  ["y","Yorum Satırı Ödülü","Kodu ve notları sonradan okuyana kolaylık sağlayan."],
+  ["y","Kısaltma Sözlüğü","Bütün kısaltmaların açılımını ezbere bilen."],
+  ["y","İlk Yardım Hattı","Bilgisayarı, lisansı, yazıcısı bozulanın ilk aradığı kişi."],
+  ["o","Kafein Kontrol Döngüsü","Çay ve kahve akışının güvencesi."],
+  ["o","Ofisin Şefi","Evden getirdiği ikramla herkesin gününü güzelleştiren."],
+  ["o","Acil Durum Çekmecesi","Atıştırmalık, şarj kablosu, ağrı kesici: çekmecesinde her şey bulunan."],
+  ["o","En Yeşil Masa","Bitkileriyle ofise hayat veren."],
+  ["o","Günaydın Enerjisi","Sabah selamıyla günü başlatan."],
+  ["o","Ofisin DJ'i","En iyi şarkı önerilerinin kaynağı."],
+  ["o","Yılın Repliği","Yıl boyunca en çok tekrarlanan esprili cümlenin sahibi."],
+  ["o","Organizasyon Motoru","Doğum günü, veda, yemek: hepsini örgütleyen."],
+  ["o","Yılın Gezgini","Görev ve test için en çok yol yapan."],
+  ["o","Toplantı Odası Avcısı","En dolu günde bile boş oda bulan."],
+  ["o","Yılın Mentoru","Bildiğini en sabırla anlatan."],
+  ["o","Emoji Ustası","Yazışmalara en yerinde tepkiyi veren."],
+  ["o","Yılın Masa Komşusu","Yanında çalışmak en keyifli olan."],
+  ["o","Moral Motoru","Kötü günde yanınıza gelip halinizi soran."],
+  ["o","Yılın Soru Soranı","Herkesin aklındaki soruyu toplantıda sormaya cesaret eden."]
+];
+var active = "tum";
+var fl = document.getElementById("filters");
+var ul = document.getElementById("pool");
+function draw() {
+  ul.innerHTML = pool
+    .filter(function (p) { return active === "tum" || p[0] === active; })
+    .map(function (p) { return "<li><b>" + p[1] + "</b><span>" + p[2] + "</span><em>" + G[p[0]] + "</em></li>"; })
+    .join("");
+  Array.prototype.forEach.call(fl.children, function (b) {
+    b.setAttribute("aria-pressed", b.dataset.g === active ? "true" : "false");
+  });
+}
+[["tum", "Tümü (" + pool.length + ")"]].concat(Object.keys(G).map(function (k) { return [k, G[k]]; })).forEach(function (g) {
+  var b = document.createElement("button");
+  b.textContent = g[1];
+  b.dataset.g = g[0];
+  b.onclick = function () { active = g[0]; draw(); };
+  fl.appendChild(b);
+});
+draw();
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+% HKTTM 2027 kontrol teorisi masa takvimi
+% Derleme: pdflatex takvim-masa.tex (iki kez; arka plan panelleri ikinci geçişte oturur)
+% Sayfa: 210 x 148 mm (A5 yatay), 13 sayfa: kapak ve 12 ay.
+% Baskı: 250-300 g mat kuşe, tek yön, gerçek boyut. Üst kenardan spiral cilt;
+% üstteki 13 mm boşluk spiral delikleri içindir. Üçgen karton ayakla masaya konur.
+\documentclass[10pt]{article}
+\usepackage[paperwidth=210mm,paperheight=148mm,top=13mm,bottom=8mm,left=0mm,right=9mm]{geometry}
+\input{takvim-ortak}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\renewcommand{\GrafikYazi}{\fontsize{8.5}{10}\selectfont}
+
+% Sol koyu panel: sayfanın sol 84 mm'si
+\newcommand{\SolPanel}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[lacivert] (current page.north west) rectangle ([xshift=84mm]current page.south west);
+    \fill[zemin] ([xshift=84mm]current page.north west) rectangle (current page.south east);
+    \foreach \x in {0,...,12}{\fill[white] ([xshift=\x*15mm+15mm,yshift=-6.5mm]current page.north west) circle[radius=1.6mm];}
+  \end{tikzpicture}}
+
+\newcommand{\AySayfasi}[1]{%
+  \SolPanel
+  \begin{minipage}[t][123mm][t]{84mm}
+    \hspace*{10mm}\begin{minipage}[t]{66mm}
+      \vspace{0pt}
+      \color{white}
+      {\Dar\bfseries\fontsize{15}{15}\selectfont\color{buz}\ifnum#1<10 0\fi#1\,/\,12}\par
+      \vspace{1.5mm}
+      {\Dar\bfseries\fontsize{42}{42}\selectfont\AyAdi{#1}}\par
+      \vspace{2.5mm}
+      {\Dar\fontsize{15}{17}\selectfont\color{buz}\AyKavram{#1}}\par
+      \vspace{4mm}
+      \AyGrafik{#1}{54mm}{46mm}\par
+      \vspace{3mm}
+      {\fontsize{11}{14}\selectfont\AyFormul{#1}}\par
+      \vspace{3mm}
+      {\fontsize{10.5}{13.5}\selectfont\color{soluk}\raggedright\AySoz{#1}\par}
+    \end{minipage}
+  \end{minipage}%
+  \hspace{7mm}%
+  \begin{minipage}[t][123mm][t]{110mm}
+    \vspace{0pt}
+    {\Dar\bfseries\fontsize{15}{15}\selectfont\color{lacivert}\AyAdi{#1} 2027\hfill\raisebox{-3.2mm}{\Logo{30mm}}}\par
+    \vspace{3mm}
+    \AyIzgara[masa]{#1}{15.7mm}{15.4mm}{\fontsize{11}{11}\selectfont}\par
+    \vspace{2mm}
+    {\fontsize{7}{8.5}\selectfont\color{kizil}\raggedright\AyTatil{#1}\par}
+  \end{minipage}
+  \newpage}
+
+\begin{document}
+% ---------- Kapak ----------
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[lacivert] (current page.north west) rectangle (current page.south east);
+  \foreach \x in {0,...,12}{\fill[white] ([xshift=\x*15mm+15mm,yshift=-6.5mm]current page.north west) circle[radius=1.6mm];}
+  \node[anchor=south west,inner sep=0pt] at ([xshift=14mm,yshift=12mm]current page.south west) {%
+    \begin{minipage}{120mm}\color{white}
+      {\Dar\bfseries\fontsize{96}{90}\selectfont\color{buz}2027}\par\vspace{5mm}
+      {\Dar\bfseries\fontsize{24}{26}\selectfont Kontrol teorisi takvimi}\par\vspace{2mm}
+      {\fontsize{10}{13}\selectfont\color{soluk}Hareket Kontrol Teknolojileri Tasarım Müdürlüğü\par
+       On iki ay, on iki kavram. Aşımınız az, kazancınız bol olsun.}
+    \end{minipage}};
+  \node[anchor=north east,inner sep=0pt] at ([xshift=-12mm,yshift=-20mm]current page.north east)
+    {\Logo{74mm}};
+  \node[anchor=south east,inner sep=0pt] at ([xshift=-12mm,yshift=12mm]current page.south east)
+    {\AyGrafik{1}{62mm}{38mm}};
+\end{tikzpicture}
+\mbox{}\newpage
+% ---------- Aylar ----------
+\AySayfasi{1}\AySayfasi{2}\AySayfasi{3}\AySayfasi{4}\AySayfasi{5}\AySayfasi{6}
+\AySayfasi{7}\AySayfasi{8}\AySayfasi{9}\AySayfasi{10}\AySayfasi{11}\AySayfasi{12}
+\end{document}

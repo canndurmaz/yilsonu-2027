@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hediye fiyat araştırması: baston şeker, kart, LÖSEV kurabiyesi</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; margin: 0 0 16px; }
+  .cards figure { margin: 0; }
+  .cards svg { width: 100%; height: auto; display: block; border: 1px solid var(--grid); }
+  .cards figcaption { font-size: 15px; padding-top: 8px; }
+  .cards figcaption b { font-family: var(--head); font-size: 18px; display: block; }
+  .sum td:last-child { font-weight: 700; }
+  .legend .tag { margin-right: 6px; }
+  .presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+  .presets button { padding: 6px 14px; font-size: 15px; }
+  .presets button[aria-pressed="false"] { background: #fff; color: var(--ink); }
+  .build select { width: 100%; max-width: 420px; margin: 0; }
+  .build input { width: 110px; margin: 0; }
+  .build tr.off td { color: #8a9bb8; }
+  .meter { height: 14px; border: 2px solid var(--ink); background: #fff; margin: 0 0 10px; max-width: 640px; }
+  .meter div { height: 100%; background: var(--accent); width: 0; }
+  .meter div.over { background: var(--berry); }
+  #bMsg { font-family: var(--head); font-size: 21px; }
+</style>
+</head>
+<body>
+<main>
+<header class="top wrap">
+  <h1>Hediye fiyat araştırması</h1>
+  <p>Tül kese içinde verilecek on kalemlik hediye listesi için 23 Kasım 2026 tarihli fiyatlar, kaynaklar ve 50 kişi, kişi başı 300 TL sınırına göre kese kombinasyonları.</p>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2>Keseyi kurun</h2>
+  <p>50 kişi, kişi başı en çok 300 TL: toplam tavan 15.000 TL. Hazır bir kombinasyonla başlayın, sonra kalemleri tek tek değiştirin. Tutarlar paket bazında hesaplanır; yedekler ve artan paketler kişi başı maliyete dahildir.</p>
+  <div class="presets no-print" id="presets"></div>
+  <div class="scroll">
+  <table class="build">
+    <thead><tr><th>Kalem</th><th>Seçenek</th><th class="num">50 kişi için</th><th class="num">Kişi başı</th></tr></thead>
+    <tbody id="buildBody"></tbody>
+    <tfoot>
+      <tr><td>Toplam</td><td id="bNote"></td><td class="num" id="bTot"></td><td class="num" id="bPer"></td></tr>
+    </tfoot>
+  </table>
+  </div>
+  <div class="meter" aria-hidden="true"><div id="bBar"></div></div>
+  <p id="bMsg" aria-live="polite"></p>
+  <p class="small">Kargo satırı tahmindir: fiyatların çoğu kargo hariç ve sekiz ayrı satıcıdan sipariş gerekiyor. Rakamı kendi siparişlerinize göre düzeltin.</p>
+</section>
+
+<section>
+  <h2>Kombinasyonların karşılaştırması</h2>
+  <p>Beş hazır kese. Her biri kese, kurdele, kart ve 600 TL kargo payını içerir.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Kombinasyon</th><th>İçinde ne var</th><th class="num">Parça</th><th class="num">50 kişi</th><th class="num">Kişi başı</th><th class="num">Sınıra kalan</th></tr></thead>
+    <tbody id="cmpBody"></tbody>
+  </table>
+  </div>
+  <div class="cols">
+    <div>
+      <h3>Öneri</h3>
+      <p><b>Listenin tamamı sınıra sığıyor</b>, ama payın üçte birinden fazlasını tek kalem, kişi başı LÖSEV kesesi (105 TL) götürüyor ve o ürün yılbaşı temalı değil. LÖSEV kurabiyesini kesenin içine koymak yerine ikram masasına dört özel kutu olarak almak, desteği korur ve kişi başı yaklaşık 68 TL açar. Açılan payla kalem isimli yapılabilir.</p>
+      <p>Bu yüzden önerim ikinci kombinasyon: dokuz parçalı kese, isimli metal kalem ve ikram masasında LÖSEV kutuları.</p>
+    </div>
+    <div>
+      <h3>Rakamların zayıf noktaları</h3>
+      <ul>
+        <li>Hazır gingerbread fiyatı yalnızca arama özetinden geliyor (adedi 23 ile 31 TL arası). Hesapta üst fiyat kullanıldı.</li>
+        <li>İsimli kalemde her kaleme farklı isim yazılıp yazılmadığı ve teslim süresi hiçbir satıcıda yazılı değil.</li>
+        <li>Çorapta beden yazmıyor. 52 çift geliyor, yalnızca iki yedek kalıyor.</li>
+        <li>Kese fiyatında KDV ve kargo sayfada belirtilmemiş.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Önce bilinmesi gerekenler</h2>
+  <div class="note warn">
+    <p><b>LÖSEV'in şu an yılbaşı temalı kurabiyesi yok.</b> Resmi mağaza LSV Dükkan'da 21 kurabiye ürünü var, hiçbiri yılbaşı temalı değil ve sitede yılbaşı kategorisi açılmamış. Kurabiyeler klasik kuru kurabiye; dekorlu, şeker hamurlu ürün satılmıyor. Yılbaşı ürünü çıkıp çıkmayacağı ve toplu sipariş koşulları için bu hafta kurumsaliletisim@losev.org.tr adresine yazmak gerekiyor.</p>
+  </div>
+  <div class="note">
+    <p><b>Fiyatların güvenilirliği aynı değil.</b> Trendyol, Hepsiburada, N11, Çiçeksepeti ve Amazon otomatik erişimi engelledi; bu sitelerdeki fiyatlar yalnızca arama sonucu özetinden alındı ve eski olabilir. Her satırda fiyatın nereden görüldüğü etiketle belirtildi. Sipariş vermeden önce bağlantıdan güncel fiyatı kontrol edin.</p>
+  </div>
+  <div class="note">
+    <p><b>Mum, ofiste yakılmak için değil.</b> Kübik süsleme kuralları ofiste açık alevi yasaklıyor. Mum keseye girecekse karta ya da duyuruya "evde yakmak için" notu ekleyin.</p>
+  </div>
+  <p class="legend small">
+    <span class="tag ok">Sayfada</span> satıcının kendi sayfasında görüldü.
+    <span class="tag">Akakçe</span> fiyat karşılaştırma sayfasında görüldü, satıcı sayfası açılmadı.
+    <span class="tag q">Özet</span> yalnızca arama sonucu özetinden; doğrulanmadı.
+  </p>
+</section>
+
+<section>
+  <h2>Tül kese ve kurdele</h2>
+  <p>On parçalık içerik için doğru boy 20 x 30 cm. Büzgü üstten 5 ile 7 cm yer; 17 x 25 cm kese çorap, defter ve kurabiye birlikte girince sınırda kalır. 25 x 35 cm rahat ama az parçalı kesede boş görünür.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ürün</th><th>Satıcı</th><th class="num">Adet</th><th>Boyut</th><th class="num">Fiyat</th><th class="num">Adet başı</th><th>Not</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://susmarket.com/organze-tul-kese-ipli-buzgulu-kese-beyaz-17x25-cm-100-adet/">Organze tül kese, ipli büzgülü</a></td><td>Süs Market</td><td class="num">100</td><td>17 x 25 cm</td><td class="num">410 TL</td><td class="num">4,10 TL</td><td>Beyaz. Beş altı parçalı kese için</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr class="pick"><td><a href="https://susmarket.com/organze-tul-kese-ipli-buzgulu-kese-beyaz-20x30-cm-100-adet/">Organze tül kese, ipli büzgülü</a></td><td>Süs Market</td><td class="num">100</td><td>20 x 30 cm</td><td class="num">520 TL</td><td class="num">5,20 TL</td><td>Beyaz, 48 paket stokta. 50 yedek kalır</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://susmarket.com/organze-tul-kese-ipli-buzgulu-kese-beyaz-25x35-cm-100-adet/">Organze tül kese, ipli büzgülü</a></td><td>Süs Market</td><td class="num">100</td><td>25 x 35 cm</td><td class="num">750 TL</td><td class="num">7,50 TL</td><td>Beyaz, 33 paket stokta</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://susmarket.com/lame-kese-metalik-gold-kese-20x30-cm-100-adet/">Lame kese, metalik altın</a></td><td>Süs Market</td><td class="num">100</td><td>20 x 30 cm</td><td class="num">750 TL</td><td class="num">7,50 TL</td><td>İçi görünmez; gümüşü aynı fiyat</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.vitrinkutu.com/tul-kese-hediyelik-30-cm-cap-100lu-paket-kirmizi-1">Tül kese, yuvarlak</a></td><td>Vitrin Kutu</td><td class="num">100</td><td>30 cm çap</td><td class="num">673,18 TL</td><td class="num">6,73 TL</td><td>Kırmızı ya da altın. Bohça tipi; defter ve baston şeker sığmaz</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/poset/en-ucuz-kagit-canta-burgu-sapli-18x24x8cm-koruk-kraft-25-adet-fiyati,1144289684.html">Burgu saplı kraft çanta</a></td><td>Hepsiburada</td><td class="num">25</td><td>18 x 24 x 8 cm</td><td class="num">181,35 TL</td><td class="num">7,25 TL</td><td>Kargo 49,90 TL. 50 kişi için iki paket</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/poset/en-ucuz-burgu-sapli-kraft-kagit-canta-25x12x31-cm-25-adet-fiyati,74040048.html">Burgu saplı kraft çanta</a></td><td>n11</td><td class="num">25</td><td>25 x 12 x 31 cm</td><td class="num">240 TL</td><td class="num">9,60 TL</td><td>Kargo ücretsiz</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://susmarket.com/cuval-kese-17x25-cm-50-adet/">Jüt çuval kese</a></td><td>Süs Market</td><td class="num">50</td><td>17 x 25 cm</td><td class="num">1.490 TL</td><td class="num">29,80 TL</td><td>Şık ama pahalı</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr class="pick"><td><a href="https://www.akakce.com/kurdele/en-ucuz-benim-marifetlerim-bordo-saten-1-cm-10-metre-1-adet-fiyati,1127018955.html">Saten kurdele, bordo</a></td><td>Akakçe listesi</td><td class="num">10 m</td><td>1 cm</td><td class="num">70 TL</td><td class="num">7 TL/m</td><td>Kese başına 60 cm için üç rulo</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.nikahsekerimalzemem.com/2-cm-organze-kurdele-250-mt.html">Organze kurdele</a></td><td>nikahsekerimalzemem.com</td><td class="num">250 m</td><td>2 cm</td><td class="num">150 TL</td><td class="num">0,60 TL/m</td><td>Renk ve kargo sayfada yok</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/etiket/en-ucuz-hazir-ler-hazir-al-hizli-al-mutlu-yillar-i-5cm-capinda-500-adet-dogum-gunu-yilbasi-gecesi-ve-nice-yaslar-icin-kuse-fiyati,879946418.html">"Mutlu Yıllar" yuvarlak etiket</a></td><td>Akakçe listesi</td><td class="num">500</td><td>5 cm çap</td><td class="num">335,54 TL</td><td class="num">0,67 TL</td><td>Kart basılacaksa gerekmez</td><td><span class="tag">Akakçe</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Kırmızı, yeşil ya da altın renkte dikdörtgen organze kese hiçbir satıcıda doğrulanamadı; renkliler ya yuvarlak tül ya da lame. Beyaz kese kırmızı kurdeleyle bağlanırsa içindeki baston şeker ve çorap rengi zaten taşır. Süs Market sayfalarında KDV, kargo ve en az sipariş bilgisi yok.</p>
+</section>
+
+<section>
+  <h2>Baston şeker</h2>
+  <p>Standart boy 28 ile 35 gram ve 13 ile 17 santimetredir; tek başına hediye paketine yeter. Mini boy yaklaşık 4 gram ve 6 santimetredir, kişi başı iki üç adet gerekir. Güncelliği doğrulanan en ekonomik seçenek, Hasel Şekerleme'nin 35 gramlık paketleri.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ürün</th><th>Satıcı</th><th>Paket</th><th class="num">Fiyat</th><th class="num">Adet başı</th><th>Not</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td><a href="https://www.akakce.com/sekerleme/en-ucuz-baston-sekeri-150-adet-kirmizi-beyaz-seritli-yilbasi-hediyelik-kermes-35-gram-fiyati,1661581916.html">Hasel, kırmızı beyaz şeritli</a></td><td>idefix</td><td>150 adet, 35 g</td><td class="num">2.160,00 TL</td><td class="num">14,40 TL</td><td>Ücretsiz kargo, 2 iş günü. PttAVM 2.400 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr class="pick"><td><a href="https://www.akakce.com/sekerleme/en-ucuz-baston-sekeri-100-adet-kirmizi-beyaz-seritli-yilbasi-hediyelik-kermes-35-gram-fiyati,1661581917.html">Hasel, kırmızı beyaz şeritli</a></td><td>idefix</td><td>100 adet, 35 g</td><td class="num">1.530,00 TL</td><td class="num">15,30 TL</td><td>Ücretsiz kargo. PttAVM 1.700 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr class="pick"><td><a href="https://www.akakce.com/sekerleme/en-ucuz-baston-sekeri-50-adet-yesil-kirmizi-beyaz-seritli-yilbasi-hediyelik-kermes-35-gram-fiyati,1645800662.html">Hasel, yeşil kırmızı beyaz</a></td><td>idefix</td><td>50 adet, 35 g</td><td class="num">855,00 TL</td><td class="num">17,10 TL</td><td>Ücretsiz kargo. PttAVM 950 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/sekerleme/en-ucuz-baston-sekeri-kirmizi-beyaz-seritli-30-adet-yilbasi-hediyelik-kermes-35-gram-fiyati,1661571143.html">Hasel, kırmızı beyaz şeritli</a></td><td>idefix</td><td>30 adet, 35 g</td><td class="num">594,00 TL</td><td class="num">19,80 TL</td><td>Ücretsiz kargo. PttAVM 660 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/sekerleme/en-ucuz-baston-sekeri-20-adet-kirmizi-beyaz-yilbasi-hediye-kermes-parti-fiyati,1660705037.html">Hasel, kırmızı beyaz</a></td><td>idefix</td><td>20 adet</td><td class="num">450,00 TL</td><td class="num">22,50 TL</td><td>Ücretsiz kargo</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.stilsekerleme.com.tr/baston-%C5%9Feker-g%C3%B6kku%C5%9Fa%C4%9Fi">Stil Şekerleme, gökkuşağı ya da kırmızı</a></td><td>Üreticinin sitesi</td><td>Tek adet, yaklaşık 30 g, 13 cm</td><td class="num">19,90 TL</td><td class="num">19,90 TL</td><td>Meyve aromalı. Kargo ücreti yazmıyor</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.partidunyasi.com/yilbasi-baston-seker-150-adet">Yılbaşı baston şeker, kurdeleli</a></td><td>partidunyasi.com</td><td>150 adet, boy ve gramaj yok</td><td class="num">675,00 TL</td><td class="num">4,50 TL</td><td>Piyasanın üçte biri; mini boy ya da eski fiyat olabilir. Arayıp teyit edin</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/sekerleme/baston-seker.html">SPİL, fiyonklu</a></td><td>Akakçe listesi</td><td>15 adet</td><td class="num">498,01 TL</td><td class="num">33,20 TL</td><td>Fiyonk hazır geliyor</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/sekerleme/en-ucuz-hepsi-enteresan-16-adet-kurdeleli-baston-seker-yilbasi-hediyesi-yeni-yil-hediyesi-fiyati,1158692882.html">Hepsi Enteresan, kurdeleli</a></td><td>idefix</td><td>16 adet</td><td class="num">792,00 TL</td><td class="num">49,50 TL</td><td>Amazon'da 880 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.trendyol.com/spangler/peppermint-candy-canes-40-adet-mini-baston-seker-170-gr-p-457102807">Spangler, naneli, mini</a></td><td>Trendyol</td><td>40 adet, 170 g</td><td class="num">699,90 TL</td><td class="num">17,50 TL</td><td>Mini boy; tekli ambalajlı olduğu yalnızca özette geçiyor</td><td><span class="tag q">Özet</span></td></tr>
+      <tr><td><a href="https://www.amazon.com.tr/Spangler-Peppermint-Aromal%C4%B1-Baston-%C5%9Eeker/dp/B01NAGNO9H">Spangler, naneli</a></td><td>Amazon.com.tr</td><td>12 adet, 150 g</td><td class="num">539,95 TL</td><td class="num">45,00 TL</td><td>İthal, klasik nane aroması</td><td><span class="tag q">Özet</span></td></tr>
+      <tr><td><a href="https://www.altansekerleme.com/urun/baston-seker">Altan Şekerleme, küçük boy</a></td><td>Üreticinin sitesi</td><td>Yaklaşık 15 cm, paket adedi yazmıyor</td><td class="num">106,25 TL</td><td class="num">Belirsiz</td><td>İçindekiler: pancar şekeri, su, renklendirici. Jelatin yok</td><td><span class="tag ok">Sayfada</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="cols">
+    <div>
+      <h3>50 kişi için alım</h3>
+      <ul>
+        <li><b>Önerilen:</b> Hasel 30'lu iki paket, 60 adet, 1.188 TL. On adet kırılma payı kalır.</li>
+        <li><b>Kase videosu için de kullanılacaksa:</b> Hasel 100'lü, 1.530 TL.</li>
+        <li><b>Yedeksiz:</b> Hasel 50'li, 855 TL. Kargoda kırılan olursa eksik kalır.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Sipariş öncesi sorulacaklar</h3>
+      <ul>
+        <li>Tek tek ambalajlı mı? Hiçbir sayfada açıkça yazmıyor.</li>
+        <li>Aroma nane mi, meyve mi? Yerli ürünlerin çoğu meyve aromalı.</li>
+        <li>Son tüketim tarihi ve helal sertifikası. Hiçbir üründe sertifika ibaresi görülmedi; ithal ürünlerde renklendiriciye bakın.</li>
+        <li>Teslim tarihi. Baston şeker kargoda kolay kırılır, Aralık ortasından sonra stok azalır.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="small">Migros, CarrefourSA, A101, ŞOK, Tchibo ve Flying Tiger'da yenilebilir baston şeker bulunamadı; çıkan ürünler süs. Kervan, Bonart ve Jelly Belly markalı baston şeker de listelenmiyor.</p>
+</section>
+
+<section>
+  <h2>"Mutlu yıllar" kartı</h2>
+  <p>Üç hazır tasarım. Hepsi 85 x 55 mm oranında ve vektör; metinleri <code>kart.js</code> dosyasından değiştirebilirsiniz.</p>
+  <div class="cards" id="cards"></div>
+  <p class="no-print"><a class="btn" href="kart-baski.html">A4'e on kart baskı sayfasını aç</a></p>
+
+  <h3>Bastırma seçenekleri</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Seçenek</th><th>Satıcı</th><th class="num">Adet</th><th class="num">Fiyat (KDV dahil)</th><th class="num">Kart başı</th><th>Not</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td><a href="https://www.bidolubaski.com/tr/kartvizit/kraft">Kraft kartvizit, 300 g</a></td><td>bidolubaskı</td><td class="num">100</td><td class="num">153,60 TL</td><td class="num">1,54 TL</td><td>Ölçü 82 x 50 mm. 250 adet 354 TL, 500 adet 633,60 TL</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.bidolubaski.com/tr/kartvizit/standart">Standart kartvizit</a></td><td>bidolubaskı</td><td class="num">100</td><td class="num">202,80 TL</td><td class="num">2,03 TL</td><td>250 adet 391,20 TL. Kağıt ve yön sepette teyit edilmeli</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.bidolubaski.com/tr/kartvizit/ekspres-baski">Ekspres kartvizit</a></td><td>bidolubaskı</td><td class="num">50</td><td class="num">98,40 TL</td><td class="num">1,97 TL</td><td>25 adet 58,80 TL. Küçük ekip ve geç sipariş için</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.bidolubaski.com/tr/kartvizit/mini">Mini kartvizit, 9 x 3 cm</a></td><td>bidolubaskı</td><td class="num">100</td><td class="num">140,40 TL</td><td class="num">1,40 TL</td><td>Şeride bağlanacak etiket gibi durur; tasarım yeniden oranlanmalı</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://istanbulofset.net/ekonomik-kartvizit-html">350 g mat kuşe, mat selofan, çift yön</a></td><td>İstanbul Ofset</td><td class="num">1000</td><td class="num">660 TL</td><td class="num">0,66 TL</td><td>En az 1000 adet. Üretim 3 ile 4 iş günü, 83 x 51 mm</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.ranseymatbaa.com/urun/1000-adet-mat-kartvizit">350 g mat selofan</a></td><td>Ransey Matbaa</td><td class="num">1000</td><td class="num">899 TL</td><td class="num">0,90 TL</td><td>Kargo ücretsiz, üretim 3 iş günü</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr class="pick"><td><a href="https://www.ozgunfotokopi.com/renkli-kuse-kagit-baski-fiyatlari/">Kopyalama merkezi, 300 g mat kuşeye renkli A4</a></td><td>Özgün Fotokopi</td><td class="num">1 sayfa, 10 kart</td><td class="num">12 TL</td><td class="num">1,20 TL</td><td>Kağıt dahil. Kesim ücreti yayınlanmıyor, yerinde sorun</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.bikopi.com/fiyatlar">Renkli lazer A4, 200 g kağıt</a></td><td>Bikopi</td><td class="num">1 sayfa, 10 kart</td><td class="num">11,40 TL</td><td class="num">1,14 TL</td><td>Online siparişte kargo 110,85 TL</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/arama/?q=a4+300+gr+ku%C5%9Fe+ka%C4%9F%C4%B1t">Ofiste baskı: 300 g parlak kuşe A4</a></td><td>Çözüm Kağıt</td><td class="num">50 yaprak</td><td class="num">275 TL</td><td class="num">0,55 TL</td><td>Çoğu ofis yazıcısı 300 g kartonu almaz; azami gramaja bakın</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.ikea.com.tr/urun/vinterfint-cok-renkli-hediye-etiketi-80604341">Hazır etiket: VINTERFINT</a></td><td>IKEA, yalnızca mağazada</td><td class="num">24 karton, 24 yapışkanlı</td><td class="num">74,99 TL</td><td class="num">1,56 TL</td><td>Üzerinde "Mutlu yıllar" yazmaz, elle yazılır</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.ciceksepeti.com/mutlu-yillar-yeni-yil-karti-5-5-x-8-cm-50-adet-kcm97566494">Hazır "Mutlu yıllar" kartı, 5,5 x 8 cm</a></td><td>Çiçeksepeti satıcısı</td><td class="num">50</td><td class="num">175 TL</td><td class="num">3,50 TL</td><td>Hazır kartlar kendi baskınızdan pahalı</td><td><span class="tag q">Özet</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="cols">
+    <div>
+      <h3>Öneri</h3>
+      <p>Elli kişiye kadar en kolay yol kopyalama merkezi: beş A4 sayfa, yaklaşık 60 TL ve aynı gün teslim. Elli kişinin üstünde ya da kraft doku isteniyorsa bidolubaskı kraft 100'lü, 153,60 TL. Bin adetlik ofset, kart başına en ucuzu ama dokuz yüz kart artar.</p>
+      <p><b>Son sipariş günü:</b> matbaa için 4 ile 7 Aralık arası, en geç 11 Aralık. Sonrası için kopyalama merkezi.</p>
+    </div>
+    <div>
+      <h3>Baskı dosyası</h3>
+      <ul>
+        <li>Matbaaların ölçüsü farklı: 82 x 50, 83 x 51, 85 x 55 mm. Sipariş vereceğiniz matbaanın şablonunu indirip tasarımı ona oturtun.</li>
+        <li>Her kenarda 2 ile 3 mm taşma payı, yazılar kenardan 3 mm içeride, 300 dpi, CMYK, PDF. Genel matbaa pratiğidir; matbaanın kendi kılavuzuna bakın.</li>
+        <li>Tasarımı değiştirmek için Canva, Inkscape ya da Figma yeterli.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Kartı keseye bağlama malzemesi</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Malzeme</th><th class="num">Adet</th><th class="num">Fiyat</th><th class="num">Birim</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://www.akakce.com/arama/?q=bantl%C4%B1+%C5%9Feffaf+opp+po%C5%9Fet+100+adet">Şeffaf bantlı OPP poşet, 9 x 15 cm</a></td><td class="num">100</td><td class="num">166,49 TL</td><td class="num">1,66 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/arama/?q=bantl%C4%B1+%C5%9Feffaf+opp+po%C5%9Fet+100+adet">Şeffaf bantlı OPP poşet, 7 x 10 cm</a> (yalnız kart sığar)</td><td class="num">100</td><td class="num">134,99 TL</td><td class="num">1,35 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/arama/?q=j%C3%BCt+ip+100+metre">Jüt ip, 1 mm</a></td><td class="num">100 m</td><td class="num">133,41 TL</td><td class="num">1,33 TL/m</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/arama/?q=mini+ah%C5%9Fap+mandal+100">Ahşap mini mandal</a></td><td class="num">100</td><td class="num">127,49 TL</td><td class="num">1,27 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://halsa.com.tr/urun/kw-trio-tek-delik-mini-delgec-81092/">Tek delik mini delgeç</a></td><td class="num">1</td><td class="num">114,00 TL</td><td class="num"></td><td><span class="tag ok">Sayfada</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Kart delinir ve kesenin büzgü ipine ya da kurdelesine geçirilir. Delgeç ofiste varsa bu tablodan hiçbir şey almak gerekmez; kese ve kurdele fiyatları yukarıda.</p>
+</section>
+
+<section>
+  <h2>Salep ve sıcak çikolata</h2>
+  <p>Tek içimlik saşeler kesenin en ucuz ve en hafif kalemi. İkisi birlikte kişi başı yaklaşık 24 TL tutuyor; aynı markadan alınırsa tek sipariş, tek kargo olur.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ürün</th><th>Satıcı</th><th class="num">İçerik</th><th class="num">Kutu</th><th class="num">Saşe başı</th><th>Not</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td><a href="https://www.akakce.com/salep/en-ucuz-mahmood-coffee-20-gr-20-li-tarcinli-salep-fiyati,1211647482.html">Mahmood tarçınlı salep</a></td><td>Mahmood Coffee sitesi</td><td class="num">20 x 20 g</td><td class="num">169,90 TL</td><td class="num">8,50 TL</td><td>Kargo tutarı yazmıyor. Pazarama'da kargo dahil 197,94 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td>Koza salep aromalı içecek tozu</td><td>Akakçe listesi</td><td class="num">16 stick</td><td class="num">132,00 TL</td><td class="num">8,25 TL</td><td>Satıcı ve ürün bağlantısı görülmedi</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/salep/en-ucuz-bykurt-tek-icimlik-10-lu-paket-lezzetli-ve-pratik-keyfi-fiyati,949856542.html">ByKurt salep</a></td><td>Akakçe listesi</td><td class="num">10 saşe</td><td class="num">112,23 TL</td><td class="num">11,22 TL</td><td></td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/salep/en-ucuz-tarcinli-tozu-24-lu-paket-hazir-tek-icimlik-kis-icecegi-17-gr-x-24-lu-fiyati,1641020084.html">Aladeep tarçınlı salep</a></td><td>Alışılmadık Alışveriş</td><td class="num">24 x 17 g</td><td class="num">347,13 TL</td><td class="num">14,46 TL</td><td>Kargo 44,90 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/salep/en-ucuz-nestle-17-gr-24-lu-paket-salep-fiyati,32521698.html">Nestlé salep</a></td><td>Amazon Türkiye</td><td class="num">24 x 17 g</td><td class="num">349,90 TL</td><td class="num">14,58 TL</td><td>Kargo 49,90 TL. CarrefourSA'da tek saşe 14,50 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/salep/en-ucuz-altincezve-salep-10x17-gr-fiyati,674263836.html">Altıncezve sütlü salep</a></td><td>idefix</td><td class="num">10 x 17 g</td><td class="num">156,60 TL</td><td class="num">15,66 TL</td><td>Kargo 44,90 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/salep/en-ucuz-kahve-dunyasi-20gr-x-24-adet-fiyati,1790161196.html">Kahve Dünyası salep</a></td><td>PttAVM</td><td class="num">24 x 20 g</td><td class="num">426,55 TL</td><td class="num">17,77 TL</td><td>Kargo ücretsiz</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr class="pick"><td><a href="https://www.akakce.com/toz-icecek/en-ucuz-altincezve-sicak-cikolata-tek-icimlik-10-x-19-gr-fiyati,725005837.html">Altıncezve sıcak çikolata</a></td><td>Amazon Türkiye</td><td class="num">10 x 19 g</td><td class="num">76,00 TL</td><td class="num">7,60 TL</td><td>Kargo 49,90 TL. idefix'te aynı kutu 156,60 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/toz-icecek/en-ucuz-shazel-sicak-cikolata-18-gr-x-12-adet-fiyati,1349236984.html">Shazel sıcak çikolata</a></td><td>Kaytika.com</td><td class="num">12 x 18 g</td><td class="num">99,95 TL</td><td class="num">8,33 TL</td><td>Kargo 39,90 TL, aynı gün kargo</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/toz-icecek/en-ucuz-altincezve-tek-icimlik-sicak-cikolata-20-x-19-gr-3-lu-paket-fiyati,1647334972.html">Altıncezve sıcak çikolata, 3 kutu</a></td><td>idefix</td><td class="num">60 x 19 g</td><td class="num">527,22 TL</td><td class="num">8,79 TL</td><td>Kargo ücretsiz; tek siparişte 60 saşe</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr class="pick"><td><a href="https://www.akakce.com/toz-icecek/en-ucuz-mahmood-sicak-cikolata-12-x-20-g-fiyati,1125009526.html">Mahmood sıcak çikolata</a></td><td>Mahmood Coffee sitesi</td><td class="num">12 x 20 g</td><td class="num">139,90 TL</td><td class="num">11,66 TL</td><td>Saleple aynı siparişte</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/toz-icecek/en-ucuz-nestle-18-5-gr-24-lu-paket-sicak-cikolata-fiyati,540652202.html">Nestlé sıcak çikolata</a></td><td>Amazon Türkiye</td><td class="num">24 x 18,5 g</td><td class="num">368,31 TL</td><td class="num">15,35 TL</td><td>Kargo 49,90 TL</td><td><span class="tag">Akakçe</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="cols">
+    <div>
+      <h3>50 kişi için alım</h3>
+      <ul>
+        <li><b>İkisi birlikte:</b> Mahmood salep 20'li üç kutu ve sıcak çikolata 12'li beş kutu. 60 ve 60 saşe, 1.209,20 TL artı kargo.</li>
+        <li><b>Yalnız salep:</b> Mahmood üç kutu, 509,70 TL.</li>
+        <li><b>Yalnız sıcak çikolata:</b> Altıncezve 10'lu altı kutu, kargoyla 505,90 TL.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Yanına konabilecekler</h3>
+      <ul>
+        <li>Marshmallow: <a href="https://www.akakce.com/sekerleme/en-ucuz-haribo-chamallows-pembe-beyaz-150-gr-marshmallow-fiyati,574474106.html">Haribo Chamallows 150 g</a> 59,77 TL. Dört paket küçük poşetlere bölünür, kişi başı yaklaşık 5 TL.</li>
+        <li>Tarçın çubuğu: 250 gramı yaklaşık 308 TL; çubuk sayısı sayfalarda yazmıyor. Yerel aktar büyük olasılıkla daha ucuz.</li>
+        <li>Sıcak çikolata bombası adedi 250 TL ve üzeri; bütçeye uymuyor.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Gingerbread</h2>
+  <div class="note warn">
+    <p><b>Bu kalemin fiyatı doğrulanamadı.</b> Trendyol sayfaları açılmadı; fiyatlar arama özetinden geliyor ve aynı ilan için iki farklı rakam çıktı (339,90 ve 467,90 TL). Toplu sipariş fiyatı, en az adet, teslim süresi ve raf ömrü hiçbir kaynakta yok. Siparişten önce ilanı açıp bakın ya da yerel bir pastaneden 55 adet için teklif alın.</p>
+  </div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ürün</th><th>Satıcı</th><th class="num">Adet</th><th class="num">Fiyat</th><th class="num">Adet başı</th><th>Not</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td><a href="https://www.trendyol.com/partylandtr/15-adet-kurabiye-adam-gingerbread-zencefilli-kurabiye-yilbasi-kurabiyesi-p-65121043">Kurabiye adam, tek tek paketli</a></td><td>PartylandTR, Trendyol</td><td class="num">15</td><td class="num">339,90 ile 467,90 TL</td><td class="num">22,66 ile 31,19 TL</td><td>İki özet iki farklı fiyat verdi</td><td><span class="tag q">Özet</span></td></tr>
+      <tr><td><a href="https://www.trendyol.com/partylandtr/15-adet-gingerbread-zencefilli-kurabiye-yilbasi-agaci-susleme-kurabiyesi-p-410454531">Gingerbread, ağaç süsü tipi</a></td><td>PartylandTR, Trendyol</td><td class="num">15</td><td class="num">467,90 TL</td><td class="num">31,19 TL</td><td></td><td><span class="tag q">Özet</span></td></tr>
+      <tr><td><a href="https://www.trendyol.com/kurabiye-s/zencefilli-tarcinli-yeni-yil-kurabiye-adam-gingerbread-i-15-adet-kurabiye-p-754020001">Zencefilli tarçınlı kurabiye adam</a></td><td>Kurabiye'S, Trendyol</td><td class="num">15</td><td class="num">899,99 TL</td><td class="num">60,00 TL</td><td></td><td><span class="tag q">Özet</span></td></tr>
+      <tr><td><a href="https://www.shopier.com/5210656">Gingerbread kurabiye, tereyağlı</a></td><td>Shopier satıcısı</td><td class="num">20</td><td class="num">240 TL</td><td class="num">12,00 TL</td><td>Dükkan satışa geçici ara vermiş</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.bikutumutluluk.com/urun/zencefilli-tarcinli-kagit-kurabiye-5li">Zencefilli tarçınlı kurabiye 5'li</a></td><td>Bikutumutluluk</td><td class="num">5</td><td class="num">229,90 TL</td><td class="num">45,98 TL</td><td></td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.ikea.com.tr/p60504861">VINTERSAGA mini zencefilli evler</a></td><td>IKEA, yalnızca mağazada</td><td class="num">6</td><td class="num">395 TL</td><td class="num">65,83 TL</td><td>Tek tek ambalajlı değil</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td>Ev yapımı, 55 adet</td><td>Ekipten gönüllü</td><td class="num">55</td><td class="num">400 ile 700 TL</td><td class="num">7 ile 13 TL</td><td>Malzeme ve şeffaf poşet için kaba tahmin; fiyat araştırılmadı</td><td>Tahmin</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Hesapta hazır alım için üst fiyat kullanıldı: 15'li dört paket, 60 adet, 1.871,60 TL. Kesede LÖSEV kurabiyesi de olacaksa iki kurabiye fazla gelebilir; birini seçmek kişi başı 37 ile 105 TL açar.</p>
+</section>
+
+<section>
+  <h2>LÖSEV kurabiyesi</h2>
+  <p>Resmi satış kanalı <a href="https://www.lsvdukkan.com/kategori/kurabiye">LSV Dükkan</a>. Ürünleri lösemili çocukların anneleri vakfın atölyelerinde üretiyor. Fiyatlar KDV dahil ve 23 Kasım 2026'da mağaza sayfasından okundu.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ürün</th><th>İçerik</th><th class="num">Fiyat</th><th>Hediye paketine uygunluk</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td><a href="https://www.lsvdukkan.com/urun/nikah-sekeri-kahveli-kurabiye">Tül kesede kahveli kurabiye</a></td><td>Kesede 2 kurabiye</td><td class="num">105 TL</td><td>Kişi başı tekli hediyeye en uygun ürün. Hindistan cevizlisi de aynı fiyat</td></tr>
+      <tr class="pick"><td><a href="https://www.lsvdukkan.com/urun/sevgi-gunu-kurabiye-kalpli-bardakta">Kalpli bardakta kurabiye</a></td><td>Gramaj yazmıyor</td><td class="num">140 TL</td><td>Tekli; bardak kalıcı hediye olur</td></tr>
+      <tr><td><a href="https://www.lsvdukkan.com/urun/kahke-bardak-kurabiye-130g">Kahke kurabiye, bardakta</a></td><td>130 g</td><td class="num">165 TL</td><td>Tekli</td></tr>
+      <tr><td><a href="https://www.lsvdukkan.com/urun/lsv-isvec-kurabiye">İsveç kurabiye</a></td><td>150 g</td><td class="num">210 TL</td><td>Paylaşmalık paket</td></tr>
+      <tr><td><a href="https://www.lsvdukkan.com/urun/findikli-gevrek-150-gr">Fındıklı gevrek</a></td><td>150 g</td><td class="num">235 TL</td><td>Paylaşmalık paket</td></tr>
+      <tr><td><a href="https://www.lsvdukkan.com/urun/hindistan-cevizli-kurabiye-ozel-kutu">Hindistan cevizli, özel kutu</a></td><td>Gramaj yazmıyor</td><td class="num">375 TL</td><td>İkram masası için</td></tr>
+      <tr><td><a href="https://www.lsvdukkan.com/urun/tuzlu-kurabiye-ozel-kutu">Tuzlu kurabiye, özel kutu</a></td><td>Yaklaşık 350 g</td><td class="num">435 TL</td><td>İkram masası için</td></tr>
+      <tr><td><a href="https://www.lsvdukkan.com/urun/kahveli-kurabiye-ozel-kutu">Kahveli kurabiye, özel kutu</a></td><td>Gramaj yazmıyor</td><td class="num">515 TL</td><td>İkram masası için</td></tr>
+      <tr><td><a href="https://www.lsvdukkan.com/urun/kurabiye-aranjman-1">Kurabiye aranjman</a></td><td>Yaklaşık 220 g</td><td class="num">685 TL</td><td>Tek kişiye özel hediye</td></tr>
+      <tr><td><a href="https://www.lsvdukkan.com/urun/findikli-gevrek-ozel-kutu">Fındıklı gevrek, özel kutu</a></td><td>360 g</td><td class="num">800 TL</td><td>İkram masası için</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small">Fiyatlar sayfayı özetleyen bir okuma aracıyla alındı. Kutulardaki kurabiye adedi hiçbir sayfada yazmıyor. Alerjenler: gluten, ürüne göre yumurta, süt ve susam.</p>
+
+  <div class="cols">
+    <div>
+      <h3>Üç yol</h3>
+      <ol>
+        <li><b>LÖSEV tekli ürün ve kendi kartınız.</b> Tül kesede iki kurabiye, 105 TL. Yılbaşı temasını kart ve baston şeker taşır. Elli kişi için 5.250 TL; kişi başı 300 TL'lik payın üçte birinden fazlası.</li>
+        <li><b>LÖSEV kutuları ikram masasına.</b> Kişi başı hediye yerine üç dört özel kutu alınır, masaya LÖSEV tanıtım kartıyla konur. Yaklaşık 1.500 ile 2.000 TL.</li>
+        <li><b>Ticari yılbaşı kurabiyesi ve LÖSEV'e bağış.</b> Tema şartsa dekorlu kurabiye başka satıcıdan alınır, aradaki fark ekip adına LÖSEV'e bağışlanır.</li>
+      </ol>
+    </div>
+    <div>
+      <h3>LÖSEV'e yazarken sorulacaklar</h3>
+      <ul>
+        <li>Yılbaşı temalı kurabiye ya da sepet çıkacak mı, ne zaman?</li>
+        <li>Adet ve teslim tarihi verildiğinde toplu fiyat ve kargo</li>
+        <li>Tekli pakete yılbaşı etiketi ya da kendi kartımız eklenebilir mi?</li>
+        <li>Son tüketim tarihi kaç gün?</li>
+        <li>Fatura bilgileri</li>
+      </ul>
+      <p>Kurumsal talepler: kurumsaliletisim@losev.org.tr. Mağaza: 0312 436 34 00, lsvdukkan@losev.org.tr.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <p><b>Fatura ve makbuz.</b> Mağaza siparişe e-arşiv fatura kesiyor ve fiyatlar KDV'li. Sitede bağış makbuzundan söz edilmiyor; satıcı bir anonim şirket olduğu için bu bir mal alımıdır, bağış sayılmaz. Bu, mağaza bilgilerinden çıkarılan bir sonuç; makbuz gerekiyorsa LÖSEV'den yazılı teyit alın. Gelirin ne kadarının vakfa aktarıldığı yayınlanmıyor.</p>
+  </div>
+
+  <h3>Kıyas: ticari yılbaşı kurabiyesi</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ürün</th><th>Satıcı</th><th class="num">Adet</th><th class="num">Fiyat</th><th class="num">Adet başı</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://www.trendyol.com/partylandtr/15-adet-kurabiye-adam-gingerbread-zencefilli-kurabiye-yilbasi-kurabiyesi-p-65121043">Zencefilli kurabiye adam</a></td><td>PartylandTR, Trendyol</td><td class="num">15</td><td class="num">339,90 ile 467,90 TL</td><td class="num">22,66 ile 31,19 TL</td><td><span class="tag q">Özet</span></td></tr>
+      <tr><td><a href="https://www.ayyildizpastanesi.com/zencefil-adam-10-lu-yilbasi-kurabiyesi">Zencefil adam 10'lu</a></td><td>Ayyıldız Pastanesi</td><td class="num">10</td><td class="num">350 TL</td><td class="num">35,00 TL</td><td><span class="tag q">Özet</span> stokta yok</td></tr>
+      <tr><td><a href="https://www.bikutumutluluk.com/urun/zencefilli-tarcinli-kagit-kurabiye-5li">Zencefilli tarçınlı kurabiye 5'li</a></td><td>Bikutumutluluk</td><td class="num">5</td><td class="num">229,90 TL</td><td class="num">45,98 TL</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.trendyol.com/kurabiye-s/zencefilli-tarcinli-yeni-yil-kurabiye-adam-gingerbread-i-15-adet-kurabiye-p-754020001">Zencefilli tarçınlı kurabiye adam</a></td><td>Kurabiye'S, Trendyol</td><td class="num">15</td><td class="num">899,99 TL</td><td class="num">60,00 TL</td><td><span class="tag q">Özet</span></td></tr>
+      <tr><td><a href="https://www.ikea.com.tr/p60504861">VINTERSAGA mini zencefilli evler</a></td><td>IKEA, yalnızca mağazada</td><td class="num">6</td><td class="num">395 TL</td><td class="num">65,83 TL</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.trendyol.com/tatli-armaganlar/yeniyil-yilbasina-ozel-kardan-adam-kar-tanesi-ve-karli-ev-butik-kurabiye-20-adet-p-451547027">Dekorlu butik kurabiye, tek tek paketli</a></td><td>Tatlı Armağanlar, Trendyol</td><td class="num">20</td><td class="num">1.500 TL</td><td class="num">75,00 TL</td><td><span class="tag q">Özet</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Piyasa aralığı adet başı 31 ile 75 TL. Sade zencefilli adam alt uçta, tek tek paketli dekorlu kurabiye üst uçta.</p>
+
+  <h3>Başka vakıfların yeni yıl ürünleri</h3>
+  <ul>
+    <li><a href="https://www.tohumdukkan.com/pages/kurumsal-hediye-setleri">Tohum Otizm Vakfı</a>: yeni yıl setleri 750, 1.150 ve 1.675 TL artı KDV. Teslimat üç hafta, kurabiye yok.</li>
+    <li><a href="https://tegv.org/yeni-yil-kurumsal-hediye-katalogu">TEGV</a>: 2027 yeni yıl kataloğu yayında, çikolatalı kutular ve sertifika. Fiyat teklifle.</li>
+    <li><a href="https://www.kacuv.org/bagis/kurumsal-destek/umut-kafe">KAÇUV Umut Kafe</a>: ofise gelen gezici kafe, kahve ve kurabiye ikramı. Yalnızca İstanbul, Kocaeli ve Tekirdağ; fiyat ön talep formuyla.</li>
+    <li><a href="https://www.tocevdukkan.com/yeni-yil">TOÇEV</a>: yeni yıl sertifikası ve e-kart. Fiyat sayfada görünmedi.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Mini mum</h2>
+  <p>Ucuz uç tealight, pahalı uç kokulu kavanoz mum. Arada, 50'li paket halinde satılan mini teneke ya da kavanoz mum bulunamadı.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ürün</th><th>Satıcı</th><th class="num">Adet</th><th class="num">Fiyat</th><th class="num">Adet başı</th><th>Not</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td><a href="https://www.ikea.com.tr/urun/glimma-beyaz-4-saat-tealight-mum-50097995">GLIMMA tealight, beyaz, 4 saat</a></td><td>IKEA</td><td class="num">100</td><td class="num">349 TL</td><td class="num">3,49 TL</td><td>Kokusuz. Kişi başı iki adet; şeffaf poşet ya da kurdeleyle</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.ikea.com.tr/urun/glimma-beyaz-4-saat-tealight-mum-10436959">GLIMMA tealight, beyaz</a></td><td>IKEA</td><td class="num">50</td><td class="num">149 TL</td><td class="num">2,98 TL</td><td>Fiyat sayfada görünmedi</td><td><span class="tag q">Özet</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/mum/en-ucuz-tealight-25-adet-kirmizi-fiyati,1908063028.html">Tealight, kırmızı</a></td><td>n11</td><td class="num">25</td><td class="num">148 TL</td><td class="num">5,92 TL</td><td>Kargo dahil. 50 kişi için iki paket</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/mum/en-ucuz-100-adet-beyaz-tealight-fiyati,797859699.html">Beyaz tealight</a></td><td>idefix</td><td class="num">100</td><td class="num">348 TL</td><td class="num">3,48 TL</td><td>Kargo 44,90 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td>Yılbaşı çam ağacı kokulu mum, soya</td><td>Akakçe listesi</td><td class="num">3</td><td class="num">86,13 TL</td><td class="num">28,71 TL</td><td>Satıcı ve ürün bağlantısı görülmedi</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.tualcandle.com/product-page/40-cc-kokulu-kavanoz-mum-48-adet">Kokulu cam kavanoz mum, 40 cc</a></td><td>Tual Candle</td><td class="num">48</td><td class="num">1.510 TL</td><td class="num">31,46 TL</td><td>50 kişi için iki paket gerekir: 3.020 TL, 46 adet artar</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/mum/en-ucuz-balve-25-adet-sarma-balu-hediyelik-fiyati,1105047520.html">Sarma balmumu hediyelik</a></td><td>Akakçe listesi</td><td class="num">25</td><td class="num">649 TL</td><td class="num">25,96 TL</td><td></td><td><span class="tag">Akakçe</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Yılbaşı çorabı</h2>
+  <p>Kesenin en çok yer kaplayan ve LÖSEV'den sonra en pahalı kalemi. Doğrulanmış toptan fiyat zayıf: iki toptancı tükenmiş, biri fiyatın çifte mi düzineye mi ait olduğunu yazmıyor.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ürün</th><th>Satıcı</th><th class="num">Adet</th><th class="num">Fiyat</th><th class="num">Çift başı</th><th>Not</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td><a href="https://www.akakce.com/corap/en-ucuz-bgk-unisex-yilbasi-corabi-4-lu-cok-renkli-fiyati,1037800714.html">BGK unisex yılbaşı çorabı</a></td><td>n11</td><td class="num">4</td><td class="num">149,99 TL</td><td class="num">37,50 TL</td><td>Kargo ücretsiz, stok 100 üzeri. Beden yazmıyor</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://toptancoraplar.com/toptan-yilbasi-corabi/">Yılbaşı çorabı, toptan</a></td><td>toptancoraplar.com</td><td class="num">1 çift</td><td class="num">25 TL</td><td class="num">25,00 TL</td><td>Sitede her ürün 25 TL görünüyor; beden, en az sipariş ve KDV yok. Teyit şart</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.sobientoptan.com/yilbasi-temali-agacli-corap-02100156">Yılbaşı temalı ağaçlı çorap, pamuklu</a></td><td>Sobien Toptan</td><td class="num">1 çift</td><td class="num">35 TL artı KDV</td><td class="num">42 TL</td><td>36-44 beden. Stok şüpheli</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.sobientoptan.com/pamuklu-yilbasi-corabi-00569">Pamuklu yılbaşı çorabı</a></td><td>Sobien Toptan</td><td class="num">1 çift</td><td class="num">40 TL artı KDV</td><td class="num">48 TL</td><td>WhatsApp ile sipariş</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.toptancamasirci.com/unal-kadin-yilbasi-corabi-12li">Kadın yılbaşı çorabı 12'li</a></td><td>Toptan Çamaşırcı</td><td class="num">12</td><td class="num">950,40 TL</td><td class="num">79,20 TL</td><td>Tükendi</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.penti.com/tr/kadin-yeni-sezon/kirmizi-gingerman-yeni-yil-desenli-pamuklu-2-cift-soket-corap/p/PHMR4EIA26SK-KMM">Kurabiye desenli 2 çift, kutulu</a></td><td>Penti</td><td class="num">2</td><td class="num">299,99 TL</td><td class="num">150,00 TL</td><td>Perakende kıyas</td><td><span class="tag ok">Sayfada</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p><b>50 kişi için:</b> BGK 4'lü on üç paket, 52 çift, 1.949,87 TL. Sipariş öncesi satıcıya bedeni sorun; tek beden geliyorsa 36-40 ve 41-45 karışık isteyin. Bir çorabı rulo yapıp kurdeleyle bağlamak kesede yer açar.</p>
+</section>
+
+<section>
+  <h2>Not defteri</h2>
+  <p>Kesenin 20 x 30 cm olması A6 boyu (10,5 x 14,8 cm) zorunlu kılıyor. Yılbaşı temalı defterler tekli satılıyor ve adedi 85 TL'den başlıyor; bütçeye uymuyor.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ürün</th><th>Satıcı</th><th class="num">Adet</th><th class="num">Fiyat</th><th class="num">Adet başı</th><th>Not</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td><a href="https://www.akakce.com/defter/en-ucuz-gurpas-dikisli-a6-cizgisiz-32-yaprak-not-i-fiyati,1667668511.html">Gürpaş A6 dikişli, çizgisiz, 32 yaprak</a></td><td>Ofisostim.com</td><td class="num">1</td><td class="num">16,00 TL</td><td class="num">16,00 TL</td><td>Kargo 120 TL, 1.000 TL üzeri ücretsiz. Stok 100 üzeri</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/defter/en-ucuz-dilman-bloknot-spiralli-karton-kapak-cep-no2-a7-40-yp-cizgili-2209-fiyati,903526335.html">Dilman A7 spiralli cep bloknot, 40 yaprak</a></td><td>Ofiseal.com</td><td class="num">1</td><td class="num">20,15 TL</td><td class="num">20,15 TL</td><td>Kargo 115 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/defter/en-ucuz-gurpas-a6-sert-kapak-dikisli-ciltli-cizgisiz-80-yaprak-not-i-fiyati,1709306406.html">Gürpaş A6 sert kapak, 80 yaprak</a></td><td>Akakçe, 2 satıcı</td><td class="num">1</td><td class="num">31,00 TL</td><td class="num">31,00 TL</td><td></td><td><span class="tag">Akakçe</span></td></tr>
+      <tr class="pick"><td><a href="https://www.akakce.com/arama/?q=wings+journal+4%27l%C3%BC+a6+defter+seti+kraft">Etika Wings Journal A6, kraft kapak</a></td><td>Akakçe, tek satıcı</td><td class="num">4</td><td class="num">122,00 TL</td><td class="num">30,50 TL</td><td>Kraft kapak karta ve keseye yakışır</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/defter/en-ucuz-gipta-pro-block-a6-spiralli-karton-kapak-bloknot-not-i-40-yaprak-12-adet-fiyati,313025356.html">Gıpta A6 spiralli, 40 yaprak</a></td><td>Hepsiburada</td><td class="num">12</td><td class="num">473,33 TL</td><td class="num">39,44 TL</td><td>Kargo dahil</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.1001promosyon.com.tr/urun/tarihsiz-cep-defter-15817">Lastikli cep defteri 9 x 14 cm, kalem tutuculu</a></td><td>1001promosyon</td><td class="num">En az 30</td><td class="num">81,18 ile 90,20 TL artı KDV</td><td class="num">yaklaşık 97 ile 108 TL</td><td>Baskısız. Logo baskısı ve teslim süresi teklifle</td><td><span class="tag ok">Sayfada</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p><b>50 kişi için:</b> Gürpaş A6 55 adet 880 TL, kargoyla yaklaşık 1.000 TL. 63 adet alınırsa sepet 1.008 TL olur ve kargo düşebilir; sepette kontrol edin. Kapağa "Mutlu yıllar" etiketi ya da kart tasarımı yapıştırılırsa düz defter temalı hale gelir.</p>
+</section>
+
+<section>
+  <h2>Kalem</h2>
+  <p>Düz tükenmez kalem kişi başı 4 TL'nin altında; isimli kalem 16 ile 35 TL arasında. Hazır defter ve kalem setlerinin tamamı tek başına 300 TL'yi aşıyor.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ürün</th><th>Satıcı</th><th class="num">Adet</th><th class="num">Fiyat</th><th class="num">Adet başı</th><th>Not</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td><a href="https://www.akakce.com/tukenmez-kalem/en-ucuz-pensan-2270-1-mm-50-li-paket-fiyati,447057469.html">Pensan 2270 tükenmez, 1 mm</a></td><td>Hepsiburada</td><td class="num">50</td><td class="num">129,01 TL</td><td class="num">2,58 TL</td><td>Kargo 49,90 TL; toplam 178,91 TL. Yedek yok</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/tukenmez-kalem/en-ucuz-bic-round-stic-60-li-mavi-fiyati,1516129920.html">Bic Round Stic, mavi</a></td><td>Hepsiburada</td><td class="num">60</td><td class="num">180,00 TL</td><td class="num">3,00 TL</td><td>Kargo 49,90 TL; toplam 229,90 TL</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.hdrlazerdijital.com/kisiye-ozel-ahsap-isimli-kursun-kalem">İsimli ahşap kurşun kalem</a></td><td>hdrlazerdijital.com</td><td class="num">10</td><td class="num">165,00 TL</td><td class="num">16,50 TL</td><td>İsimler mesajla bildiriliyor. Teslim süresi alanı boş</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr class="pick"><td><a href="https://www.akakce.com/arama/?q=bk+gift+firmalara+%C3%B6zel+isimli+kalem+50+adet">İsimli mini metal tükenmez, lacivert</a></td><td>BK Gift, Çiçeksepeti</td><td class="num">50</td><td class="num">1.078,50 TL</td><td class="num">21,57 TL</td><td>"Firmalara özel" ilan; her kaleme farklı isim doğrulanamadı</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.baskiyap.com/kisiye-ozel-kalemler-isimli-kalem">İsimli ekonomik plastik kalem</a></td><td>baskiyap.com</td><td class="num">10</td><td class="num">210,00 TL</td><td class="num">21,00 TL</td><td>Fiyat kategori sayfasında</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.baskiyap.com/cankaya-metal-tukenmez-kalem">Metal tükenmez, lazer kazıma</a></td><td>baskiyap.com</td><td class="num">10</td><td class="num">350,00 TL</td><td class="num">35,00 TL</td><td>0850 455 11 55</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.1001promosyon.com.tr/urun/tukenmez-kalem-16637">Metal tükenmez, baskısız</a></td><td>1001promosyon</td><td class="num">En az 50</td><td class="num">26,18 ile 30,80 TL artı KDV</td><td class="num">yaklaşık 31 ile 37 TL</td><td>Lazer baskı teklifle. 0850 223 1001</td><td><span class="tag ok">Sayfada</span></td></tr>
+      <tr><td><a href="https://www.partisepeti.com/yeni-yil--noel-baba-kalem">Noel Baba figürlü tükenmez</a></td><td>partisepeti.com</td><td class="num">5</td><td class="num">150,00 TL</td><td class="num">30,00 TL</td><td>23 cm; kesenin büzgüsünden taşar</td><td><span class="tag ok">Sayfada</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note">
+    <p><b>İsimli kalem için bu hafta yazılı teyit alın.</b> Hiçbir satıcı sayfasında 50 farklı isimli sipariş için teslim süresi yok. Üç soru: her kaleme farklı isim yazılıyor mu, isim başına ek ücret var mı, kargoya hangi gün veriliyor. Satıcıya yalnızca kalemde yazacak adları gönderin; soyad ve başka bilgi gerekmez.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Sipariş planı ve oyun ödülleri</h2>
+  <p>Önerilen kombinasyon için sekiz sipariş. Hepsini aynı hafta verin; en uzun belirsizlik isimli kalemde ve gingerbread'de.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Sıra</th><th>Kimden</th><th>Ne</th><th class="num">Tutar</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Kalem satıcısı</td><td>İsimli kalem: önce yazılı teyit, sonra 50 adet sipariş</td><td class="num">1.078,50 TL</td></tr>
+      <tr><td>2</td><td>LÖSEV, LSV Dükkan</td><td>Yılbaşı ürünü sorusu ve ikram masası için dört özel kutu</td><td class="num">yaklaşık 1.840 TL</td></tr>
+      <tr><td>3</td><td>Pastane ya da Trendyol satıcısı</td><td>Gingerbread 55 ile 60 adet; teslim etkinlikten üç dört gün önce</td><td class="num">1.360 ile 1.872 TL</td></tr>
+      <tr><td>4</td><td>idefix, Hasel</td><td>Baston şeker 30'lu iki paket</td><td class="num">1.188 TL</td></tr>
+      <tr><td>5</td><td>Mahmood Coffee</td><td>Salep üç kutu, sıcak çikolata beş kutu</td><td class="num">1.209,20 TL</td></tr>
+      <tr><td>6</td><td>n11, BGK</td><td>Çorap 4'lü on üç paket</td><td class="num">1.949,87 TL</td></tr>
+      <tr><td>7</td><td>Ofisostim</td><td>A6 defter 55 ile 63 adet</td><td class="num">yaklaşık 1.000 TL</td></tr>
+      <tr><td>8</td><td>Süs Market, IKEA, kırtasiye</td><td>Kese 100'lü, kurdele üç rulo, tealight 100'lü, kart baskısı</td><td class="num">yaklaşık 1.150 TL</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>Liste dışı: tombala ve bilgi yarışması ödülleri</h3>
+  <p>Planlama notunda tombala ödülü olarak eğlenceli bir 2027 takvimi, bilgi yarışması ödülü olarak madalya geçiyor. Bunlar kişi başı 300 TL'nin dışında tutuldu.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ürün</th><th>Satıcı</th><th class="num">Fiyat</th><th>Not</th><th>Kaynak</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://www.akakce.com/takvim/en-ucuz-gipta-2027-cappybara-12x17-ucgen-masa-1217-brs-fiyati,1782081545.html">Gıpta 2027 kapibara temalı üçgen masa takvimi, 12 x 17 cm</a></td><td>Trendyol satıcısı</td><td class="num">115,90 TL</td><td>Kargo 44,99 TL. "Eğlenceli" tanımına en yakın bulunan</td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/takvim/en-ucuz-gipta-504-btk-brite-haftalik-2027-masa-i-12-cm-x-33-cm-asorti-fiyati,1784676780.html">Gıpta 2027 haftalık masa takvimi, 12 x 33 cm</a></td><td>Akakçe listesi</td><td class="num">149,00 TL</td><td></td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.akakce.com/takvim/en-ucuz-keskin-color-2027-k-blok-gunluk-masa-i-fiyati,1770982949.html">Keskin Color 2027 günlük blok takvim</a></td><td>Akakçe listesi</td><td class="num">239,20 TL</td><td></td><td><span class="tag">Akakçe</span></td></tr>
+      <tr><td><a href="https://www.idefix.com/lider-1-adet-sampiyon-madalyasi-dijital-baskili-1-kalite-madalya-p-26102029">Şampiyon madalyası, dijital baskılı</a></td><td>idefix</td><td class="num">59,50 TL</td><td>Bilgi yarışması için üç adet yeter</td><td><span class="tag ok">Sayfada</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Kaynaklar</h2>
+  <p class="small">Tümü 23 Kasım 2026'da tarandı. Tablolardaki bağlantılara ek olarak:</p>
+  <ul class="sources">
+    <li><a href="https://www.akakce.com/sekerleme/baston-seker.html">Akakçe, baston şeker listesi</a></li>
+    <li><a href="https://www.lsvdukkan.com/sayfa/sikca-sorulan-sorular">LSV Dükkan, sıkça sorulan sorular</a>: kurumsal alım, fatura ve iade koşulları</li>
+    <li><a href="https://www.lsvdukkan.com/iletisim">LSV Dükkan, iletişim</a></li>
+    <li><a href="https://www.lsvdukkan.com/kategori/cikolata-kurabiye">LSV Dükkan, çikolata ve kurabiye kategorisi</a></li>
+    <li><a href="https://www.bidolubaski.com/kartvizit">bidolubaskı, kartvizit çeşitleri</a></li>
+    <li><a href="https://printerofset.com.tr/en/blog/matbaa-fiyatlari-2026-izmir-rehberi">Printer Ofset, 2026 matbaa fiyatları rehberi</a>: 500 ve 1000 adet için piyasa aralığı</li>
+    <li><a href="https://www.orbakkagit.com.tr/urun/300-gr-amerikan-bristol-kagit-karton-21x297-a4-ebatinda-100-adet-187-kg/">Orbak Kağıt, 300 g bristol A4, 100 yaprak 323,86 TL</a></li>
+    <li><a href="https://susmarket.com/">Süs Market</a>: organze, lame, kadife ve jüt kese fiyatları</li>
+    <li><a href="https://www.akakce.com/salep/">Akakçe, salep</a> ve <a href="https://www.akakce.com/toz-icecek/">toz içecek</a> listeleri</li>
+    <li><a href="https://www.akakce.com/defter/a6-defter.html">Akakçe, A6 defter listesi</a></li>
+    <li><a href="https://www.1001promosyon.com.tr/plastik-kalemler">1001promosyon</a>: promosyon kalem ve defter fiyatları, en az sipariş adetleri</li>
+    <li>Hediye listesi, paylaşılan planlama notundaki on kalemden alındı; nottaki kişi adları okunmadı ve kullanılmadı.</li>
+    <li><a href="https://www.canva.com/tr_tr/sablonlar/s/mutlu-yillar/">Canva, "Mutlu yıllar" şablonları</a></li>
+  </ul>
+</section>
+
+</div>
+</main>
+<footer class="wrap">HKTTM 2026 yıl sonu organizasyonu. Hazırlanma tarihi 23 Kasım 2026.</footer>
+
+<script src="common.js"></script>
+<script src="kart.js"></script>
+<script>
+// Kart önizlemeleri
+var info = {
+  a: ["Basamak yanıtı", "2026'dan 2027 referansına oturan eğri. Koyu zemin; matbaa ya da kopyalama merkezi için."],
+  b: ["Blok diyagram", "Kazançları mutluluk, sağlık ve başarı olan kapalı çevrim. Beyaz zemin, ofis yazıcısına uygun."],
+  c: ["Baston şeker şeridi", "Mühendislik göndermesi az; başka birimlere de verilecekse bu."]
+};
+document.getElementById("cards").innerHTML = Object.keys(info)
+  .map(function (k) {
+    return "<figure>" + KART[k]() + "<figcaption><b>" + info[k][0] + "</b>" + info[k][1] +
+      ' <a href="kart-baski.html?t=' + k + '">Baskı sayfası</a></figcaption></figure>';
+  })
+  .join("");
+
+// Kese kurucu: her seçenek [etiket, 50 kişi için toplam TL]
+var N = 50, LIMIT = 300;
+var ITEMS = [
+  ["Kese", [["Organze kese 20 x 30 cm, 100'lü", 520], ["Organze kese 25 x 35 cm, 100'lü", 750], ["Kraft çanta 18 x 24 x 8 cm, iki paket", 362.7]]],
+  ["Kurdele", [["Saten kurdele 1 cm, üç rulo", 210], ["Organze kurdele 2 cm, 250 m", 150]]],
+  ["Mutlu yıllar kartı", [["Kopyalama merkezi, 6 sayfa", 72], ["Matbaa, kraft 100 adet", 153.6]]],
+  ["Baston şeker", [["Hasel 30'lu iki paket, 60 adet", 1188], ["Hasel 100'lü", 1530], ["Hasel 50'li, yedeksiz", 855]]],
+  ["Salep ve sıcak çikolata", [["İkisi birlikte, Mahmood", 1209.2], ["Yalnız salep, Mahmood üç kutu", 509.7], ["Yalnız sıcak çikolata, Altıncezve altı kutu", 505.9]]],
+  ["Gingerbread", [["Hazır, 60 adet, üst fiyat (doğrulanmadı)", 1871.6], ["Hazır, 60 adet, alt fiyat (doğrulanmadı)", 1359.6], ["Ev yapımı, 55 adet (tahmin)", 550]]],
+  ["LÖSEV kurabiyesi", [["Kişi başı tül kesede iki kurabiye", 5250], ["Kişi başı bardakta kurabiye", 7000], ["Kesede yok; ikram masasına dört özel kutu", 1840]]],
+  ["Mini mum", [["Tealight, kişi başı iki adet", 349], ["Kırmızı tealight, kişi başı bir adet", 296], ["Kokulu kavanoz mum 40 cc", 3020]]],
+  ["Yılbaşı çorabı", [["BGK 4'lü on üç paket, 52 çift", 1949.87], ["Toptan 55 çift (teyit şartlı)", 1375]]],
+  ["Not defteri", [["A6 dikişli 32 yaprak, 55 adet", 1000], ["A6 kraft kapak, 52 adet", 1586], ["Lastikli cep defteri, 50 adet", 4850]]],
+  ["Kalem", [["Tükenmez 50'li kutu", 178.91], ["Tükenmez 60'lı kutu", 229.9], ["İsimli ahşap kurşun kalem", 825], ["İsimli mini metal tükenmez", 1078.5], ["Lazer kazıma metal tükenmez", 1750]]]
+];
+// -1 = kesede yok. Sıra ITEMS ile aynı.
+var PRESETS = [
+  ["Listenin tamamı", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "On kalemin hepsi, en ekonomik seçeneklerle"],
+  ["LÖSEV ikram masasında, isimli kalem", [0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 3], "Dokuz parçalı kese, isimli metal kalem; LÖSEV kutuları masada"],
+  ["Tatlı ağırlıklı", [0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1], "Baston şeker, içecekler, gingerbread ve kişi başı LÖSEV kesesi"],
+  ["Kalıcı hediye", [0, 0, 0, 0, 0, -1, -1, 2, 0, 1, 3], "Çorap, kraft defter, isimli kalem, kokulu kavanoz mum; kurabiye yok"],
+  ["Sade", [0, 0, 0, 0, 0, -1, -1, -1, 0, 0, 0], "Baston şeker, içecekler, çorap, defter ve kalem"]
+];
+var KARGO = 600;
+// LÖSEV'in 2. seçeneği (ikram masası) kesede parça sayılmaz
+function inBag(i, j) { return j >= 0 && i > 2 && !(i === 6 && j === 2); }
+var body = document.getElementById("buildBody");
+body.innerHTML = ITEMS.map(function (it, i) {
+  var opts = it[1].map(function (o, j) { return '<option value="' + j + '">' + o[0] + "</option>"; }).join("") +
+    (i === 0 ? "" : '<option value="-1">Kesede yok</option>');
+  return "<tr><td>" + it[0] + '</td><td><select aria-label="' + it[0] + ' seçeneği" data-i="' + i + '">' + opts +
+    '</select></td><td class="num"></td><td class="num"></td></tr>';
+}).join("") +
+  '<tr><td>Kargo ve beklenmeyen</td><td><input type="number" id="kargo" min="0" step="50" value="' + KARGO + '" aria-label="Kargo ve beklenmeyen gider"></td><td class="num"></td><td class="num"></td></tr>';
+var sels = body.querySelectorAll("select"), kargoEl = document.getElementById("kargo");
+
+function total(pick, kargo) {
+  var t = kargo, parts = 0;
+  pick.forEach(function (j, i) { if (j >= 0) t += ITEMS[i][1][j][1]; if (inBag(i, j)) parts += i === 4 && j === 0 ? 2 : 1; });
+  return { t: t, parts: parts };
+}
+function current() { return Array.prototype.map.call(sels, function (s) { return parseInt(s.value, 10); }); }
+function calc() {
+  var pick = current(), kargo = parseFloat(kargoEl.value) || 0, rows = body.rows;
+  pick.forEach(function (j, i) {
+    var v = j >= 0 ? ITEMS[i][1][j][1] : 0;
+    rows[i].className = j >= 0 ? "" : "off";
+    rows[i].cells[2].textContent = j >= 0 ? HK.tl(v) : "";
+    rows[i].cells[3].textContent = j >= 0 ? HK.tl2(v / N) : "";
+  });
+  rows[ITEMS.length].cells[2].textContent = HK.tl(kargo);
+  rows[ITEMS.length].cells[3].textContent = HK.tl2(kargo / N);
+  var r = total(pick, kargo), per = r.t / N, left = LIMIT - per;
+  document.getElementById("bTot").textContent = HK.tl(r.t);
+  document.getElementById("bPer").textContent = HK.tl2(per);
+  document.getElementById("bNote").textContent = "Kesede kartla birlikte " + (r.parts + (pick[2] >= 0 ? 1 : 0)) + " parça";
+  var bar = document.getElementById("bBar");
+  bar.style.width = Math.min(100, (per / LIMIT) * 100) + "%";
+  bar.className = left < 0 ? "over" : "";
+  document.getElementById("bMsg").textContent = left >= 0
+    ? "Sınırın altında: kişi başı " + HK.tl2(left) + " pay kalıyor."
+    : "Sınır aşıldı: kişi başı " + HK.tl2(-left) + " fazla. Bir kalemi çıkarın ya da ucuz seçeneğe geçin.";
+  var key = pick.join();
+  Array.prototype.forEach.call(document.getElementById("presets").children, function (b, k) {
+    b.setAttribute("aria-pressed", PRESETS[k][1].join() === key ? "true" : "false");
+  });
+  HK.set("n", N);
+  HK.set("gift", Math.round(r.t));
+}
+var pEl = document.getElementById("presets");
+PRESETS.forEach(function (p) {
+  var b = document.createElement("button");
+  b.textContent = p[0];
+  b.onclick = function () {
+    p[1].forEach(function (j, i) { sels[i].value = j; });
+    calc();
+  };
+  pEl.appendChild(b);
+});
+document.getElementById("cmpBody").innerHTML = PRESETS.map(function (p, k) {
+  var r = total(p[1], KARGO), per = r.t / N;
+  return "<tr" + (k === 1 ? ' class="pick"' : "") + "><td><b>" + p[0] + "</b></td><td>" + p[2] + '</td><td class="num">' + (r.parts + 1) +
+    '</td><td class="num">' + HK.tl(r.t) + '</td><td class="num">' + HK.tl2(per) + '</td><td class="num">' + HK.tl2(LIMIT - per) + "</td></tr>";
+}).join("");
+Array.prototype.forEach.call(sels, function (s) { s.onchange = calc; });
+kargoEl.oninput = calc;
+PRESETS[1][1].forEach(function (j, i) { sels[i].value = j; });
+calc();
+</script>
+</body>
+</html>

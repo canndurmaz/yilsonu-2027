@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Etkinlikler ve kase videosu soruları</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .bowl {
+    border: 2px dashed var(--ink);
+    padding: 22px;
+    margin: 0 0 18px;
+    max-width: 640px;
+    background: var(--accent-soft);
+  }
+  .bowl output {
+    display: block;
+    font-family: var(--head);
+    font-size: 28px;
+    line-height: 1.15;
+    min-height: 2.4em;
+    margin: 0 0 14px;
+  }
+  .qlist { columns: 2 320px; column-gap: 36px; padding-left: 0; list-style: none; max-width: none; }
+  .qlist li { break-inside: avoid; padding: 5px 0; border-bottom: 1px solid var(--grid); margin: 0; font-size: 16px; }
+  .qlist h3 { margin-top: 18px; break-after: avoid; }
+  .act td:first-child { min-width: 190px; }
+  @media print {
+    .print-area { display: grid; grid-template-columns: 1fr 1fr; }
+    .print-area div {
+      border: 1px dashed #666;
+      padding: 7mm 6mm;
+      font-family: var(--head);
+      font-size: 14pt;
+      min-height: 24mm;
+      break-inside: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+<main>
+<header class="top wrap">
+  <h1>Etkinlikler ve kase videosu</h1>
+  <p>Instagram'daki kase videosu için 60 soru ve çekim planı, ardından yıl sonu buluşmasında yapılabilecek, mühendis ekibine uygun diğer etkinlikler.</p>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2>Kase videosu nasıl çekilir</h2>
+  <p>Bir kişi kaseden katlanmış bir kağıt çeker, soruyu yalnızca kameraya gösterir ve cevabı olan iş arkadaşının yanına yürür. Gidilen kişi sorunun ne olduğunu bilmez; izleyici bilir. Eğlence, o kişinin şaşkınlığından ve sonunda soruyu öğrendiğindeki tepkisinden gelir.</p>
+  <div class="cols">
+    <div>
+      <h3>Çekim planı</h3>
+      <ol>
+        <li>Soruları yazdırıp kesin, katlayıp kaseye koyun. Aşağıdaki düğme kesilecek şeritleri yazdırır.</li>
+        <li>Telefonu dikey tutun. Çeken kişi kağıdı açar, kameraya gösterir, sessizce yürür.</li>
+        <li>Gidilen kişiye bir baston şeker uzatılır ya da omzuna dokunulur. Tepki için üç saniye bekleyin.</li>
+        <li>Çekimden sonra kağıt o kişiye verilir. Tepkisini de çekin; videonun en iyi yeri burasıdır.</li>
+        <li>Kurguda soru metni ekranın üstüne yazılır. Sekiz ile on iki soru, toplam 60 ile 90 saniye yeterli.</li>
+      </ol>
+    </div>
+    <div>
+      <h3>Dikkat edilecekler</h3>
+      <ul>
+        <li><b>Önce izin.</b> Kurum içinde telefonla çekim ve sosyal medya paylaşımı için güvenlik ve kurumsal iletişim birimlerinden onay alın. Onay çıkmazsa video yalnızca tören sırasında projeksiyonda gösterilebilir.</li>
+        <li><b>Kadraj.</b> Ekranlar, beyaz tahtalar, çizimler, donanım ve yaka kartları görünmemeli. Çekimi koridor ya da dinlenme alanında yapmak en kolayı.</li>
+        <li><b>Rıza.</b> Görünmek istemeyenleri önceden sorun. Sürpriz bozulmasın diye soruyu değil, yalnızca "videoda yer almak ister misin" sorusunu sorun.</li>
+        <li><b>Dağılım.</b> Aynı kişiye iki kez gidilmesin. Çeken kişi kimseyi seçemezse kağıdı kaseye geri atıp yenisini çeker.</li>
+        <li><b>Yayın öncesi.</b> Videoyu görünen herkese gösterin, itirazı olanın sahnesini çıkarın.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Kaseden bir soru çek</h2>
+  <p>Soruların hepsi iltifat niteliğinde: cevabı olmak hoşa gider. "En çok kim geç kalır" türünden sorular bilerek yok.</p>
+  <div class="bowl no-print">
+    <output id="drawn" aria-live="polite">Kase dolu. Bir soru çekin.</output>
+    <button id="draw">Soru çek</button>
+    <button class="ghost" id="printSlips">Soru şeritlerini yazdır</button>
+  </div>
+  <div class="qlist" id="qlist"></div>
+</section>
+
+<section>
+  <h2>Yapılabilecek diğer etkinlikler</h2>
+  <p>Hepsi ofiste, mesai içinde ve düşük bütçeyle yapılabilir. Mühendislik esprili olanlar üstte.</p>
+  <div class="scroll">
+  <table class="act">
+    <thead><tr><th>Etkinlik</th><th>Nasıl oynanır</th><th>Süre</th><th>Malzeme</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td><b>Ters sarkaç şampiyonası</b></td><td>Herkes bir süpürge sapını ya da bir metrelik cetveli avucunda dik tutmaya çalışır. En uzun süre dengede tutan kazanır. Finalde çubuk kısaltılır; kısa sarkaç daha zordur, nedenini herkes bilir.</td><td>10 dk</td><td>Süpürge sapı, kronometre</td></tr>
+      <tr class="pick"><td><b>İnsan kapalı çevrimi</b></td><td>İkili takımlar. Gözü bağlı "tesis" yalnızca "kontrolcüsünün" sesli komutlarıyla masadaki hedefe bir bardak koyar. İkinci turda komutlar iki saniye gecikmeli verilir: ölü zamanın etkisi canlı görülür.</td><td>15 dk</td><td>Göz bandı, plastik bardak</td></tr>
+      <tr class="pick"><td><b>Spagetti kulesi</b></td><td>Dört kişilik takımlar 18 dakikada 20 çubuk spagetti, bir metre bant ve bir metre iple en yüksek kuleyi kurar. Tepesine bir lokum konur; kule kendi başına ayakta durmalıdır.</td><td>25 dk</td><td>Spagetti, bant, ip, lokum, şerit metre</td></tr>
+      <tr><td><b>Kağıt uçak menzil testi</b></td><td>Herkese bir A4. Beş dakika tasarım, sonra koridorda atış. En uzun menzil ve en uzun havada kalma süresi ayrı ödüllendirilir.</td><td>15 dk</td><td>A4 kağıt, şerit metre</td></tr>
+      <tr><td><b>Mühendis tabusu</b></td><td>Kartlarda bir terim ve söylenmesi yasak beş kelime. Örnek: "Rulman" kartında bilye, yatak, dönmek, sürtünme, mil yasak. Kartları ekip kendisi yazarsa hazırlık da eğlenceye dönüşür.</td><td>20 dk</td><td>Karton kartlar, kum saati</td></tr>
+      <tr><td><b>Grafikten tahmin</b></td><td>Projeksiyonda eksenleri silinmiş grafikler gösterilir: ofisteki günlük çay tüketimi, toplantı odası doluluk eğrisi, yılın e-posta sayısı. Takımlar grafiğin ne olduğunu tahmin eder.</td><td>15 dk</td><td>Sunum dosyası</td></tr>
+      <tr><td><b>2026 bilgi yarışması</b></td><td>Ekibin yılına dair 15 soru: ilk test hangi ay yapıldı, en uzun toplantı kaç saat sürdü, mutfakta en çok ne tüketildi. Telefonla katılımlı bir yarışma aracıyla ya da kağıt kalemle oynanır.</td><td>20 dk</td><td>Projeksiyon, soru seti</td></tr>
+      <tr><td><b>Yılbaşı tombalası</b></td><td>Klasik tombala. Birinci çinko, ikinci çinko ve tombala için küçük ödüller. Kalabalık ekipte en az hazırlıkla en çok kişiyi oyuna katan seçenek.</td><td>25 dk</td><td>Tombala seti, üç küçük ödül</td></tr>
+      <tr><td><b>Hediye çekilişi</b></td><td>İsimler önceden çekilir, herkes çıkan kişiye tavan fiyatı belli bir hediye alır. Katılım gönüllü olmalı, tavan fiyat duyuruda yazmalı.</td><td>20 dk</td><td>Çekiliş aracı ya da kağıt</td></tr>
+      <tr><td><b>Hediye değiş tokuşu</b></td><td>Herkes isimsiz, tavan fiyatlı bir hediye getirir. Sıra numarası çekilir; sırası gelen ya yeni paket açar ya da açılmış bir hediyeyi alır. Bir hediye en çok iki kez el değiştirir.</td><td>30 dk</td><td>Numara kağıtları</td></tr>
+      <tr><td><b>Bebeklik fotoğrafı tahmini</b></td><td>Gönüllüler çocukluk fotoğrafını önceden gönderir. Panoya numarayla asılır ya da slaytta gösterilir, herkes kim olduğunu tahmin eder.</td><td>15 dk</td><td>Fotoğraflar, tahmin formu</td></tr>
+      <tr><td><b>İki doğru bir yanlış</b></td><td>Her kişi kendisi hakkında üç cümle söyler, ekip yanlış olanı bulur. Yeni katılanların tanınması için iyi çalışır.</td><td>15 dk</td><td>Yok</td></tr>
+      <tr><td><b>Teşekkür zarfları</b></td><td>Duvara herkesin adıyla bir zarf asılır. Hafta boyunca isteyen, istediği kişinin zarfına isimli ya da isimsiz bir teşekkür notu bırakır. Zarflar etkinlik sonunda sahiplerine verilir.</td><td>Bir hafta</td><td>Zarf, not kağıdı</td></tr>
+      <tr><td><b>2027 tahmin kapsülü</b></td><td>Herkes 2027 için bir tahmin yazar: hangi sistem ilk kez çalışacak, ofise ne gelecek. Kağıtlar mühürlü kutuya konur, gelecek yıl sonu açılır.</td><td>10 dk</td><td>Kutu, kağıt</td></tr>
+      <tr><td><b>Kazak günü</b></td><td>Etkinlik günü isteyen yılbaşı kazağı ya da kırmızı, yeşil bir şey giyer. Toplu fotoğraf için iyi fon oluşturur. Kıyafet yarışması yapılmaz.</td><td>Gün boyu</td><td>Yok</td></tr>
+      <tr><td><b>Sıcak içecek köşesi</b></td><td>Salep, sıcak çikolata, tarçın çubukları. Herkes evden bir ikram getirirse masa kendiliğinden dolar. İçerik etiketleri alerjisi olanlar için önemlidir.</td><td>Etkinlik boyunca</td><td>Termos, bardak, etiket</td></tr>
+      <tr><td><b>İyilik köşesi</b></td><td>LÖSEV kurabiyesinin yanına bir bağış kutusu ya da kitap ve oyuncak toplama kolisi. Toplananlar ekip adına teslim edilir.</td><td>Bir hafta</td><td>Koli, duyuru</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Seçim önerisi</h3>
+  <p>Doksan dakikalık bir buluşma için dört parça yeterli: bir hareketli oyun (ters sarkaç ya da spagetti kulesi), bir oturarak oynanan oyun (tombala ya da bilgi yarışması), Altın PID töreni ve kase videosunun gösterimi. Teşekkür zarfları ile kübik süsleme yarışması etkinlikten önceki haftaya yayılır ve o gün sonuçlanır. Dakika dakika akış <a href="5-ek-detaylar.html">beşinci sayfada</a>.</p>
+
+  <div class="note">
+    <p><b>Katılım gönüllü olsun.</b> Sahneye çıkmak, göz bağlamak ya da fotoğraf göndermek herkes için rahat değildir. Her oyunda seyirci kalma seçeneği açıkça söylenmeli, kimse ismiyle çağrılarak zorlanmamalı.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Kaynaklar</h2>
+  <ul class="sources">
+    <li>Kaseden soru çekilen ve gidilen kişinin soruyu bilmediği biçim, taranan hiçbir yazılı kaynakta adıyla geçmiyor; bu biçime özgü bir etiket doğrulanamadı. Gördüğünüz videonun açıklamasındaki etiket ve ses, doğru adı bulmanın en hızlı yolu.</li>
+    <li>En yakın yerleşik biçim "Who's most likely to, coworker edition". Arama sonuçlarında geçen etiketler: #mostlikelyto, #coworkers, #workedition, #whosmostlikelytochallenge. TikTok sayfaları açılamadığı için içerikleri görülmedi: <a href="https://www.tiktok.com/discover/coworker-most-likely-to-questions">keşif sayfası</a>.</li>
+    <li><a href="https://newengen.com/insights/august-tiktok-trends/">New Engen, Ağustos 2026 trendleri</a>: "most likely to" biçiminin ofis sürümü; on ile on beş soruyu önceden yazma ve geniş açıyla çekme önerisi.</li>
+    <li><a href="https://newengen.com/insights/july-tiktok-trends/">New Engen, Temmuz 2026 trendleri</a>: iş arkadaşına sorulan sorunun kurguda değiştirildiği akraba biçim.</li>
+    <li><a href="https://fortune.com/2023/12/18/colleagues-film-tiktok-videos-work-brag-cold-water-swimmers-new-annoying-office-trends/">Fortune, ofiste video çekimi üzerine haber</a>: rıza almanın neden önemli olduğuna dair bağlam. Yalnızca arama özetinden.</li>
+    <li>Sorular ve etkinlik uyarlamaları bu çalışma için yazıldı. Spagetti kulesi, yaygın bilinen "marshmallow challenge" oyununun lokumlu uyarlamasıdır.</li>
+  </ul>
+</section>
+
+</div>
+</main>
+
+<div class="print-area" id="slips"></div>
+
+<footer class="wrap">HKTTM 2026 yıl sonu organizasyonu. Hazırlanma tarihi 23 Kasım 2026.</footer>
+
+<script src="common.js"></script>
+<script>
+var Q = {
+  "Ofis hayatı": [
+    "Sabahın ilk kahvesini kiminle içmek istersin?",
+    "Bilgisayarın bozulsa ilk kime gidersin?",
+    "Ofiste en güzel çayı kim demler?",
+    "Öğle yemeğinde nereye gidileceğine kim karar vermeli?",
+    "Kimin çekmecesinden mutlaka atıştırmalık çıkar?",
+    "Zor bir günde kimin yanına gidersin?",
+    "Ofisin en iyi hikâye anlatıcısı kim?",
+    "Kimin kahkahasını duyunca sen de gülersin?",
+    "Ofiste müzik seçme yetkisini kime verirsin?",
+    "Tatile çıkarken çiçeğini kime emanet edersin?",
+    "Evden kimin yaptığı keki yemek istersin?",
+    "Toplu fotoğrafı kim çekmeli?",
+    "Sunumdan önce son kontrolü kime yaptırırsın?",
+    "Uzun bir görev yolculuğunda yan koltukta kim olsun?",
+    "Masa tenisi takımına ilk kimi alırsın?",
+    "Karmaşık bir konuyu beş yaşındaki çocuğa kim anlatabilir?"
+  ],
+  "Mühendislik": [
+    "Simülasyon çalışmıyorsa kime gidersin?",
+    "PID katsayılarını gözü kapalı kim ayarlar?",
+    "Kimin çizdiği grafiği sunumuna koymak istersin?",
+    "Mars'a gidecek robotun kontrolcüsünü kime tasarlatırsın?",
+    "Ofisin en temiz lehimini kim yapar?",
+    "Formülü unutunca kime sorarsın?",
+    "Bir şeyi söküp geri takmak gerekse kimi çağırırsın?",
+    "Tasarımını ilk kime gösterip fikir alırsın?",
+    "Bir gün ders kitabı yazacak kişi kim?",
+    "Süpürgeyi avucunda en uzun kim dengede tutar?",
+    "Kaybolan alyan anahtarını kim bulur?",
+    "Hangi kısaltmanın ne demek olduğunu kim bilir?",
+    "En inatçı hatayı kim bulur?",
+    "Laboratuvarda yanında kim olsun istersin?"
+  ],
+  "Olsaydı": [
+    "Issız adaya düşsen yanında kim olsun?",
+    "Zombi istilasında takımına ilk kimi alırsın?",
+    "Bilgi yarışmasında telefon jokerin kim?",
+    "Kaçış odasından seni kim çıkarır?",
+    "Hayatta kalma yarışmasını ofisten kim kazanır?",
+    "Zaman makinesini kim icat eder?",
+    "Uzay istasyonuna ofisten kimi gönderirdik?",
+    "Ofis bir film olsa başrolde kim oynar?",
+    "Ofis bir müzik grubu olsa solist kim?",
+    "Ofise büyük ikramiye çıksa parayı kime emanet edersin?",
+    "Kampa gitsek ateşi kim yakar?",
+    "Yemek yarışmasını kim kazanır?",
+    "Yolu kaybetsek bizi kim geri getirir?",
+    "Karaoke gecesinde sahneye ilk kim çıkar?",
+    "Tek kişilik gösteriye kim çıkmalı?",
+    "Kimin anılarından kitap olur?"
+  ],
+  "Yılbaşı ve yeni yıl": [
+    "Yılbaşı çekilişinde sana kim çıksın istersin?",
+    "En güzel hediyeyi kim seçer?",
+    "Ofisin Noel Babası kim olmalı?",
+    "Yılbaşı sofrasını kim kurmalı?",
+    "Kübik süsleme yarışmasını kim kazanır?",
+    "Yeni yıl geri sayımını kim yaptırmalı?",
+    "Tombalada ilk çinkoyu kim yapar?",
+    "2026'da sana en çok kim yardım etti?",
+    "Bu yıl en çok kimden bir şey öğrendin?",
+    "2026'da seni en çok kim güldürdü?",
+    "Yeni yılda kiminle aynı projede çalışmak istersin?",
+    "2027'de kimden büyük bir iş bekliyorsun?",
+    "Altın PID bu yıl kime gitmeli?",
+    "Bu videoyu en çok kim paylaşır?"
+  ]
+};
+var all = [];
+var listEl = document.getElementById("qlist");
+Object.keys(Q).forEach(function (g) {
+  var h = document.createElement("h3");
+  h.textContent = g + " (" + Q[g].length + ")";
+  listEl.appendChild(h);
+  var ul = document.createElement("ul");
+  ul.style.cssText = "list-style:none;padding:0;margin:0";
+  Q[g].forEach(function (q) {
+    all.push(q);
+    var li = document.createElement("li");
+    li.textContent = q;
+    ul.appendChild(li);
+  });
+  listEl.appendChild(ul);
+});
+
+var bag = [];
+document.getElementById("draw").onclick = function () {
+  if (!bag.length) bag = all.slice();
+  var q = bag.splice(Math.floor(Math.random() * bag.length), 1)[0];
+  document.getElementById("drawn").textContent = q;
+};
+
+var slips = document.getElementById("slips");
+all.forEach(function (q) {
+  var d = document.createElement("div");
+  d.textContent = q;
+  slips.appendChild(d);
+});
+document.getElementById("printSlips").onclick = function () {
+  document.body.classList.add("only-print-area");
+  window.print();
+};
+window.onafterprint = function () { document.body.classList.remove("only-print-area"); };
+</script>
+</body>
+</html>

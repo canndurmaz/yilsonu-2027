@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plan ve ek detaylar: takvim, akış, bütçe, duyuru</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .past td { color: #8a9bb8; }
+  .today td { background: var(--berry-soft); }
+  .draft {
+    white-space: pre-wrap;
+    font-family: var(--body);
+    font-size: 15.5px;
+    background: var(--paper);
+    border: 1px solid var(--grid);
+    padding: 16px 18px;
+    max-width: 76ch;
+    margin: 0 0 12px;
+  }
+  .bud input { width: 120px; text-align: right; margin: 0 0 0 auto; }
+  .check { list-style: none; padding: 0; }
+  .check li { padding-left: 30px; position: relative; }
+  .check li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--ink);
+  }
+</style>
+</head>
+<body>
+<main>
+<header class="top wrap">
+  <h1>Plan ve ek detaylar</h1>
+  <p>Dört kalemin dışında kalan her şey: etkinlik gününe göre hesaplanan iş takvimi, doksan dakikalık akış, toplam bütçe, duyuru metni, aday gösterme formu ve gözden kaçabilecek hassas noktalar.</p>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2>İş takvimi</h2>
+  <div class="calc no-print">
+    <div><label for="date">Etkinlik günü</label><input type="date" id="date" style="width:190px"></div>
+  </div>
+  <p class="small">Varsayılan gün 30 Aralık 2026 Çarşamba. Tarihi değiştirince bu tablo ve kübik süsleme sayfasındaki takvim yeniden hesaplanır. Hafta sonuna denk gelen işler önceki cumaya çekilir.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Tarih</th><th>Yapılacak iş</th><th>Kalem</th></tr></thead>
+    <tbody id="plan"></tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Etkinlik günü akışı</h2>
+  <p>Doksan dakika. Mesai içinde, öğleden sonra üç ile dört buçuk arası iyi çalışır: kimse yemeğe ya da servise yetişme telaşında olmaz.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Dakika</th><th>Bölüm</th><th>Sorumlu</th><th>Gerekenler</th></tr></thead>
+    <tbody>
+      <tr><td>0 ile 10</td><td>Karşılama. Sıcak içecek köşesi açık, hediye keseleri masada dizili.</td><td>İkram sorumlusu</td><td>Termos, bardak, içerik etiketleri</td></tr>
+      <tr><td>10 ile 15</td><td>Açılış. Müdürün üç dakikalık yıl değerlendirmesi.</td><td>Sunucu</td><td>Mikrofon gerekiyorsa</td></tr>
+      <tr><td>15 ile 25</td><td>Ters sarkaç şampiyonası.</td><td>Oyun sorumlusu</td><td>Süpürge sapı, kronometre</td></tr>
+      <tr><td>25 ile 45</td><td>Tombala ya da 2026 bilgi yarışması.</td><td>Oyun sorumlusu</td><td>Tombala seti ya da soru sunumu, üç küçük ödül</td></tr>
+      <tr><td>45 ile 50</td><td>Kase videosunun gösterimi.</td><td>Video sorumlusu</td><td>Projeksiyon, ses</td></tr>
+      <tr><td>50 ile 75</td><td>Altın PID töreni. Kübik süsleme sonuçları törenin başında açıklanır.</td><td>İki sunucu</td><td>Zarflar, kupa, sertifikalar</td></tr>
+      <tr><td>75 ile 80</td><td>Toplu fotoğraf.</td><td>Fotoğrafçı</td><td>Ekranlar kapalı, tahta silinmiş</td></tr>
+      <tr><td>80 ile 90</td><td>Serbest sohbet. Teşekkür zarfları sahiplerine verilir, herkes hediye kesesini alır.</td><td>Herkes</td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>Görev dağılımı</h3>
+  <p>Beş kişi yeter: sunucu ve genel koordinasyon, satın alma ve hediye paketleme, Altın PID oylaması ve sertifikalar, oyunlar ve kübik jürisi, video ve fotoğraf. İkram bu beş kişiden birine değil, gönüllü altıncı bir kişiye verilirse etkinlik günü kimse iki işe bölünmez.</p>
+</section>
+
+<section>
+  <h2>Toplam bütçe</h2>
+  <p>Hediye tutarı birinci sayfadaki hesaptan gelir. Diğer satırlar başlangıç tahminidir; kutulara kendi rakamlarınızı yazın.</p>
+  <div class="scroll">
+  <table class="bud">
+    <thead><tr><th>Kalem</th><th>Dayanak</th><th class="num">Tutar (TL)</th></tr></thead>
+    <tbody>
+      <tr><td>Hediye paketleri</td><td><a href="1-hediye.html">Hediye sayfasındaki</a> seçimlere göre</td><td class="num"><input type="number" id="b_gift" aria-label="Hediye paketleri tutarı"></td></tr>
+      <tr><td>Altın PID ödül malzemesi</td><td>Kupa, madalya, zarf, sertifika kağıdı. Fiyatlar <a href="2-altin-pid.html">ikinci sayfada</a></td><td class="num"><input type="number" id="b_odul" aria-label="Ödül malzemesi tutarı"></td></tr>
+      <tr><td>Kübik yarışması ödülleri</td><td>Beş ödül için birer kutu çikolata</td><td class="num"><input type="number" id="b_kubik" aria-label="Kübik ödülleri tutarı"></td></tr>
+      <tr><td>Oyun malzemesi ve tombala ödülleri</td><td>Tombala seti, spagetti, bant, üç küçük ödül</td><td class="num"><input type="number" id="b_oyun" aria-label="Oyun malzemesi tutarı"></td></tr>
+      <tr><td>İkram</td><td>Sıcak içecek malzemesi; yiyecek evden gelirse düşer</td><td class="num"><input type="number" id="b_ikram" aria-label="İkram tutarı"></td></tr>
+      <tr><td>Beklenmeyen</td><td>Kargo, kesim ücreti, kırılan şeker</td><td class="num"><input type="number" id="b_diger" aria-label="Beklenmeyen giderler"></td></tr>
+    </tbody>
+    <tfoot><tr><td>Toplam</td><td id="b_per"></td><td class="num" id="b_tot"></td></tr></tfoot>
+  </table>
+  </div>
+  <p class="small">Kübik süsleme harcamaları katılımcılara aittir ve bu tabloya girmez.</p>
+</section>
+
+<section>
+  <h2>Duyuru e-postası taslağı</h2>
+  <div class="draft" id="mail"></div>
+  <p class="no-print"><button id="copyMail">Metni kopyala</button> <span class="small" id="copied" aria-live="polite"></span></p>
+</section>
+
+<section>
+  <h2>Aday gösterme formu</h2>
+  <p>Tek form, üç dakikada dolar. İsim istenmez.</p>
+  <ol>
+    <li>Her kategori için bir isim yazın. Emin olmadığınız kategoriyi boş bırakın. <span class="small">(Kategori başına bir kısa metin alanı)</span></li>
+    <li>Her isim için tek cümlelik gerekçe. Törende okunabilir. <span class="small">(İsteğe bağlı)</span></li>
+    <li>Listede olmayan, sizce verilmesi gereken bir ödül ve sahibi. <span class="small">(İsteğe bağlı; iyi fikirler sertifika olarak verilir)</span></li>
+    <li>Etkinlikte hangi oyunu tercih edersiniz: tombala, bilgi yarışması, ikisi de olur.</li>
+    <li>Gıda alerjiniz ya da ikramda dikkat etmemizi istediğiniz bir şey var mı?</li>
+  </ol>
+  <p class="small">Formun başına şu cümle konur: "Kendinizi aday gösteremezsiniz. Aday gösterilmek istemiyorsanız organizasyon ekibine yazmanız yeterli."</p>
+</section>
+
+<section>
+  <h2>Gözden kaçabilecekler</h2>
+  <div class="cols">
+    <div>
+      <h3>İnsanlar</h3>
+      <ul class="check">
+        <li>Etkinlik günü izinde, görevde ya da uzaktan çalışanlar için hediye paketi ayrıldı.</li>
+        <li>Aday listesine son üç ayda katılanlar ve stajyerler de eklendi.</li>
+        <li>Duyuruda "yıl sonu buluşması" dili kullanıldı; katılım ve kıyafet serbest.</li>
+        <li>Ayakta oynanan her oyunun oturarak izlenebilir bir rolü var: hakem, süre tutan.</li>
+        <li>Hediye çekilişi yapılacaksa tavan fiyat yazıldı ve katılım ayrıca soruldu.</li>
+      </ul>
+      <h3>Yiyecek</h3>
+      <ul class="check">
+        <li>Kurabiyenin alerjenleri (gluten, yumurta, süt, susam, fındık) paketin yanında yazıyor.</li>
+        <li>Şeker kullanmayanlar için hediye paketinde şekersiz bir seçenek var: çay poşeti, kuruyemiş.</li>
+        <li>Evden gelen ikramların yanına içerik etiketi kondu.</li>
+        <li>Alkol yok.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Kurum</h3>
+      <ul class="check">
+        <li>Video çekimi ve paylaşımı için güvenlik ve kurumsal iletişim onayı alındı.</li>
+        <li>Fotoğraf ve videolarda ekran, tahta, çizim, donanım ve yaka kartı görünmüyor.</li>
+        <li>Salon ve projeksiyon ayırtıldı, bir gün önce denendi.</li>
+        <li>Komşu birimlere gürültü için haber verildi; isterlerse davet edildiler.</li>
+        <li>Kübik kuralları bina yönetimi ve iş güvenliği uzmanıyla paylaşıldı.</li>
+        <li>Harcamalar için kimin ödeyeceği ve fişlerin kime verileceği belli.</li>
+      </ul>
+      <h3>Sonrası</h3>
+      <ul class="check">
+        <li>İki gün içinde teşekkür e-postası ve fotoğraflar gönderildi.</li>
+        <li>Üç soruluk anket: en çok neyi sevdiniz, neyi çıkaralım, seneye ne ekleyelim.</li>
+        <li>Altın PID kazananlarının listesi ve kupa bir yere kaydedildi; seneye devredilecek.</li>
+        <li>Artan malzeme, tombala seti ve süsler etiketli bir kolide saklandı.</li>
+        <li>Bu sayfalar ve harcama dökümü seneki ekip için arşivlendi.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Kese doldurma hattı</h2>
+  <p>Elli keseyi doldurmak, etkinlikten iki gün önce yarım saatlik bir toplantı odası işidir. Masaya kalemleri sırayla dizin ve dört istasyon kurun; mühendisler hat dengelemeyi sever.</p>
+  <ol>
+    <li><b>Hazırlık:</b> çoraplar rulo yapılıp kurdeleyle bağlanır, tealight mumlar ikişerli ayrılır, kartlar delinir.</li>
+    <li><b>Ağır ve düz olanlar:</b> defter keseye dik konur, çorap ve mum yanına yerleştirilir.</li>
+    <li><b>Kırılacaklar:</b> salep ve sıcak çikolata saşeleri, kalem, en üste gingerbread ve baston şeker.</li>
+    <li><b>Kapatma:</b> büzgü çekilir, kart ipe geçirilir, kurdele bağlanır. Keseler koliye dik dizilir.</li>
+  </ol>
+  <p>Baston şeker ve gingerbread en son girer ve keseler üst üste konmaz; ikisi de kolay kırılır. Gıda alerjisi bildiren kişilerin keseleri ayrı hazırlanıp işaretlenir.</p>
+</section>
+
+</div>
+</main>
+<footer class="wrap">HKTTM 2026 yıl sonu organizasyonu. Hazırlanma tarihi 23 Kasım 2026.</footer>
+
+<script src="common.js"></script>
+<script>
+var dateEl = document.getElementById("date");
+dateEl.value = HK.get("date", "2026-12-30");
+var TODAY = new Date(); TODAY.setHours(12, 0, 0, 0);
+
+function wd(d) { var x = new Date(d); while (x.getDay() === 0 || x.getDay() === 6) x.setDate(x.getDate() - 1); return x; }
+function fmt(d) { return d.toLocaleDateString("tr-TR", { day: "numeric", month: "long", weekday: "long" }); }
+function short(d) { return d.toLocaleDateString("tr-TR", { day: "numeric", month: "long" }); }
+
+var TASKS = [
+  [-35, "LÖSEV kurumsal iletişime yazın: yılbaşı ürünü, toplu fiyat, teslim tarihi.", "Hediye"],
+  [-35, "Video çekimi için güvenlik ve kurumsal iletişimden onay isteyin. Salonu ayırtın, bütçeyi onaylatın.", "Genel"],
+  [-30, "Altın PID kategorilerini seçin, aday gösterme formunu hazırlayın.", "Altın PID"],
+  [-28, "Duyuru e-postasını gönderin: etkinlik günü, kübik kuralları, form bağlantısı.", "Genel"],
+  [-26, "Kart tasarımını seçin; matbaadan basılacaksa siparişi verin.", "Hediye"],
+  [-30, "İsimli kalem için satıcıdan yazılı teyit alın: her kaleme farklı isim, teslim günü.", "Hediye"],
+  [-23, "Kese, baston şeker, içecek saşeleri, çorap, defter ve kalem siparişlerini verin.", "Hediye"],
+  [-19, "Kübik yarışması için son kayıt. Jüriyi belirleyin.", "Kübik"],
+  [-16, "Kübik kurulumu başlar. Altın PID kupasının baskısına başlayın.", "Kübik"],
+  [-14, "Aday gösterme formu kapanır. Sonuçları iki kişilik komite sayar.", "Altın PID"],
+  [-13, "Kase videosunu çekin: sorular basılmış, kase ve baston şekerler hazır.", "Video"],
+  [-9, "Gingerbread ve LÖSEV kurabiyesi siparişini verin; teslimat etkinlikten üç dört gün önceye gelsin.", "Hediye"],
+  [-7, "Kübik kurulumu biter. Sertifikaları bastırın, zarfları hazırlayın.", "Kübik"],
+  [-6, "Videonun kurgusu biter; görünen herkese gösterip onay alın.", "Video"],
+  [-5, "Tombala seti, oyun malzemesi ve küçük ödülleri alın.", "Etkinlik"],
+  [-2, "Kübik jüri turu ve fotoğraflar. Altın PID kazananlarına sahne için ön soru. Keselerin doldurulması.", "Genel"],
+  [-1, "Salon hazırlığı: projeksiyon ve ses denemesi, masa düzeni, içecek köşesi.", "Genel"],
+  [0, "Etkinlik günü.", "Genel"],
+  [2, "Teşekkür e-postası, fotoğraflar ve üç soruluk anket.", "Genel"]
+];
+
+function render() {
+  var ev = new Date(dateEl.value + "T12:00:00");
+  if (isNaN(ev)) return;
+  HK.set("date", dateEl.value);
+  var rows = TASKS.map(function (t) {
+    var d = new Date(ev); d.setDate(d.getDate() + t[0]);
+    return [t[0] > 0 ? d : wd(d), t[1], t[2]];
+  });
+  rows.push([wd(new Date(ev.getFullYear() + (ev.getMonth() === 11 ? 1 : 0), 0, 8, 12)), "Kübik süslerinin sökümü için son gün.", "Kübik"]);
+  var late = 0;
+  document.getElementById("plan").innerHTML = rows.map(function (r) {
+    var past = r[0] < TODAY;
+    if (past) late++;
+    return '<tr class="' + (past ? "past" : "") + '"><td>' + fmt(r[0]) + (past ? " (geçti, hemen yapın)" : "") + "</td><td>" + r[1] + "</td><td>" + r[2] + "</td></tr>";
+  }).join("");
+
+  var d28 = new Date(ev); d28.setDate(d28.getDate() - 14);
+  var d19 = new Date(ev); d19.setDate(d19.getDate() - 19);
+  var d16 = new Date(ev); d16.setDate(d16.getDate() - 16);
+  var cap = HK.get("cap", "250");
+  document.getElementById("mail").textContent =
+    "Konu: " + short(ev) + " yıl sonu buluşması, Altın PID ödülleri ve kübik süsleme yarışması\n\n" +
+    "Merhaba,\n\n" +
+    "2026'yı " + fmt(ev) + " günü saat 15.00'te [salon adı]'nda birlikte kapatıyoruz. Program doksan dakika sürecek: kısa oyunlar, ikram ve bu yıl ilk kez verilecek Altın PID ödülleri.\n\n" +
+    "Sizden üç şey rica ediyoruz:\n\n" +
+    "1. Altın PID için aday gösterin. Form isimsizdir ve üç dakika sürer: [form bağlantısı]. Son gün " + short(wd(d28)) + ". Kategorilerin hepsi teşekkür niteliğindedir. Aday gösterilmek istemezseniz bize yazmanız yeterli.\n\n" +
+    "2. Kübik süsleme yarışmasına katılmak isterseniz " + short(wd(d19)) + " gününe kadar adınızı bildirin. Kişi başı harcama tavanı " + cap + " TL, süsler panel üst kenarını en çok 15 cm aşabilir, yalnızca pilli ışık kullanılabilir. Kurulum " + short(wd(d16)) + " günü başlar ve mesai dışında yapılır. Kuralların tamamı ekte.\n\n" +
+    "3. İkramda dikkat etmemizi istediğiniz bir alerji ya da tercih varsa formun son sorusuna yazın.\n\n" +
+    "Katılım tümüyle gönüllüdür; oyunlara girmeden izlemek de serbest. O gün ofiste olamayacaksanız haber verin, hediye paketinizi ayıralım.\n\n" +
+    "Görüşmek üzere,\n[Organizasyon ekibi]";
+}
+dateEl.onchange = render;
+render();
+
+document.getElementById("copyMail").onclick = function () {
+  var txt = document.getElementById("mail").textContent, msg = document.getElementById("copied");
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(function () { msg.textContent = "Kopyalandı."; }, function () { msg.textContent = "Kopyalanamadı; metni elle seçin."; });
+  } else {
+    msg.textContent = "Tarayıcı izin vermedi; metni elle seçin.";
+  }
+};
+
+// Bütçe
+var n = parseInt(HK.get("n", "50"), 10) || 50;
+var DEF = { gift: HK.get("gift", "11888"), odul: "1500", kubik: "750", oyun: "1000", ikram: String(n * 60), diger: "500" };
+function sum() {
+  var t = 0;
+  Object.keys(DEF).forEach(function (k) {
+    var el = document.getElementById("b_" + k);
+    t += parseFloat(el.value) || 0;
+    if (k !== "gift") HK.set("b_" + k, el.value);
+  });
+  document.getElementById("b_tot").textContent = HK.tl(t);
+  document.getElementById("b_per").textContent = n + " kişi için kişi başı " + HK.tl(t / n);
+}
+Object.keys(DEF).forEach(function (k) {
+  var el = document.getElementById("b_" + k);
+  el.value = k === "gift" ? DEF.gift : HK.get("b_" + k, DEF[k]);
+  el.oninput = sum;
+});
+sum();
+</script>
+</body>
+</html>

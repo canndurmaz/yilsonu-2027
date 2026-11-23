@@ -1,0 +1,141 @@
+% HKTTM 2027 masa takvimi: karton ayak şablonu
+% Derleme: pdflatex takvim-ayak.tex (iki kez)
+% Sayfa 1: A3 dikey kesim ve katlama şablonu (gerçek boyut, ölçeklemeden basın).
+% Sayfa 2: montaj talimatı ve yan görünüş.
+%
+% Ayak tek parça bir şerittir: yapıştırma payı, taban, arka yüz, ön yüz.
+% Katlanınca üçgen prizma olur; takvim sayfaları tepe katındaki spirale asılır.
+\documentclass[10pt]{article}
+\usepackage[paperwidth=297mm,paperheight=420mm,margin=0mm]{geometry}
+\input{takvim-ortak}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\tikzset{
+  kes/.style={lacivert,line width=0.8pt},
+  katla/.style={lacivert,line width=0.6pt,dash pattern=on 4mm off 2mm},
+  olcu/.style={yumusak,line width=0.4pt,<->,>={Stealth[length=2.2mm]}},
+  not/.style={font=\fontsize{8}{10}\selectfont,text=yumusak},
+}
+
+\begin{document}
+% =================== Sayfa 1: şablon ===================
+\begin{tikzpicture}[remember picture,overlay,x=1mm,y=1mm,
+    shift={([xshift=41.5mm,yshift=10.5mm]current page.south west)}]
+  % y: 0-15 pay, 15-95 taban, 95-247 arka yüz, 247-399 ön yüz
+  % --- baskı alanları ---
+  \fill[zemin] (0,0) rectangle (214,95);
+  \fill[zemin] (0,95) rectangle (214,247);
+  \fill[lacivert] (0,247) rectangle (214,399);
+
+  % --- arka yüz: logo, başlık ve yıl özeti (şerit yönünde düz durur) ---
+  \node[anchor=north west,inner sep=0pt] at (10,239) {\Logo{52mm}};
+  \node[anchor=north east,inner sep=0pt,align=right] at (204,239)
+    {{\Dar\bfseries\fontsize{30}{30}\selectfont\color{lacivert}2027}\\[1mm]
+     {\Dar\fontsize{11}{12}\selectfont\color{yumusak}Kontrol teorisi takvimi}};
+  \foreach \ay in {1,...,12}{
+    \pgfmathtruncatemacro{\sutun}{mod(\ay-1,4)}
+    \pgfmathtruncatemacro{\satir}{(\ay-1)/4}
+    \node[anchor=north west,inner sep=0pt] at (10+\sutun*49.5,211-\satir*37.5) {%
+      \begin{minipage}[t]{45mm}
+        {\Dar\bfseries\fontsize{9}{9}\selectfont\color{lacivert}\AyAdi{\ay}}\par\vspace{0.6mm}
+        \AyIzgara{\ay}{6.4mm}{4.1mm}{\fontsize{6.3}{6.3}\selectfont}
+      \end{minipage}};
+  }
+
+  % --- ön yüz: sayfaların altında kalır; ters basılır ki ayakta düz dursun ---
+  \node[rotate=180,inner sep=0pt] at (107,318) {\Logo{150mm}};
+  \node[rotate=180,inner sep=0pt] at (107,372)
+    {\Dar\bfseries\fontsize{26}{26}\selectfont\color{buz}2027\quad Kontrol teorisi takvimi};
+
+  % --- taban ve pay ---
+  \node[not] at (107,55) {TABAN (masaya oturur)};
+  \node[not] at (107,7.5) {YAPIŞTIRMA PAYI: ön yüzün alt kenarının içine yapıştırılır};
+
+  % --- spiral delik yerleri: tepe katının iki yanında, sayfa delikleriyle aynı aralıkta ---
+  \foreach \k in {0,...,12}{
+    \draw[yumusak,line width=0.3pt] (2+15+15*\k,247-6.5) circle[radius=1.6];
+    \draw[buz,line width=0.3pt] (2+15+15*\k,247+6.5) circle[radius=1.6];
+  }
+
+  % --- kesim ve katlama çizgileri ---
+  \draw[kes] (0,0) rectangle (214,399);
+  \draw[katla] (0,15)--(214,15);
+  \draw[katla] (0,95)--(214,95);
+  \draw[katla,buz] (0,247)--(214,247);
+  \draw[katla] (-6,247)--(0,247) (214,247)--(220,247);
+
+  % --- ölçüler ---
+  \draw[olcu] (-12,0)--(-12,15) node[midway,left,not]{15};
+  \draw[olcu] (-12,15)--(-12,95) node[midway,left,not]{80};
+  \draw[olcu] (-12,95)--(-12,247) node[midway,left,not]{152};
+  \draw[olcu] (-12,247)--(-12,399) node[midway,left,not]{152};
+  \draw[olcu] (0,404)--(214,404) node[midway,above,not]{214 mm};
+  \node[not,anchor=west,rotate=90] at (226,0) {Düz çizgi: kes \quad Kesikli çizgi: katla (baskılı yüz dışta kalacak biçimde)
+    \quad Daireler: spiral delik yerleri \quad Ölçeklemeden, gerçek boyutta basın.};
+  \node[not,anchor=west,rotate=90] at (-28,95) {ARKA YÜZ};
+  \node[not,anchor=west,rotate=90] at (-28,247) {ÖN YÜZ (sayfaların altı)};
+  \node[not,anchor=west,rotate=90] at (-28,247-9) {tepe katı};
+\end{tikzpicture}
+\mbox{}\newpage
+
+% =================== Sayfa 2: montaj ===================
+\pagecolor{white}
+\hspace*{30mm}\begin{minipage}[t][380mm][t]{237mm}
+\vspace*{30mm}
+{\Dar\bfseries\fontsize{40}{42}\selectfont\color{lacivert}Karton ayak montajı}\par\vspace{3mm}
+{\fontsize{13}{17}\selectfont\color{yumusak}2027 kontrol teorisi masa takvimi için tek parça üçgen ayak.}\par
+\vspace{12mm}
+
+\begin{minipage}[t]{112mm}
+\vspace{0pt}
+\fontsize{12}{17}\selectfont\color{lacivert}
+{\Dar\bfseries\fontsize{18}{20}\selectfont Malzeme}\par\vspace{2mm}
+\begin{itemize}\setlength{\itemsep}{1mm}\setlength{\leftskip}{-4mm}
+  \item Şablon: A3, 300--350 g mat kuşe ya da bristol, tek yön, gerçek boyut.
+  \item Daha sağlam ayak için baskıyı 1,5 mm gri mukavvaya sıvatın; kat yerlerine mukavva tarafından yarım kesik (pilyaj) atılır.
+  \item Çift taraflı bant ya da tutkal, maket bıçağı, çelik cetvel.
+  \item 13 takvim sayfası ve spiral cilt (matbaa ya da kırtasiye).
+\end{itemize}
+\vspace{6mm}
+{\Dar\bfseries\fontsize{18}{20}\selectfont Adımlar}\par\vspace{2mm}
+\begin{enumerate}\setlength{\itemsep}{1.5mm}\setlength{\leftskip}{-4mm}
+  \item Dış çerçeveyi düz çizgiden kesin: 214 $\times$ 399 mm tek şerit.
+  \item Üç kesikli çizgiyi cetvel ve kör bıçak sırtıyla ezin (pilyaj), sonra baskılı yüz dışta kalacak biçimde katlayın.
+  \item Takvim sayfalarını ön yüzün üstüne hizalayın: sayfaların üst kenarı tepe katına gelir, iki yanda 2 mm pay kalır.
+  \item Spirali, sayfalarla birlikte ayağın tepe katının iki yanındaki delik sırasından geçirtin. Ciltçi kendi delik aralığını kullanır; dairelerin konumu yalnızca hizayı gösterir (kattan 6,5 mm).
+  \item Yapıştırma payını ön yüzün alt kenarının iç tarafına yapıştırın. Üçgen kapanır.
+  \item Her ay sonunda sayfayı tepeden arkaya çevirin. Arka yüzdeki yıl özeti arkadan görünür.
+\end{enumerate}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{112mm}
+\vspace{0pt}
+{\Dar\bfseries\fontsize{18}{20}\selectfont\color{lacivert}Yan görünüş}\par\vspace{4mm}
+% Üçgen: taban 80, yüzler 152; tepe yüksekliği sqrt(152^2 - 40^2) = 146,6 mm; taban açısı 74,7 derece
+\begin{tikzpicture}[x=0.62mm,y=0.62mm]
+  \coordinate (A) at (0,0); \coordinate (B) at (80,0); \coordinate (C) at (40,146.6);
+  \fill[zemin] (A)--(B)--(C)--cycle;
+  \draw[lacivert,line width=1.6pt,line join=round] (A)--(B)--(C)--cycle;
+  \draw[kizil,line width=1.2pt] ($(C)+(-1.2,2)$)--($(A)+(-5.5,6)$);
+  \draw[lacivert,line width=1pt] (C) circle[radius=3.2];
+  \draw[yumusak,line width=0.6pt] (-30,0)--(125,0);
+  \draw[olcu] (0,-9)--(80,-9) node[midway,below,not]{taban 80 mm};
+  \draw[olcu] (104,0)--(104,146.6) node[midway,right,not,align=left]{tepe\\146,6 mm};
+  \draw[yumusak,line width=0.4pt,dashed] (C)--(104,146.6);
+  \draw[yumusak,line width=0.5pt] (14,0) arc[start angle=0,end angle=74.7,radius=14];
+  \node[not,anchor=west] at (15,7) {$74{,}7^\circ$};
+  \node[not,anchor=east,align=right] at (8,82) {ön yüz 152 mm\\[0.5mm]\color{kizil}takvim sayfaları};
+  \node[not,anchor=west] at (66,70) {arka yüz 152 mm};
+  \node[not,anchor=west] at (46,153) {spiral};
+  \node[not,anchor=west,align=left] at (60,9) {yapıştırma payı\\ön yüzün içinde};
+  \draw[lacivert,line width=1.6pt] ($(A)+(1.6,1.2)$)--($(A)+(5.6,14.5)$);
+\end{tikzpicture}
+\par\vspace{8mm}
+{\fontsize{11}{15.5}\selectfont\color{yumusak}\raggedright
+Taban açısı $\arccos(40/152)\approx 74{,}7^\circ$: sayfa masada oturan birine hafif geriye yatık durur.
+Daha yatık bir takvim için taban genişletilir; bunun için şablondaki 15, 95, 247 ve 399 mm sınırları
+birlikte kaydırılmalıdır.\par}
+\end{minipage}
+\end{minipage}
+\end{document}

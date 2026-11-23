@@ -1,0 +1,72 @@
+% HKTTM 2027 kontrol teorisi takvimi: duvar posteri
+% Derleme: pdflatex takvim-poster.tex (iki kez)
+% Sayfa: A2 dikey (420 x 594 mm). A3'e basmak için yazdırırken "sayfaya sığdır" seçin;
+% oranlar aynıdır, yazılar yüzde 71'e küçülür ve okunur kalır.
+\documentclass[10pt]{article}
+\usepackage[paperwidth=420mm,paperheight=594mm,margin=0mm]{geometry}
+\input{takvim-ortak}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\renewcommand{\GrafikYazi}{\fontsize{9}{10.5}\selectfont}
+
+% Bir ay kartı: 120 mm genişlik
+\newcommand{\AyKarti}[1]{%
+  \begin{minipage}[t]{120mm}
+    {\Dar\bfseries\fontsize{30}{30}\selectfont\color{lacivert}\AyAdi{#1}\hfill
+     \fontsize{13}{13}\selectfont\color{mavi}\ifnum#1<10 0\fi#1}\par
+    \vspace{0.8mm}
+    {\color{lacivert}\rule{120mm}{1.2pt}}\par
+    \vspace{2mm}
+    \begin{minipage}[t]{52mm}
+      \vspace{0pt}
+      {\setlength{\fboxsep}{0pt}\colorbox{lacivert}{\begin{minipage}[t][72.8mm][t]{52mm}
+        \vspace{2.5mm}
+        \hspace*{2mm}{\Dar\bfseries\fontsize{14}{15}\selectfont\color{buz}\AyKavram{#1}}\par
+        \vspace{1.5mm}
+        \centering\AyGrafik{#1}{36mm}{45mm}\par
+      \end{minipage}}}\par
+      \vspace{2mm}
+      \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{64mm}
+      \vspace{0pt}
+      \AyIzgara{#1}{9.1mm}{10.4mm}{\fontsize{13.5}{13.5}\selectfont}\par
+    \end{minipage}\par
+    \vspace{1.5mm}
+    {\fontsize{10.5}{13}\selectfont\color{lacivert}\AyFormul{#1}\hfill}\par\vspace{1.5mm}
+    {\fontsize{10.5}{13}\selectfont\color{yumusak}\raggedright\AySoz{#1}\par}
+  \end{minipage}}
+
+\begin{document}
+\pagecolor{zemin}
+% ---------- Başlık ----------
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[lacivert] (current page.north west) rectangle ([yshift=-118mm]current page.north east);
+  \node[anchor=north west,inner sep=0pt] at ([xshift=20mm,yshift=-18mm]current page.north west) {%
+    \begin{minipage}{200mm}\color{white}
+      {\Dar\bfseries\fontsize{190}{160}\selectfont\color{buz}2027}\par\vspace{7mm}
+      {\Dar\bfseries\fontsize{40}{42}\selectfont Kontrol teorisi takvimi}\par\vspace{2mm}
+      {\fontsize{15}{19}\selectfont\color{soluk}Hareket Kontrol Teknolojileri Tasarım Müdürlüğü}
+    \end{minipage}};
+  \node[anchor=north east,inner sep=0pt] at ([xshift=-20mm,yshift=-13mm]current page.north east)
+    {\Logo{100mm}};
+  \node[anchor=south east,inner sep=0pt] at ([xshift=-20mm,yshift=-112mm]current page.north east) {%
+    {\renewcommand{\GrafikYazi}{\fontsize{13}{15}\selectfont}\AyGrafik{1}{150mm}{44mm}}};
+\end{tikzpicture}
+\vspace*{124mm}
+
+% ---------- Aylar: 3 sütun x 4 satır ----------
+\hspace*{20mm}\begin{minipage}{380mm}
+\AyKarti{1}\hfill\AyKarti{2}\hfill\AyKarti{3}\par\vspace{4mm}
+\AyKarti{4}\hfill\AyKarti{5}\hfill\AyKarti{6}\par\vspace{4mm}
+\AyKarti{7}\hfill\AyKarti{8}\hfill\AyKarti{9}\par\vspace{4mm}
+\AyKarti{10}\hfill\AyKarti{11}\hfill\AyKarti{12}\par
+\vspace{5mm}
+{\color{lacivert}\rule{380mm}{1.2pt}}\par\vspace{2.5mm}
+{\fontsize{10.5}{13}\selectfont\color{yumusak}%
+\tikz[baseline=-0.6ex]{\fill[kizil] (0,0) circle[radius=1.6mm];} Resmi tatil\quad
+\tikz[baseline=-0.6ex]{\draw[kizil,line width=0.7pt] (0,0) circle[radius=1.6mm];} Yarım gün\quad
+Ramazan Bayramı 9--11 Mart, Kurban Bayramı 16--19 Mayıs (Diyanet 2027 takvimine göre).\hfill
+Aşımınız az, kazancınız bol, sisteminiz kararlı olsun.}
+\end{minipage}
+\end{document}

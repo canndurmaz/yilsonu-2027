@@ -1,0 +1,119 @@
+% HKTTM 2027 kontrol teorisi masa takvimi (pafta düzeni)
+% Derleme: pdflatex takvim-masa.tex (iki kez)
+% Sayfa: 210 x 148 mm (A5 yatay), 13 sayfa: kapak ve 12 ay.
+% Baskı: 250-300 g mat kuşe, tek yön, gerçek boyut. Üstteki 13 mm spiral içindir.
+% Ayak şablonu: takvim-ayak.tex
+\documentclass[10pt]{article}
+\usepackage[paperwidth=210mm,paperheight=148mm,margin=0mm]{geometry}
+\input{takvim-ortak}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\renewcommand{\GrafikYazi}{\fontsize{8}{9.5}\selectfont}
+\newsavebox{\KG}\newsavebox{\KI}\newsavebox{\KO}\newsavebox{\KS}\newsavebox{\KL}
+
+\tikzset{
+  hat/.style={buz,line width=1.3pt,line join=round},
+  ok/.style={-{Stealth[length=3mm,width=2.4mm]}},
+  yazi/.style={font=\fontsize{6.5}{8}\selectfont\ttfamily,text=soluk,inner sep=1pt},
+  koyuyazi/.style={font=\fontsize{6.5}{8}\selectfont\ttfamily,text=yumusak,inner sep=1pt},
+}
+
+% Yılın gün sayısı olarak ay sonu
+\newcommand{\AySonuGun}[1]{\ifcase#1 0\or 31\or 59\or 90\or 120\or 151\or 181\or 212\or 243\or 273\or 304\or 334\or 365\fi}
+
+% Ortak zemin: solda lacivert pafta, sağda milimetrik kağıt, üstte spiral delik hizası
+\newcommand{\Zemin}{%
+  \fill[lacivert] (0,0) rectangle (84,148);
+  \fill[zemin] (84,0) rectangle (210,148);
+  \foreach \x in {4,9,...,84}{\draw[kareli,line width=0.25pt] (\x,0)--(\x,148);}
+  \foreach \y in {3,8,...,148}{\draw[kareli,line width=0.25pt] (0,\y)--(84,\y);}
+  \foreach \x in {89,94,...,209}{\draw[izgara!55!zemin,line width=0.25pt] (\x,0)--(\x,148);}
+  \foreach \y in {3,8,...,148}{\draw[izgara!55!zemin,line width=0.25pt] (84,\y)--(210,\y);}
+  \foreach \k in {0,...,12}{\fill[white] (15+15*\k,141.5) circle[radius=1.6];
+    \draw[izgara,line width=0.3pt] (15+15*\k,141.5) circle[radius=1.6];}}
+
+\newcommand{\AySayfasi}[1]{%
+  \pgfmathtruncatemacro{\onceki}{ifthenelse(#1==1,12,#1-1)}%
+  \pgfmathtruncatemacro{\sonraki}{ifthenelse(#1==12,1,#1+1)}%
+  \pgfmathtruncatemacro{\yuzde}{round(\AySonuGun{#1}/3.65)}%
+  \sbox{\KG}{\AyGrafik{#1}{50mm}{33mm}}%
+  \sbox{\KI}{\tkHaftatrue\tkGunNotrue\renewcommand{\HaftaYazi}{\fontsize{5.6}{6}\selectfont\ttfamily}%
+    \AyIzgara[masa]{#1}{15.1mm}{14.4mm}{\fontsize{11}{11}\selectfont}}%
+  \sbox{\KO}{\renewcommand{\RenkGun}{buz}\renewcommand{\RenkHS}{gul}\renewcommand{\RenkBaslik}{soluk}%
+    \renewcommand{\RenkCizgi}{soluk}\renewcommand{\RenkOzel}{nane}\renewcommand{\RenkYarim}{gul}%
+    \ifnum#1=1 \renewcommand{\TakvimYil}{2026}\fi
+    \AyIzgara{\onceki}{4.6mm}{2.9mm}{\fontsize{5.4}{5.4}\selectfont}}%
+  \sbox{\KS}{\renewcommand{\RenkGun}{buz}\renewcommand{\RenkHS}{gul}\renewcommand{\RenkBaslik}{soluk}%
+    \renewcommand{\RenkCizgi}{soluk}\renewcommand{\RenkOzel}{nane}\renewcommand{\RenkYarim}{gul}%
+    \ifnum#1=12 \renewcommand{\TakvimYil}{2028}\fi
+    \AyIzgara{\sonraki}{4.6mm}{2.9mm}{\fontsize{5.4}{5.4}\selectfont}}%
+  \sbox{\KL}{\Logo{30mm}}%
+  \begin{tikzpicture}[remember picture,overlay,x=1mm,y=1mm,shift={(current page.south west)}]
+    \Zemin
+    % ---------- sol: blok ----------
+    \node[draw=buz,line width=0.7pt,text=buz,inner sep=1.3mm,anchor=north west,
+          font=\fontsize{9}{9}\selectfont\ttfamily] (etiket) at (8,133) {$G_{\ifnum#1<10 0\fi#1}(s)$};
+    \node[yazi,anchor=west,text=buz] at ([xshift=2mm]etiket.east) {BLOK \ifnum#1<10 0\fi#1 / 12};
+    \node[anchor=north west,inner sep=0pt,text=mavi] at (8.7,124.3) {\Dar\bfseries\fontsize{42}{42}\selectfont\AyAdi{#1}};
+    \node[anchor=north west,inner sep=0pt,text=white] at (8,125) {\Dar\bfseries\fontsize{42}{42}\selectfont\AyAdi{#1}};
+    \node[anchor=north west,inner sep=0pt,text=buz] at (8,108.5) {\Dar\fontsize{14}{14}\selectfont\AyKavram{#1}};
+    \node[anchor=north west,inner sep=0pt] (g) at (8,101) {\usebox{\KG}};
+    % giriş ve çıkış hattı
+    \draw[hat,ok] (0,80)--(7.2,80); \node[yazi,text=buz,anchor=south west] at (0.8,80.8) {$u$};
+    \draw[hat,ok] ([xshift=1.2mm]g.east |- 0,80)--(88,80);
+    \node[yazi,text=buz,anchor=south east] at (83,80.8) {$y$};
+    \node[anchor=north west,inner sep=0pt,text=buz] at (8,54.5) {\fontsize{10}{12}\selectfont\AyFormul{#1}};
+    \node[anchor=north west,inner sep=0pt,text=soluk,text width=68mm] at (8,42.5)
+      {\fontsize{9}{11.5}\selectfont\raggedright\AySoz{#1}};
+    % önceki ve sonraki ay
+    \draw[mavi,line width=0.5pt] (8,29.5)--(76,29.5);
+    \node[yazi,anchor=north west,text=buz] at (8,28.6) {$\blacktriangleleft$ \AyAdi{\onceki}\ifnum#1=1\ 2026\fi};
+    \node[yazi,anchor=north east,text=buz] at (76,28.6) {\AyAdi{\sonraki}\ifnum#1=12\ 2028\fi\ $\blacktriangleright$};
+    \node[anchor=north west,inner sep=0pt] at (8,25.5) {\usebox{\KO}};
+    \node[anchor=north east,inner sep=0pt] at (76,25.5) {\usebox{\KS}};
+    % ---------- sağ: ay ----------
+    \node[anchor=north west,inner sep=0pt,text=lacivert] at (98.6,133)
+      {\Dar\bfseries\fontsize{17}{17}\selectfont\AyAdi{#1} 2027};
+    \node[koyuyazi,anchor=north west] at (98.6,125.4) {$x_{#1}(t)$ \textbullet\ H: ISO haftası \textbullet\ köşede yılın günü};
+    \node[anchor=north east,inner sep=0pt] at (204.5,134.5) {\usebox{\KL}};
+    \node[anchor=north east,inner sep=0pt] at (204.5,120.5) {\usebox{\KI}};
+    % yıl çubuğu
+    \foreach \k in {1,...,12}{
+      \ifnum\k<#1 \fill[mavi] (98.6+\k*8.825-8.825,6.5) rectangle ++(8.825,5.5);\fi
+      \ifnum\k=#1 \fill[lacivert] (98.6+\k*8.825-8.825,6.5) rectangle ++(8.825,5.5);\fi
+      \draw[lacivert,line width=0.5pt] (98.6+\k*8.825-8.825,6.5) rectangle ++(8.825,5.5);
+      \node[font=\fontsize{6.5}{6.5}\selectfont\ttfamily,inner sep=0pt,
+            text=\ifnum\k>#1 lacivert\else white\fi] at (98.6+\k*8.825-4.41,9.25) {\k};}
+    \node[koyuyazi,anchor=south west] at (98.6,12.8) {ay sonunda $t=\AySonuGun{#1}/365$ gün \textbullet\ yılın \%\yuzde'i tamam};
+  \end{tikzpicture}\mbox{}\newpage}
+
+\begin{document}
+% ---------- Kapak ----------
+\sbox{\KG}{\AyGrafik{1}{58mm}{34mm}}\sbox{\KL}{\Logo{78mm}}%
+\begin{tikzpicture}[remember picture,overlay,x=1mm,y=1mm,shift={(current page.south west)}]
+  \fill[lacivert] (0,0) rectangle (210,148);
+  \foreach \x in {4,9,...,209}{\draw[kareli,line width=0.25pt] (\x,0)--(\x,148);}
+  \foreach \y in {3,8,...,148}{\draw[kareli,line width=0.25pt] (0,\y)--(210,\y);}
+  \foreach \k in {0,...,12}{\fill[white] (15+15*\k,141.5) circle[radius=1.6];}
+  \draw[buz,line width=0.9pt] (7,7) rectangle (203,134);
+  \node[anchor=south west,inner sep=0pt,text=mavi] at (14.9,42.1) {\Dar\bfseries\fontsize{110}{110}\selectfont 2027};
+  \node[anchor=south west,inner sep=0pt,text=buz] at (14,43) {\Dar\bfseries\fontsize{110}{110}\selectfont 2027};
+  \node[anchor=north west,inner sep=0pt,text=white] at (14,39) {\Dar\bfseries\fontsize{24}{24}\selectfont Kontrol teorisi takvimi};
+  \node[anchor=north west,inner sep=0pt,text=soluk,text width=110mm] at (14,28)
+    {\fontsize{9.5}{12.5}\selectfont Hareket Kontrol Teknolojileri Tasarım Müdürlüğü\par
+     On iki ay, on iki blok, tek kapalı çevrim. Aşımınız az, kazancınız bol olsun.};
+  \node[anchor=north east,inner sep=0pt] at (197,128) {\usebox{\KL}};
+  \node[anchor=south east,inner sep=0pt] at (197,40) {\usebox{\KG}};
+  % küçük kapalı çevrim
+  \node[circle,draw=buz,line width=1pt,minimum size=5.4mm,inner sep=0pt,text=buz,font=\fontsize{8}{8}\selectfont] (S) at (26,112) {$\Sigma$};
+  \node[draw=buz,line width=1pt,fill=gece,text=buz,inner sep=2mm,font=\fontsize{9}{9}\selectfont] (G) at (62,112) {$G_{01}\cdots G_{12}$};
+  \draw[hat,ok] (10,112)--(S); \draw[hat,ok] (S)--(G); \draw[hat,ok] (G)--(104,112);
+  \draw[hat,ok] (92,112)--(92,99)--(26,99)--(S);
+  \node[yazi,text=buz,anchor=south west] at (10,113.2) {$r$};
+  \node[yazi,text=buz,anchor=south] at (98,113) {$y$};
+  \node[yazi,text=buz,anchor=north east] at (25,109) {$-$};
+\end{tikzpicture}\mbox{}\newpage
+% ---------- Aylar ----------
+\AySayfasi{1}\AySayfasi{2}\AySayfasi{3}\AySayfasi{4}\AySayfasi{5}\AySayfasi{6}
+\AySayfasi{7}\AySayfasi{8}\AySayfasi{9}\AySayfasi{10}\AySayfasi{11}\AySayfasi{12}
+\end{document}

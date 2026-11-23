@@ -1,0 +1,334 @@
+% HKTTM 2027 kontrol teorisi takvimi: ortak tanımlar
+% Bu dosya takvim-poster.tex ve takvim-masa.tex tarafından \input ile okunur.
+% pdfLaTeX ile derlenir. Gereken paketler: tikz, pgfplots, tgheros, geometry.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{tgheros}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfcalendar}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,calc,positioning}
+
+% ---------- Renkler: HKTTM logosunun lacivert ve buz mavisi ----------
+\definecolor{lacivert}{HTML}{002D7A}  % logo laciverti: paneller, başlıklar, gün numaraları
+\definecolor{gece}{HTML}{001B4D}      % çizim alanı
+\definecolor{buz}{HTML}{DDE8F7}       % logo zemini: koyu zeminde birinci iz ve vurgu
+\definecolor{mavi}{HTML}{4667A0}      % açık zeminde ikincil vurgu
+\definecolor{kizil}{HTML}{C8102E}     % yalnızca hafta sonu ve resmi tatil
+\definecolor{gul}{HTML}{FF9DAA}       % koyu zeminde ikinci iz
+\definecolor{zemin}{HTML}{EEF3FB}     % sayfa zemini
+\definecolor{izgara}{HTML}{C7D6EB}
+\definecolor{yumusak}{HTML}{4667A0}
+\definecolor{soluk}{HTML}{9DB3DB}     % koyu zeminde eksen ve etiket
+
+% ---------- Logo ----------
+% \Logo{genişlik}: hkttm-logo.png, köşeleri yuvarlatılmış çerçevesine kırpılmış olarak
+\usepackage{graphicx}
+\newcommand{\Logo}[1]{%
+  \begin{tikzpicture}[x=#1,y=#1]
+    \clip[rounded corners=0.022*#1] (0.002,0.002) rectangle (0.998,0.3637);
+    \node[anchor=south west,inner sep=0pt] at (0,0) {\includegraphics[width=#1]{hkttm-logo.png}};
+  \end{tikzpicture}}
+
+% Dar başlık yazı tipi (TeX Gyre Heros Condensed)
+\newcommand{\Dar}{\fontfamily{qhvc}\selectfont}
+
+% ---------- Ay verileri ----------
+\newcommand{\AyAdi}[1]{\ifcase#1\or Ocak\or Şubat\or Mart\or Nisan\or Mayıs\or Haziran\or
+  Temmuz\or Ağustos\or Eylül\or Ekim\or Kasım\or Aralık\fi}
+
+\newcommand{\AyKavram}[1]{\ifcase#1\or
+  Basamak yanıtı\or
+  Kutup--sıfır haritası\or
+  Bode diyagramı\or
+  Nyquist eğrisi\or
+  PID kontrolcü\or
+  Kök yer eğrisi\or
+  Rezonans\or
+  Faz düzlemi\or
+  Örnekleme ve örtüşme\or
+  Ölü zaman\or
+  Histerezisli kontrol\or
+  Kalıcı durum\fi}
+
+\newcommand{\AyFormul}[1]{\ifcase#1\or
+  $G(s)=\dfrac{\omega_n^2}{s^2+2\zeta\omega_n s+\omega_n^2}$\or
+  $\operatorname{Re}\{p_i\}<0 \;\Rightarrow\; \text{kararlı}$\or
+  $\mathrm{FM}=180^\circ+\angle L(j\omega_c)$\or
+  $Z=N+P$\or
+  $u=K_p e+K_i\!\int\! e\,dt+K_d\,\dfrac{de}{dt}$\or
+  $1+K\,\dfrac{s+3}{s(s+2)}=0$\or
+  $\omega_r=\omega_n\sqrt{1-2\zeta^2}$\or
+  $\dot{\mathbf{x}}=A\mathbf{x}$\or
+  $f_s>2f_{\max}$\or
+  $G(s)=\dfrac{K e^{-Ls}}{\tau s+1}$\or
+  $u=\begin{cases}1,& T<T_r-h\\ 0,& T>T_r+h\end{cases}$\or
+  $e_{ss}=\lim\limits_{s\to 0}sE(s)$\fi}
+
+\newcommand{\AySoz}[1]{\ifcase#1\or
+  Yeni yıl referansı uygulandı. İlk haftalardaki aşım normaldir.\or
+  Bütün kutuplar sol yarı düzlemde: ay kısa, sistem kararlı.\or
+  Kazanç düşse de faz marjı korunur. Bahar geliyor.\or
+  $-1$ noktasını çevrelemeden dolaşın.\or
+  Oransal çalışın, integralle biriktirin, türevle öngörün.\or
+  Kazancı artırın, köklerin nereye gittiğini izleyin.\or
+  Yaz sıcağında doğal frekansınızdan uzak durun.\or
+  Tatil dönüşü denge noktasına spiral çizerek varılır.\or
+  Okullar açıldı: en az iki kat hızlı örnekleyin.\or
+  Girişi verdiniz, çıkış yok mu? Sabır: $L$ saniye sonra gelir.\or
+  Kombi açıldı. Evinizdeki kontrolcü bu ay sahnede.\or
+  Yıl yüzde iki bandına girdi. Kalıcı durum hatası sıfır olsun.\fi}
+
+% ---------- Resmi tatiller (2027) ----------
+% Dini bayram tarihleri Diyanet'in 2027 takvimine göredir; bazı kaynaklar
+% Kurban Bayramı'nı bir gün sonra (17-20 Mayıs) verir. Basmadan önce doğrulayın.
+\newcommand{\Tatil}[3]{\expandafter\def\csname tatil@#1-#2\endcsname{#3}}
+\newcommand{\YarimTatil}[3]{\expandafter\def\csname yarim@#1-#2\endcsname{#3}}
+\Tatil{1}{1}{Yılbaşı}
+\YarimTatil{3}{8}{Arife}
+\Tatil{3}{9}{Ramazan B.}\Tatil{3}{10}{Ramazan B.}\Tatil{3}{11}{Ramazan B.}
+\Tatil{4}{23}{23 Nisan}
+\Tatil{5}{1}{1 Mayıs}
+\YarimTatil{5}{15}{Arife}
+\Tatil{5}{16}{Kurban B.}\Tatil{5}{17}{Kurban B.}\Tatil{5}{18}{Kurban B.}\Tatil{5}{19}{19 Mayıs}
+\Tatil{7}{15}{15 Temmuz}
+\Tatil{8}{30}{30 Ağustos}
+\YarimTatil{10}{28}{Arife}
+\Tatil{10}{29}{29 Ekim}
+
+\newcommand{\AyTatil}[1]{\ifcase#1\or
+  1 Ocak: Yılbaşı\or
+  \or
+  8 Mart öğleden sonra arife, 9--11 Mart: Ramazan Bayramı\or
+  23 Nisan: Ulusal Egemenlik ve Çocuk Bayramı\or
+  1 Mayıs: Emek ve Dayanışma Günü. 15 Mayıs arife, 16--19 Mayıs: Kurban Bayramı. 19 Mayıs: Gençlik ve Spor Bayramı\or
+  \or
+  15 Temmuz: Demokrasi ve Millî Birlik Günü\or
+  30 Ağustos: Zafer Bayramı\or
+  \or
+  28 Ekim öğleden sonra, 29 Ekim: Cumhuriyet Bayramı\or
+  \or
+  \fi}
+
+% ---------- Ay ızgarası ----------
+% \AyIzgara[masa]{ay}{hücre genişliği}{hücre yüksekliği}{yazı komutu}
+% Seçeneksiz: gün numarası ortada, çerçevesiz (poster).
+% [masa]: çerçeveli hücre, numara sol üstte, tatil adı hücrenin içinde.
+\newcount\tkJ \newcount\tkIlk \newcount\tkN \newcount\tkD
+\newcount\tkPos \newcount\tkSatir \newcount\tkSutun
+\newif\iftkMasa
+\newcommand{\AyIzgara}[5][poster]{%
+  \def\tkMod{#1}\def\tkMasaAd{masa}%
+  \ifx\tkMod\tkMasaAd\tkMasatrue\else\tkMasafalse\fi
+  \pgfcalendardatetojulian{2027-#2-01}{\tkJ}%
+  \pgfcalendarjuliantoweekday{\tkJ}{\tkIlk}% 0 = pazartesi
+  \pgfcalendardatetojulian{2027-#2-last}{\tkN}%
+  \advance\tkN by -\tkJ \advance\tkN by 1
+  \begin{tikzpicture}[x=#3,y=#4,inner sep=0pt,outer sep=0pt]
+    \path[use as bounding box] (0,1) rectangle (7,-6);
+    \foreach \gun [count=\i from 0] in {Pzt,Sal,Çar,Per,Cum,Cmt,Paz}{%
+      \ifnum\i>4
+        \node[text=kizil] at (\i+0.5,0.45) {#5\Dar\bfseries\gun};
+      \else
+        \node[text=yumusak] at (\i+0.5,0.45) {#5\Dar\bfseries\gun};
+      \fi}
+    \draw[lacivert,line width=0.8pt] (0,0)--(7,0);
+    \tkD=1
+    \loop
+      \tkPos=\tkIlk \advance\tkPos by \tkD \advance\tkPos by -1
+      \tkSatir=\tkPos \divide\tkSatir by 7
+      \tkSutun=\tkSatir \multiply\tkSutun by -7 \advance\tkSutun by \tkPos
+      \edef\tkRenk{\ifnum\tkSutun>4 kizil\else lacivert\fi}%
+      \def\tkAd{}\def\tkTur{0}%
+      \ifcsname tatil@#2-\the\tkD\endcsname
+        \edef\tkAd{\csname tatil@#2-\the\tkD\endcsname}\def\tkTur{1}\fi
+      \ifcsname yarim@#2-\the\tkD\endcsname
+        \edef\tkAd{\csname yarim@#2-\the\tkD\endcsname}\def\tkTur{2}\fi
+      \iftkMasa
+        \ifnum\tkTur=1 \fill[kizil!14] (\the\tkSutun,-\the\tkSatir) rectangle ++(1,-1);\fi
+        \ifnum\tkTur=2 \fill[kizil!14] (\the\tkSutun,-\the\tkSatir)--++(1,0)--++(0,-1)--cycle;\fi
+        \draw[izgara,line width=0.5pt] (\the\tkSutun,-\the\tkSatir) rectangle ++(1,-1);
+        \ifnum\tkTur>0 \def\tkRenk{kizil}\fi
+        \node[anchor=north west,text=\tkRenk] at (\the\tkSutun+0.09,-\the\tkSatir-0.1)
+          {#5\Dar\bfseries\the\tkD};
+        \ifnum\tkTur>0
+          \node[anchor=south west,text=kizil] at (\the\tkSutun+0.09,-\the\tkSatir-0.9)
+            {\fontsize{6.2}{7}\selectfont\Dar\tkAd};
+        \fi
+      \else
+        \ifnum\tkTur=1
+          \fill[kizil] (\the\tkSutun+0.5,-\the\tkSatir-0.5) circle[x radius=0.36,y radius=0.42];
+          \def\tkRenk{white}\fi
+        \ifnum\tkTur=2
+          \draw[kizil,line width=0.7pt] (\the\tkSutun+0.5,-\the\tkSatir-0.5) circle[x radius=0.36,y radius=0.42];
+          \def\tkRenk{kizil}\fi
+        \node[text=\tkRenk] at (\the\tkSutun+0.5,-\the\tkSatir-0.5) {#5\the\tkD};
+      \fi
+    \ifnum\tkD<\tkN \advance\tkD by 1
+    \repeat
+  \end{tikzpicture}}
+
+% ---------- Grafikler ----------
+% Yazı boyutu belgede \renewcommand{\GrafikYazi}{...} ile ayarlanır.
+\newcommand{\GrafikYazi}{\fontsize{7}{8}\selectfont}
+\pgfplotsset{
+  kt/.style={
+    scale only axis, trig format plots=rad,
+    axis background/.style={fill=gece},
+    axis line style={soluk,line width=0.5pt},
+    tick style={soluk,line width=0.4pt}, major tick length=2pt,
+    tick label style={font=\GrafikYazi,text=soluk},
+    label style={font=\GrafikYazi,text=soluk},
+    grid=major, grid style={soluk!22!gece,line width=0.3pt},
+    every axis plot/.append style={line width=1.3pt,buz,line join=round,mark=none},
+    samples=160, clip=true,
+    xlabel shift=-2pt, ylabel shift=-3pt,
+    /pgf/number format/use comma, /pgf/number format/1000 sep={},
+  },
+}
+\tikzset{
+  ince/.style={line width=0.7pt},
+  ref/.style={soluk,dashed,line width=0.6pt},
+  ikinci/.style={gul},
+  etiket/.style={font=\GrafikYazi,text=white,inner sep=1.5pt},
+}
+
+% \AyGrafik{ay}{genişlik}{yükseklik}: çizim alanının boyutları
+\newcommand{\AyGrafik}[3]{\ifcase#1\or
+% 1 Basamak yanıtı: zeta = 0.3, wn = 1.6
+\begin{tikzpicture}\begin{axis}[kt,width=#2,height=#3,xmin=0,xmax=12,ymin=-0.1,ymax=1.6,
+    xtick={0,4,8,12},ytick={0,1},xlabel={$t$},ylabel={$y(t)$}]
+  \addplot[ref,domain=0:12,samples=2]{1};
+  \addplot[domain=1:12]{1-exp(-0.48*(x-1))*(cos(1.5263*(x-1))+0.3145*sin(1.5263*(x-1)))};
+  \addplot[domain=0:1,samples=2]{0};
+  \node[etiket,anchor=south east] at (axis cs:12,1.02){$r=2027$};
+\end{axis}\end{tikzpicture}\or
+% 2 Kutup-sıfır haritası
+\begin{tikzpicture}\begin{axis}[kt,width=#2,height=#3,xmin=-4.5,xmax=2.2,ymin=-3,ymax=3,
+    xtick={-4,-2,0,2},ytick={-2,0,2},xlabel={$\sigma$},ylabel={$j\omega$}]
+  \fill[kizil,opacity=0.35] (axis cs:0,-3) rectangle (axis cs:2.2,3);
+  \addplot[ref,samples=2,domain=-3:3] ({0},{x});
+  \addplot[ref,samples=2,domain=-4.5:2.2] {0};
+  \addplot[only marks,mark=x,mark size=3.6pt,buz,line width=1pt]
+    coordinates{(-0.6,0)(-1,2)(-1,-2)(-2.2,0)(-3,1.2)(-3,-1.2)};
+  \addplot[only marks,mark=o,mark size=2.8pt,gul,line width=1.2pt] coordinates{(-3.8,0)};
+  \node[etiket,anchor=north] at (axis cs:1.1,2.9){kararsız};
+\end{axis}\end{tikzpicture}\or
+% 3 Bode genlik: L(s) = 10 / (s (s+1) (0.1s+1))
+\begin{tikzpicture}\begin{semilogxaxis}[kt,width=#2,height=#3,xmin=0.01,xmax=100,ymin=-90,ymax=70,
+    xtick={0.01,0.1,1,10,100},ytick={-80,-40,0,40},log ticks with fixed point,
+    xlabel={$\omega$ [rad/s]},ylabel={$|L|$ [dB]}]
+  \addplot[ref,domain=0.01:100,samples=2]{0};
+  \addplot[domain=0.01:100,samples=120]{20*log10(10/(x*sqrt(1+x^2)*sqrt(1+0.01*x^2)))};
+  \node[etiket,anchor=south west] at (axis cs:0.012,-2){$-20$ dB/dek};
+  \node[etiket,anchor=south west] at (axis cs:2.2,-12){$-40$};
+  \node[etiket,anchor=south west] at (axis cs:14,-58){$-60$};
+\end{semilogxaxis}\end{tikzpicture}\or
+% 4 Nyquist: L(s) = 4 / (s+1)^3, w = tan(u)
+\begin{tikzpicture}\begin{axis}[kt,width=#2,height=#3,axis equal,xmin=-1.6,xmax=4.4,ymin=-2.8,ymax=2.8,
+    xtick={-1,0,2,4},ytick={-2,0,2},xlabel={Re},ylabel={Im}]
+  \addplot[ref,samples=2,domain=-5:8]{0};
+  \addplot[ref,samples=2,domain=-5:5]({0},{x});
+  \addplot[ikinci,ince,dashed,domain=0:1.54,samples=140]
+    ({4*(1-3*tan(x)^2)/(1+tan(x)^2)^3},{-4*(tan(x)^3-3*tan(x))/(1+tan(x)^2)^3});
+  \addplot[domain=0:1.54,samples=140]
+    ({4*(1-3*tan(x)^2)/(1+tan(x)^2)^3},{4*(tan(x)^3-3*tan(x))/(1+tan(x)^2)^3});
+  \addplot[only marks,mark=x,mark size=3.6pt,white,line width=1pt] coordinates{(-1,0)};
+  \node[etiket,anchor=south] at (axis cs:-1,0.25){$-1$};
+\end{axis}\end{tikzpicture}\or
+% 5 PID blok diyagramı (pgfplots değil)
+\begin{tikzpicture}[x=#2,y=#3,line width=0.7pt,>={Stealth[length=4pt]},
+    every node/.style={font=\GrafikYazi,text=white,inner sep=1.5pt},
+    blok/.style={draw=soluk,fill=lacivert,minimum width=0.17*#2,minimum height=0.17*#3,inner sep=2pt}]
+  \fill[gece] (0,0) rectangle (1,1);
+  \draw[soluk,line width=0.5pt] (0,0) rectangle (1,1);
+  \node[circle,draw=soluk,inner sep=1.2pt] (s1) at (0.15,0.56) {$\Sigma$};
+  \node[blok] (p) at (0.40,0.84) {$K_p$};
+  \node[blok] (i) at (0.40,0.56) {$K_i/s$};
+  \node[blok] (d) at (0.40,0.28) {$K_d s$};
+  \node[circle,draw=soluk,inner sep=1.2pt] (s2) at (0.60,0.56) {$\Sigma$};
+  \node[blok,fill=kizil,draw=white] (g) at (0.80,0.56) {$G(s)$};
+  \draw[soluk,->] (0.02,0.56)--(s1) node[pos=0.25,above]{$r$};
+  \draw[buz,->] (s1)--(i) node[pos=0.4,above]{$e$};
+  \draw[buz,->] (0.25,0.56)|-(p);
+  \draw[buz,->] (0.25,0.56)|-(d);
+  \draw[buz,->] (p)-|(s2);
+  \draw[buz,->] (i)--(s2);
+  \draw[buz,->] (d)-|(s2);
+  \draw[buz,->] (s2)--(g) node[midway,above]{$u$};
+  \draw[soluk,->] (g)--(0.98,0.56) node[pos=0.6,above]{$y$};
+  \draw[soluk,->] (0.93,0.56)|-(0.15,0.08)--(s1) node[pos=0.85,right]{$-$};
+\end{tikzpicture}\or
+% 6 Kök yer eğrisi: K (s+3) / (s (s+2)); merkez -3, yarıçap sqrt(3)
+\begin{tikzpicture}\begin{axis}[kt,width=#2,height=#3,axis equal,xmin=-6.4,xmax=1.2,ymin=-2.6,ymax=2.6,
+    xtick={-6,-4,-2,0},ytick={-2,0,2},xlabel={$\sigma$},ylabel={$j\omega$}]
+  \addplot[ref,samples=2,domain=-9:4]{0};
+  \addplot[ref,samples=2,domain=-4:4]({0},{x});
+  \addplot[domain=0:6.2832,samples=120]({-3+1.7321*cos(x)},{1.7321*sin(x)});
+  \addplot[samples=2,domain=-2:0]{0};
+  \addplot[samples=2,domain=-9:-3]{0};
+  \addplot[only marks,mark=x,mark size=3.6pt,white,line width=1pt] coordinates{(0,0)(-2,0)};
+  \addplot[only marks,mark=o,mark size=2.8pt,white,line width=1.2pt,fill=gece] coordinates{(-3,0)};
+  \node[etiket,anchor=south west] at (axis cs:-1.2,1.75){$K\uparrow$};
+\end{axis}\end{tikzpicture}\or
+% 7 Rezonans: zeta = 0.1, 0.2, 0.4, 0.7
+\begin{tikzpicture}\begin{axis}[kt,width=#2,height=#3,xmin=0,xmax=2.5,ymin=0,ymax=5.6,
+    xtick={0,1,2},ytick={0,1,3,5},xlabel={$\omega/\omega_n$},ylabel={$|G|$}]
+  \addplot[soluk,ince,domain=0:2.5]{1/sqrt((1-x^2)^2+(2*0.7*x)^2)};
+  \addplot[ikinci,ince,domain=0:2.5]{1/sqrt((1-x^2)^2+(2*0.4*x)^2)};
+  \addplot[ikinci,domain=0:2.5]{1/sqrt((1-x^2)^2+(2*0.2*x)^2)};
+  \addplot[domain=0:2.5,samples=260]{1/sqrt((1-x^2)^2+(2*0.1*x)^2)};
+  \node[etiket,anchor=west] at (axis cs:1.08,4.9){$\zeta=0{,}1$};
+  \node[etiket,anchor=west] at (axis cs:1.18,2.5){$0{,}2$};
+\end{axis}\end{tikzpicture}\or
+% 8 Faz düzlemi: sönümlü salınıcı
+\begin{tikzpicture}\begin{axis}[kt,width=#2,height=#3,axis equal,xmin=-1.15,xmax=1.15,ymin=-1.05,ymax=0.85,
+    xtick={-1,0,1},ytick={-1,0},xlabel={$x$},ylabel={$\dot{x}$}]
+  \addplot[ref,samples=2,domain=-3:3]{0};
+  \addplot[ref,samples=2,domain=-3:3]({0},{x});
+  \addplot[domain=0:30,samples=400]({exp(-0.15*x)*cos(x)},{-exp(-0.15*x)*(0.15*cos(x)+sin(x))});
+  \addplot[only marks,mark=*,mark size=1.8pt,white] coordinates{(0,0)};
+  \addplot[only marks,mark=*,mark size=1.8pt,gul] coordinates{(1,-0.15)};
+\end{axis}\end{tikzpicture}\or
+% 9 Örnekleme: 0.9 Hz işaret, 1 Hz örnekleme, 0.1 Hz örtüşme
+\begin{tikzpicture}\begin{axis}[kt,width=#2,height=#3,xmin=0,xmax=10,ymin=-1.35,ymax=1.35,
+    xtick={0,5,10},ytick={-1,0,1},xlabel={$t$ [s]},ylabel={$x(t)$}]
+  \addplot[soluk,ince,domain=0:10,samples=400]{sin(2*pi*0.9*x)};
+  \addplot[ikinci,dashed,domain=0:10]{-sin(2*pi*0.1*x)};
+  \addplot[only marks,mark=*,mark size=2pt,buz,samples at={0,1,...,10}]{-sin(2*pi*0.1*x)};
+\end{axis}\end{tikzpicture}\or
+% 10 Ölü zaman: L = 2, tau = 3
+\begin{tikzpicture}\begin{axis}[kt,width=#2,height=#3,xmin=0,xmax=14,ymin=-0.1,ymax=1.25,
+    xtick={0,2,5,14},xticklabels={0,$L$,$L{+}\tau$,},ytick={0,0.632,1},yticklabels={0,{0,63},1},
+    xlabel={$t$},ylabel={$y(t)$}]
+  \addplot[ref,domain=0:14,samples=2]{1};
+  \addplot[ikinci,ince,dashed,samples=2,domain=2:5]{(x-2)/3};
+  \addplot[domain=0:2,samples=2]{0};
+  \addplot[domain=2:14]{1-exp(-(x-2)/3)};
+  \draw[white,<->,line width=0.6pt] (axis cs:0,0.18)--(axis cs:2,0.18);
+  \node[etiket,anchor=south] at (axis cs:1,0.2){$L$};
+\end{axis}\end{tikzpicture}\or
+% 11 Histerezisli röle: Tr = 21, h = 1
+\begin{tikzpicture}\begin{axis}[kt,width=#2,height=#3,xmin=17,xmax=25,ymin=-0.3,ymax=1.45,
+    xtick={18,20,22,24},ytick={0,1},yticklabels={kapalı,açık},xlabel={$T$ [$^\circ$C]}]
+  \addplot[samples=2] coordinates{(17,1)(22,1)(22,0)(25,0)};
+  \addplot[ikinci,samples=2] coordinates{(25,0)(20,0)(20,1)(17,1)};
+  \draw[white,-{Stealth[length=5pt]},line width=0.6pt] (axis cs:22,0.62)--(axis cs:22,0.38);
+  \draw[white,-{Stealth[length=5pt]},line width=0.6pt] (axis cs:20,0.38)--(axis cs:20,0.62);
+  \draw[white,<->,line width=0.6pt] (axis cs:20,1.2)--(axis cs:22,1.2);
+  \node[etiket,anchor=south] at (axis cs:21,1.2){$2h$};
+\end{axis}\end{tikzpicture}\or
+% 12 Kalıcı durum: hata zarfı ve yüzde iki bandı (ts = 4 / 0.5 = 8)
+\begin{tikzpicture}\begin{axis}[kt,width=#2,height=#3,xmin=0,xmax=12,ymin=-1.05,ymax=1.05,
+    xtick={0,4,8,12},ytick={-1,0,1},xlabel={$t$},ylabel={$e(t)$}]
+  \fill[buz,opacity=0.5] (axis cs:0,-0.02) rectangle (axis cs:12,0.02);
+  \addplot[ref,domain=0:12]{exp(-0.5*x)};
+  \addplot[ref,domain=0:12]{-exp(-0.5*x)};
+  \addplot[domain=0:12,samples=300]{exp(-0.5*x)*cos(3*x)};
+  \addplot[ikinci,ince,dashed,samples=2,domain=-1:1]({8},{x});
+  \node[etiket,anchor=south west] at (axis cs:8.1,0.3){$t_s$};
+\end{axis}\end{tikzpicture}\fi}

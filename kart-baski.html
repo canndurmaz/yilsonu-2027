@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mutlu yıllar kartı: A4 baskı sayfası</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  @page { size: A4 portrait; margin: 11mm 20mm; }
+  .sheet {
+    width: 170mm;
+    display: grid;
+    grid-template-columns: 85mm 85mm;
+    grid-auto-rows: 55mm;
+    background: #fff;
+    margin: 0 auto 28px;
+  }
+  .sheet > div { outline: 0.2mm dashed #999; outline-offset: -0.1mm; overflow: hidden; }
+  .sheet svg { width: 85mm; height: 55mm; display: block; }
+  @media print {
+    body { background: #fff !important; }
+    .sheet { margin: 0; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<main>
+<div class="wrap no-print" style="padding-top:28px">
+  <section>
+    <h2>A4'e on kart</h2>
+    <p>Bir A4 sayfaya 85 x 55 mm ölçüsünde on kart sığar. Yazdırma penceresinde ölçeği "Gerçek boyut" ya da yüzde 100 seçin, "Arka plan grafikleri" seçeneğini açın. Kesikli çizgilerden kesin.</p>
+    <div class="calc">
+      <div><label for="t">Tasarım</label>
+        <select id="t"><option value="a">Basamak yanıtı</option><option value="b">Blok diyagram</option><option value="c">Baston şeker şeridi</option></select>
+      </div>
+      <button onclick="window.print()">Sayfayı yazdır</button>
+      <a class="btn" style="background:#fff;color:var(--ink)" href="1-hediye.html">Hediye sayfasına dön</a>
+    </div>
+    <p class="small">Koyu zeminli basamak yanıtı tasarımı çok toner harcar ve ofis yazıcısında bantlanabilir; onu kopyalama merkezinde ya da matbaada bastırın. Ofis yazıcısı için beyaz zeminli iki tasarım daha uygundur.</p>
+  </section>
+</div>
+<div class="sheet" id="sheet"></div>
+</main>
+<script src="common.js"></script>
+<script src="kart.js"></script>
+<script>
+var sel = document.getElementById("t");
+var m = /[?&]t=([abc])/.exec(location.search);
+if (m) sel.value = m[1];
+function fill() {
+  var svg = KART[sel.value](), h = "";
+  for (var i = 0; i < 10; i++) h += "<div>" + svg + "</div>";
+  document.getElementById("sheet").innerHTML = h;
+}
+sel.onchange = fill;
+fill();
+</script>
+</body>
+</html>

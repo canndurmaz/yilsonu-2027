@@ -1,0 +1,181 @@
+% HKTTM 2027 kontrol teorisi takvimi: duvar posteri (pafta düzeni)
+% Derleme: pdflatex takvim-poster.tex (iki kez)
+% Sayfa: A2 dikey (420 x 594 mm), tam sayfa lacivert zemin. A3'e "sayfaya sığdır" ile basılabilir.
+%
+% Fikir: yıl tek bir kapalı çevrimdir. Referans sol üstten girer, on iki ay bloğundan
+% sırayla geçer, sağ alttan çıkar ve sol kenardan toplama noktasına geri beslenir.
+\documentclass[10pt]{article}
+\usepackage[paperwidth=420mm,paperheight=594mm,margin=0mm]{geometry}
+\input{takvim-ortak}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% Koyu zemin renkleri
+\renewcommand{\RenkGun}{buz}
+\renewcommand{\RenkHS}{gul}
+\renewcommand{\RenkBaslik}{soluk}
+\renewcommand{\RenkCizgi}{soluk}
+\renewcommand{\RenkOzel}{nane}
+\renewcommand{\RenkYarim}{gul}
+\renewcommand{\GrafikYazi}{\fontsize{7.5}{9}\selectfont}
+\renewcommand{\HaftaYazi}{\fontsize{6}{6}\selectfont\ttfamily}
+\tkHaftatrue
+
+% Ay çizimleri önceden kutulanır (iç içe tikzpicture kullanmamak için)
+\newcommand{\AyHazirla}[1]{%
+  \KutuHazirla{G#1}{\AyGrafik{#1}{31mm}{33mm}}%
+  \KutuHazirla{I#1}{\AyIzgara{#1}{8.2mm}{7.9mm}{\fontsize{12}{12}\selectfont}}}
+\tikzset{
+  hat/.style={buz,line width=1.5pt,line join=round},
+  ok/.style={-{Stealth[length=3.6mm,width=2.8mm]}},
+  ince/.style={line width=0.5pt},
+  yazi/.style={font=\fontsize{8}{9.5}\selectfont\ttfamily,text=soluk,inner sep=1pt},
+  toplam/.style={circle,draw=buz,line width=1.2pt,fill=lacivert,minimum size=6.4mm,inner sep=0pt,
+    font=\fontsize{10}{10}\selectfont,text=buz},
+  hatyazi/.style={font=\fontsize{8}{9.5}\selectfont\ttfamily,text=buz,fill=lacivert,inner sep=1.6pt},
+}
+
+\begin{document}
+\pagecolor{lacivert}
+\AyHazirla{1}\AyHazirla{2}\AyHazirla{3}\AyHazirla{4}\AyHazirla{5}\AyHazirla{6}
+\AyHazirla{7}\AyHazirla{8}\AyHazirla{9}\AyHazirla{10}\AyHazirla{11}\AyHazirla{12}
+\KutuHazirla{logo}{\Logo{100mm}}
+
+\begin{tikzpicture}[remember picture,overlay,x=1mm,y=1mm,shift={(current page.south west)}]
+
+  % ---------- milimetrik zemin ----------
+  \foreach \x in {0,5,...,420}{\draw[kareli,line width=0.25pt] (\x,0)--(\x,594);}
+  \foreach \y in {0,5,...,590}{\draw[kareli,line width=0.25pt] (0,\y)--(420,\y);}
+  \foreach \x in {10,35,...,410}{\draw[kareli!70!mavi,line width=0.4pt] (\x,0)--(\x,594);}
+  \foreach \y in {19,44,...,594}{\draw[kareli!70!mavi,line width=0.4pt] (0,\y)--(420,\y);}
+
+  % ---------- pafta çerçevesi ve bölge işaretleri ----------
+  \draw[buz,line width=1.2pt] (9,9) rectangle (411,585);
+  \draw[buz,line width=0.4pt] (5,5) rectangle (415,589);
+  \foreach \n [count=\i from 0] in {1,2,3,4,5,6}{
+    \node[yazi] at (42.5+\i*67,587) {\n}; \node[yazi] at (42.5+\i*67,7) {\n};
+    \draw[buz,line width=0.4pt] (9+\i*67,585)--(9+\i*67,589) (9+\i*67,5)--(9+\i*67,9);}
+  \foreach \n [count=\i from 0] in {A,B,C,D,E,F,G,H}{
+    \node[yazi] at (7,549-\i*72) {\n}; \node[yazi] at (413,549-\i*72) {\n};
+    \draw[buz,line width=0.4pt] (5,585-\i*72)--(9,585-\i*72) (411,585-\i*72)--(415,585-\i*72);}
+
+  % ---------- başlık ----------
+  \node[anchor=south west,inner sep=0pt,text=mavi] at (17.8,507.2)
+    {\Dar\bfseries\fontsize{200}{200}\selectfont 2027};
+  \node[anchor=south west,inner sep=0pt,text=buz] at (16,509)
+    {\Dar\bfseries\fontsize{200}{200}\selectfont 2027};
+  \node[anchor=north west,inner sep=0pt,text=white] at (168,578) {%
+    \begin{minipage}{130mm}
+      {\Dar\bfseries\fontsize{38}{40}\selectfont Kontrol teorisi\\[1mm] takvimi}\par\vspace{4mm}
+      {\fontsize{12}{15.5}\selectfont\color{soluk}Hareket Kontrol Teknolojileri Tasarım Müdürlüğü\par
+       On iki ay, on iki blok, tek kapalı çevrim.\par}
+    \end{minipage}};
+  \node[anchor=north east,inner sep=0pt] at (405,579) {\usebox{\Kutu{logo}}};
+
+  % Laplace çiftleri: logo altında küçük veri sayfası
+  \draw[buz,line width=0.6pt] (305,507) rectangle (405,537);
+  \draw[buz,line width=0.6pt] (305,522)--(405,522);
+  \foreach \x in {330,355,380}{\draw[buz,line width=0.6pt] (\x,507)--(\x,537);}
+  \foreach \t/\s [count=\i from 0] in {
+      {1}/{\dfrac{1}{s}}, {t}/{\dfrac{1}{s^2}}, {e^{-at}}/{\dfrac{1}{s+a}}, {\sin\omega t}/{\dfrac{\omega}{s^2+\omega^2}},
+      {\delta(t)}/{1}, {\dot f}/{sF-f(0)}, {\textstyle\int f}/{\dfrac{F}{s}}, {f(t-L)}/{e^{-Ls}F}}{
+    \pgfmathtruncatemacro{\cc}{mod(\i,4)}
+    \pgfmathtruncatemacro{\rr}{\i/4}
+    \node[text=buz,font=\fontsize{7.5}{9}\selectfont] at (317.5+\cc*25,529.5-\rr*15)
+      {$\begin{array}{c}\t\\[-0.5mm]\updownarrow\\[-0.5mm]\s\end{array}$};}
+  \node[yazi,anchor=south west] at (305,537.6) {LAPLACE ÇİFTLERİ};
+
+  % ---------- ay blokları ----------
+  % sütun başlangıçları 26, 153, 280; satır üstleri 488, 381.5, 275, 168.5; blok 114 x 96
+  \foreach \ay in {1,...,12}{
+    \pgfmathtruncatemacro{\cc}{mod(\ay-1,3)}
+    \pgfmathtruncatemacro{\rr}{(\ay-1)/3}
+    \begin{scope}[shift={(26+\cc*127,488-\rr*106.5)}]
+      \fill[gece] (0,0) rectangle (114,-96);
+      \fill[buz] (0,0) rectangle (114,-11.5);
+      \draw[buz,line width=0.9pt] (0,0) rectangle (114,-96);
+      % köşe işaretleri
+      \foreach \px/\py in {0/0,114/0,0/-96,114/-96}{
+        \draw[buz,line width=0.4pt] (\px-2.2,\py)--(\px+2.2,\py) (\px,\py-2.2)--(\px,\py+2.2);}
+      \node[anchor=west,inner sep=0pt,text=lacivert] at (3,-5.9)
+        {\Dar\bfseries\fontsize{24}{24}\selectfont\AyAdi{\ay}};
+      \node[anchor=east,inner sep=0pt,text=lacivert,align=right] at (111.5,-5.9)
+        {\fontsize{8.5}{9.5}\selectfont\ttfamily $G_{\ifnum\ay<10 0\fi\ay}(s)$\enspace\AyKavram{\ay}};
+      \node[anchor=north west,inner sep=0pt] at (2.5,-15.5) {\usebox{\Kutu{G\ay}}};
+      \node[anchor=north east,inner sep=0pt] at (111.5,-14) {\usebox{\Kutu{I\ay}}};
+      \node[anchor=west,inner sep=0pt,text=buz] at (3.5,-65.5) {\fontsize{8.5}{10}\selectfont\AyFormul{\ay}};
+      \draw[mavi,line width=0.5pt] (3,-73)--(111,-73);
+      \node[anchor=north west,inner sep=0pt,text=white,text width=107mm] at (3.5,-75)
+        {\fontsize{9.5}{12}\selectfont\AySoz{\ay}};
+      \node[anchor=south west,inner sep=0pt,text=nane,text width=107mm] at (3.5,-93.5)
+        {\fontsize{8}{10}\selectfont\AyOzel{\ay}};
+      % giriş ve çıkış uçları
+      \fill[buz] (0,-48) circle[radius=1.1]; \fill[buz] (114,-48) circle[radius=1.1];
+    \end{scope}}
+
+  % ---------- sinyal yolu ----------
+  % referans ve toplama noktası
+  \node[draw=buz,line width=0.9pt,fill=gece,text=buz,inner sep=2.2mm,anchor=west,
+        font=\fontsize{10}{12}\selectfont] (kaynak) at (17,499.5) {$r(t)$: 2027 hedefleri};
+  \node[toplam] (S) at (20,440) {$\Sigma$};
+  \draw[hat,ok] (20,495.3)--(S);
+  \node[yazi,anchor=west,text=buz] at (21.5,446) {$+$};
+  \draw[hat,ok] (S)--(26,440);
+  % satır içi bağlantılar
+  \foreach \rr in {0,1,2,3}{
+    \foreach \cc in {0,1}{
+      \pgfmathtruncatemacro{\k}{\rr*3+\cc+1}
+      \draw[hat,ok] (140+\cc*127,440-\rr*106.5)--(153+\cc*127,440-\rr*106.5);
+      \node[yazi,text=buz,anchor=south] at (146+\cc*127,441-\rr*106.5) {$x_{\k}$};}}
+  % satır sonundan bir sonraki satır başına
+  \foreach \rr/\etiket in {0/{$x_3$ \textbullet\ bozucu $d_1$: bayram tatilleri},
+                           1/{$x_6$ \textbullet\ bozucu $d_2$: yıllık izinler},
+                           2/{$x_9$ \textbullet\ bozucu $d_3$: yıl sonu telaşı}}{
+    \draw[hat,ok] (394,440-\rr*106.5)--(402,440-\rr*106.5)--(402,386.75-\rr*106.5)
+      --(20,386.75-\rr*106.5)--(20,333.5-\rr*106.5)--(26,333.5-\rr*106.5);
+    \node[hatyazi] at (210,386.75-\rr*106.5) {\etiket};
+    \node[hatyazi] at (90,386.75-\rr*106.5) {$\blacktriangleleft$};
+    \node[hatyazi] at (330,386.75-\rr*106.5) {$\blacktriangleleft$};}
+  % çıkış ve geri besleme
+  \draw[hat] (394,120.5)--(402,120.5)--(402,62);
+  \fill[buz] (402,62) circle[radius=1.4];
+  \draw[hat,ok] (402,62)--(402,53.2);
+  \node[yazi,text=buz,anchor=east] at (400.5,57.5) {$y(t)$: iyi bir yıl};
+  \draw[hat,ok] (402,62)--(14,62)--(14,440)--(S);
+  \node[yazi,text=buz,anchor=south] at (16.3,440.6) {$-$};
+  \node[draw=buz,line width=0.9pt,fill=gece,text=buz,inner sep=1.8mm,
+        font=\fontsize{9}{11}\selectfont] at (150,62) {$H(s)=1$: yıl sonu değerlendirmesi};
+  \node[hatyazi,rotate=90] at (14,250) {GERİ BESLEME \textbullet\ $e(t)=r(t)-y(t)$ \textbullet\ hedef: $e_{ss}=0$};
+
+  % ---------- gün cetveli ----------
+  % 26 mm'den başlar, gün başına 0,6 mm; ay başları: 0 31 59 90 120 151 181 212 243 273 304 334 365
+  \draw[buz,line width=0.7pt] (26,24)--(245,24);
+  \foreach \g in {0,...,365}{\draw[soluk,line width=0.2pt] (26+\g*0.6,24)--(26+\g*0.6,25.6);}
+  \foreach \g/\ad in {0/Oca,31/Şub,59/Mar,90/Nis,120/May,151/Haz,181/Tem,212/Ağu,243/Eyl,273/Eki,304/Kas,334/Ara}{
+    \draw[buz,line width=0.6pt] (26+\g*0.6,24)--(26+\g*0.6,29.5);
+    \node[yazi,anchor=south west,text=buz] at (26.6+\g*0.6,26.2) {\ad};
+    \node[yazi,anchor=north] at (26+\g*0.6,23) {\g};}
+  \draw[buz,line width=0.6pt] (245,24)--(245,29.5);
+  \node[yazi,anchor=north] at (245,23) {365};
+  \node[yazi,anchor=north west] at (26,18) {$t$ [gün] \textbullet\ ölçek 0,6 mm/gün \textbullet\ H01--H52: ISO hafta numarası};
+  \node[anchor=south west,inner sep=0pt,text=soluk,text width=215mm] at (26,34) {\fontsize{8.5}{11.5}\selectfont
+    \tikz[baseline=-0.6ex]{\fill[kizil] (0,0) circle[radius=1.5mm];}\ resmi tatil\quad
+    \tikz[baseline=-0.6ex]{\draw[gul,line width=0.7pt] (0,0) circle[radius=1.5mm];}\ yarım gün\quad
+    \tikz[baseline=-0.6ex]{\fill[nane] (0,0)--(1.1mm,1.4mm)--(2.2mm,0)--(1.1mm,-1.4mm)--cycle;}\ kontrol ve mühendislik tarihinden bir gün\par
+    \vspace{1mm}Dini bayramlar Diyanet'in 2027 takvimine göredir: Ramazan Bayramı 9--11 Mart, Kurban Bayramı 16--19 Mayıs.};
+
+  % ---------- antet ----------
+  \fill[gece] (262,14) rectangle (406,52);
+  \draw[buz,line width=0.9pt] (262,14) rectangle (406,52);
+  \draw[buz,line width=0.5pt] (262,40)--(406,40) (262,27)--(406,27);
+  \draw[buz,line width=0.5pt] (310,14)--(310,40) (358,14)--(358,40);
+  \node[anchor=west,inner sep=0pt,text=buz] at (265,46)
+    {\Dar\bfseries\fontsize{13}{13}\selectfont HKTTM \textbullet\ 2027 KONTROL TEORİSİ TAKVİMİ};
+  \foreach \px/\py/\bas/\deger in {
+      265/37.4/PAFTA/{01 / 01}, 313/37.4/ÖLÇEK/{1 yıl : 426 mm}, 361/37.4/REVİZYON/{0},
+      265/24.4/ÇİZEN/{$\Sigma$}, 313/24.4/ONAY/{$K_p\ K_i\ K_d$}, 361/24.4/TARİH/{01.01.2027}}{
+    \node[yazi,anchor=west] at (\px,\py) {\bas};
+    \node[anchor=west,inner sep=0pt,text=buz,font=\fontsize{10}{10}\selectfont] at (\px,\py-6.2) {\deger};}
+\end{tikzpicture}
+\mbox{}
+\end{document}
